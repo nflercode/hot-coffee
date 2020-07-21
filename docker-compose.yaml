@@ -1,0 +1,34 @@
+version: '3.2'
+
+services:
+    letsencrypt:
+        image: linuxserver/letsencrypt
+        container_name: letsencrypt
+        cap_add:
+            - NET_ADMIN
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Europe/Stockholm
+            - URL=nfler.com
+            - SUBDOMAINS=www
+            - VALIDATION=http
+            - EMAIL=isaacpieber96@gmail.com
+        volumes:
+            - web-root:/config/nginx/www
+        ports:
+            - 443:443
+            - 80:80
+        restart: unless-stopped
+        depends_on:
+            - hot-coffee
+
+    hot-coffee:
+        image: nfler/hot-coffee
+        container_name: hot-coffee
+        volumes:
+            - type: volume
+              source: web-root
+              target: /build
+volumes:
+    web-root:
