@@ -27,7 +27,7 @@ jobs:
         docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
     - name: Push to registry
       run: |
-        echo 'Pushing to registry (dockerhub)
+        echo 'Pushing to registry (dockerhub)'
         docker push nfler/hot-coffee:latest
         echo 'Done!'  
           
