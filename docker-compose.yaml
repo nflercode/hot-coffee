@@ -10,12 +10,12 @@ services:
             - PUID=1000
             - PGID=1000
             - TZ=Europe/Stockholm
-            - URL=nfler.com
+            - URL=nfler.se
             - SUBDOMAINS=www
             - VALIDATION=http
             - EMAIL=isaacpieber96@gmail.com
         volumes:
-            - web-root:/config/nginx/www
+            - web-root:/config/www
         ports:
             - 443:443
             - 80:80
@@ -29,6 +29,13 @@ services:
         volumes:
             - type: volume
               source: web-root
-              target: /build
+              target: /app/build
+
+    watchtower:
+        image: containrrr/watchtower
+        container_name: watchtower
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: --cleanup --remove-volumes
 volumes:
     web-root:
