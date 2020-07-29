@@ -15,7 +15,7 @@ services:
             - VALIDATION=http
             - EMAIL=isaacpieber96@gmail.com
         volumes:
-            - /opt/hot-coffee/nginx/nfler/www:/config/www
+            - web-root:/config/www
             - /opt/hot-coffee/nginx/nfler/letsencrypt:/config/etc/letsencrypt
         ports:
             - 443:443
@@ -28,7 +28,9 @@ services:
         image: nfler/hot-coffee
         container_name: hot-coffee
         volumes:
-            - /opt/hot-coffee/nginx/nfler/www:/build
+            - type: volume
+              source: web-root
+              target: /app/build
 
     watchtower:
         image: containrrr/watchtower
@@ -37,5 +39,5 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
         command: hot-coffee --cleanup --remove-volumes --include-stopped --revive-stopped -i 30 
 
-#volumes:
-#    web-root:
+volumes:
+    web-root:

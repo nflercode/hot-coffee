@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Do a dad ;)
+          Do a dad ;) .. or two? ; ( O )
         </p>
       </header>
     </div>
