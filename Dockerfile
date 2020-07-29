@@ -15,4 +15,4 @@ FROM node:14.5.0-alpine3.10
 
 WORKDIR /app
 
-COPY --from=build /app/build /build
+COPY --from=build /app/build /app/build
