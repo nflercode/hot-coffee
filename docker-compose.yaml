@@ -36,6 +36,6 @@ services:
         container_name: watchtower
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-        command: hot-coffee --cleanup --remove-volumes -i 30
+        command: hot-coffee --cleanup --remove-volumes --include-stopped --revive-stopped -i 30 
 volumes:
     web-root:
