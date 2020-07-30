@@ -5,15 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>nfler - arguing is healthy</h1>
-        <p>
-          Do a dab ;) .. or two? ; ( O )
-        </p>
-        <p>
-          Finally it works :)
-        </p>
-        <p>
-          Or not ..
-        </p>
+        <i>Fat redesign</i>
       </header>
     </div>
   );
