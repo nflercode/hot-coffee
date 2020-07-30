@@ -4,8 +4,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h1>nfler - arguing is healthy</h1>
         <p>
-          Do a dad ;) .. or two? ; ( O )
+          Do a dab ;) .. or two? ; ( O )
         </p>
       </header>
     </div>
