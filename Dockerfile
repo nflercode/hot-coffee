@@ -13,7 +13,7 @@ RUN npm run build
 
 FROM node:14.5.0-alpine3.10
 
-LABEL com.centurylinklabs.watchtower.lifecycle.pre-update="docker volume rm hot-coffee_web-root"
+RUN docker volume rm hot-coffee_web-root
 
 WORKDIR /app
 
