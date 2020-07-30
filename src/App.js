@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>nfler - arguing is healthy</h1>
-        <i>Fat redesign</i>
+        <i>Fat redesign ( v.2 )</i>
       </header>
     </div>
   );
