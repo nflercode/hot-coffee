@@ -27,17 +27,10 @@ services:
     hot-coffee:
         image: nfler/hot-coffee
         container_name: hot-coffee
-        volumes:
-            - type: volume
-              source: web-root
-              target: /app/build
 
     watchtower:
         image: containrrr/watchtower
         container_name: watchtower
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-        command: hot-coffee --cleanup --remove-volumes --include-stopped --revive-stopped -i 30 
-
-volumes:
-    web-root:
+        command: hot-coffee --cleanup --include-stopped --revive-stopped -i 30
