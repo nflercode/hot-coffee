@@ -41,3 +41,4 @@ jobs:
         host: $HOST
         user: root
         key: $PRIVATE_KEY
+        args: "-tt -vvv"
