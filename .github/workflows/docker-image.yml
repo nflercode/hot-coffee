@@ -30,15 +30,12 @@ jobs:
         echo 'Pushing to registry (dockerhub)'
         docker push nfler/hot-coffee:latest
     - name: Deploy to server
-      uses: fifsky/ssh-action@master
-      env:
-        HOST: ${{secrets.HOST}}
-        PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}
+      uses: appleboy/ssh-action@master
       with:
-        command: |
+        script: |
           cd /opt/hot-coffee
           ./deploy.sh
-        host: $HOST
-        user: root
-        key: $PRIVATE_KEY
-        args: "-tt -v"
+        host:  ${{secrets.HOST}}
+        username: root
+        key: ${{secrets.PRIVATE_KEY}}
+        port: 22
