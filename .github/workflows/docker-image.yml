@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -29,6 +29,15 @@ jobs:
       run: |
         echo 'Pushing to registry (dockerhub)'
         docker push nfler/hot-coffee:latest
-        echo 'Done!'  
-          
-      
+    - name: Deploy to server
+      uses: fifsky/ssh-action@master
+      env:
+        HOST: ${{secrets.HOST}}
+        PRIVATE_KEY: ${{secrets.PRIVATE_KEY}}
+      with:
+        command: |
+          cd /opt/hot-coffee
+          ./deploy.sh
+        host: $HOST
+        user: root
+        key: $PRIVATE_KEY
