@@ -30,7 +30,7 @@ services:
         container_name: hot-coffee
         volumes:
             - web-root:/app/build
-            - nginx-conf:/nginx/nginx.conf
+            - nginx-conf:/app/nginx
 
 volumes:
     web-root:
