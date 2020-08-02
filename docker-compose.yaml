@@ -11,7 +11,7 @@ services:
             - PGID=1000
             - TZ=Europe/Stockholm
             - URL=nfler.se
-            - SUBDOMAINS=www
+            - SUBDOMAINS=www,api
             - VALIDATION=http
             - EMAIL=isaacpieber96@gmail.com
         volumes:
@@ -31,6 +31,12 @@ services:
         volumes:
             - web-root:/app/build
             - nginx-conf:/app/nginx
+
+    cold-coffee:
+        image: nfler/cold-coffee
+        container_name: cold-coffee
+        ports:
+            - 3000:3000
 
 volumes:
     web-root:
