@@ -17,6 +17,7 @@ services:
         volumes:
             - web-root:/config/www
             - /opt/hot-coffee/nginx/nfler/letsencrypt:/config/etc/letsencrypt
+            - nginx-conf:/config/nginx/site-confs/
         ports:
             - 443:443
             - 80:80
@@ -29,6 +30,8 @@ services:
         container_name: hot-coffee
         volumes:
             - web-root:/app/build
+            - nginx-conf:/nginx/nginx.conf
 
 volumes:
     web-root:
+    nginx-conf:
