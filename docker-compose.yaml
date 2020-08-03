@@ -36,7 +36,7 @@ services:
         image: nfler/cold-coffee
         container_name: cold-coffee
         ports:
-            - 3000:3000
+            - 8080:8080
 
 volumes:
     web-root:
