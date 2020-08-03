@@ -8,6 +8,9 @@ function App() {
         <h1>nfler - arguing is healthy</h1>
         <i>Fat redesign ( v.2 )</i>
         <b>\o/</b>
+
+        <p>Api at: <a href="api.nfler.se/arguments">api.nfler.se</a></p>
+
       </header>
     </div>
   );
