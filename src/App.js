@@ -9,7 +9,7 @@ function App() {
         <i>Fat redesign ( v.2 )</i>
         <b>\o/</b>
 
-        <p>Api at: <a href="api.nfler.se/arguments">api.nfler.se</a></p>
+        <b>:)</b>  <i>:/</i>
 
       </header>
     </div>
