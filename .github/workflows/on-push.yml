@@ -30,7 +30,9 @@ jobs:
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
-        script: /opt/irish-coffee/deploy.sh
+        script: |
+          cd /opt/irish-coffee
+          ./deploy.sh
         host:  ${{secrets.HOST}}
         username: root
         key: ${{secrets.PRIVATE_KEY}}
