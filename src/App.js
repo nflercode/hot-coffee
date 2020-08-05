@@ -6,11 +6,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>nfler - arguing is healthy</h1>
-        <i>Fat redesign ( v.2 )</i>
-        <b>\o/</b>
-
-        <b>:)</b>  <i>:/</i>
-
+        <h2>Some new info</h2>
+        <p>Interesting ...</p>
       </header>
     </div>
   );
