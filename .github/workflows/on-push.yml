@@ -32,8 +32,9 @@ jobs:
       with:
         script: |
           cd /opt/irish-coffee
-          ./deploy.sh
-        host:  ${{secrets.HOST}}
-        username: root
-        key: ${{secrets.PRIVATE_KEY}}
+          sudo ./deploy.sh
+        host:  ${{secrets.DEPLOY_HOST}}
+        username: ${{secrets.DEPLOY_USERNAME}}
+        key: ${{secrets.DEPLOY_SSH_KEY}}
+        passphrase: ${{secrets.DEPLOY_SSH_PASSPHRASE}}
         port: 22
