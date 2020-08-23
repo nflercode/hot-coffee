@@ -32,7 +32,7 @@ jobs:
       with:
         script: |
           cd /opt/irish-coffee
-          sudo ./deploy.sh
+          sudo ./deploy-single-service.sh hot-coffee
         host:  ${{secrets.DEPLOY_HOST}}
         username: ${{secrets.DEPLOY_USERNAME}}
         key: ${{secrets.DEPLOY_SSH_KEY}}
