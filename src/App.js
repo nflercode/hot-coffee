@@ -7,11 +7,9 @@ import {
 } from "react-router-dom";
 
 function App() {
-  fetch('https://api.nfler.se/arguments').then(data => data.json(), (err) => console.error(err)).then(a => console.log(JSON.stringify(a)));
-  fetch('https://api.nfler.se/fun').then(data => data.json(), (err) => console.error(err)).then(a => console.log(JSON.stringify(a)));
   return (
     <div>
-      <h1>NFLER</h1>
+      <h1>NFLER - v2?</h1>
       <Router>
         <div>
           <span>
