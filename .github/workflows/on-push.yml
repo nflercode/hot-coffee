@@ -27,4 +27,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CDN_NFLER_SECRET_KEY }}
         AWS_S3_ENDPOINT: 'https://ams3.digitaloceanspaces.com'  
         SOURCE_DIR: 'build'
-        DEST_DIR: 'static'
+        DEST_DIR: 'prod'
