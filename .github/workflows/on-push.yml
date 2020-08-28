@@ -25,5 +25,7 @@ jobs:
         AWS_S3_BUCKET: 'nfler'
         AWS_ACCESS_KEY_ID: ${{ secrets.CDN_NFLER_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CDN_NFLER_SECRET_KEY }}
-        AWS_REGION: 'AMS3'   # optional: defaults to us-east-1
-        SOURCE_DIR: 'build'      # optional: defaults to entire repository
+        AWS_REGION: 'ams3'
+        SOURCE_DIR: 'build'
+        AWS_S3_ENDPOINT: digitaloceanspaces.com
+        DEST_DIR: 'static'
