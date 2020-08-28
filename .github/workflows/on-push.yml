@@ -6,35 +6,21 @@ on:
 
 jobs:
 
-  build-push-deploy:
+  build-deploy:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: |
-        echo 'Building docker image'
-        docker build . --file Dockerfile --tag nfler/hot-coffee:latest
-    - name: Login to dockerhub
-      env:
-        DOCKER_LOGIN: ${{secrets.DOCKER_LOGIN}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: |
-        echo 'Logging in to dockerhub'
-        docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
-    - name: Push to registry
-      run: |
-        echo 'Pushing to registry (dockerhub)'
-        docker push nfler/hot-coffee:latest
-    - name: Deploy to server
-      uses: appleboy/ssh-action@master
+    - name: run build
+      run: npm run build
+
+    - uses: jakejarvis/s3-sync-action@master
       with:
-        script: |
-          cd /opt/irish-coffee
-          sudo ./deploy-single-service.sh hot-coffee
-        host:  ${{secrets.DEPLOY_HOST}}
-        username: ${{secrets.DEPLOY_USERNAME}}
-        key: ${{secrets.DEPLOY_SSH_KEY}}
-        passphrase: ${{secrets.DEPLOY_SSH_PASSPHRASE}}
-        port: 22
+        args: --acl public-read --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: 'nfler'
+        AWS_ACCESS_KEY_ID: ${{ secrets.CDN_NFLER_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.CDN_NFLER_SECRET_KEY }}
+        AWS_REGION: 'AMS3'   # optional: defaults to us-east-1
+        SOURCE_DIR: 'build'      # optional: defaults to entire repository
