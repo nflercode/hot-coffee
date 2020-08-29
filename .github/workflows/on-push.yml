@@ -18,13 +18,12 @@ jobs:
         npm install
         npm run build
 
-    - uses: actions/checkout@v2
     - name: Scp files
-      uses: appleboy/scp-action@master
+    - uses: appleboy/scp-action@master
       with:
         host:  ${{secrets.DEPLOY_HOST}}
         username: ${{secrets.DEPLOY_USERNAME}}
         key: ${{secrets.DEPLOY_SSH_KEY}}
         passphrase: ${{secrets.DEPLOY_SSH_PASSPHRASE}}
-        source: "./build/*"
+        source: "build/*"
         target: "/opt/irish-coffee/nginx/nfler/www"
