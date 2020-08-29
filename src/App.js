@@ -32,18 +32,19 @@ function App() {
               Registrera dig
             </Link>
           </span>
+
           <Switch>
-            <Route path="/create-argument">
-              <CreateArgument />
+            <Route exact path="/">
+              <Home />
             </Route>
-            <Route path="/log-in">
+            <Route exact path="/log-in">
               <Login />
             </Route>
-            <Route path="/register">
+            <Route exact path="/register">
               <Register />
             </Route>
-            <Route path="/">
-              <Home />
+            <Route exact path="/create-argument">
+              <CreateArgument />
             </Route>
             <Route>
               <RouteNotFound />
