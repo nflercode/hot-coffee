@@ -9,7 +9,7 @@ import {
 function App() {
   return (
     <div>
-      <h1>NFLER - v3? The superior version. Good things is happening</h1>
+      <h1>NFLER (not Netflix)</h1>
       <Router>
         <div>
           <span>
@@ -45,6 +45,9 @@ function App() {
             <Route path="/">
               <Home />
             </Route>
+            <Route>
+              <RouteNotFound />
+            </Route>
           </Switch>
         </div>
       </Router>
@@ -73,6 +76,12 @@ function Login() {
 function Register() {
   return (
     <h2>Registrera dig ..</h2>
+  );
+}
+
+function RouteNotFound() {
+  return (
+    <h2>404 - Nu vet jag inte vad du letar efter</h2>
   );
 }
 
