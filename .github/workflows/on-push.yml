@@ -28,3 +28,4 @@ jobs:
         source: "build/*"
         rm: true
         target: "/opt/irish-coffee/nginx/nfler/www"
+        strip_components: 1
