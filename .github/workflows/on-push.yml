@@ -19,7 +19,7 @@ jobs:
         npm run build
 
     - name: Scp files
-    - uses: appleboy/scp-action@master
+      uses: appleboy/scp-action@master
       with:
         host:  ${{secrets.DEPLOY_HOST}}
         username: ${{secrets.DEPLOY_USERNAME}}
