@@ -9,7 +9,7 @@ import {
 function App() {
   return (
     <div>
-      <h1>NFLER - v2?</h1>
+      <h1>NFLER - v2? The superior version</h1>
       <Router>
         <div>
           <span>
