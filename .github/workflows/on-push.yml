@@ -26,5 +26,6 @@ jobs:
         key: ${{secrets.DEPLOY_SSH_KEY}}
         passphrase: ${{secrets.DEPLOY_SSH_PASSPHRASE}}
         source: "build/*"
-        target: "/opt/irish-coffee/nginx/nfler/www"
+        target: "/opt/irish-coffee/nginx/nfler/www/nfler.se"
+        rm: true
         strip_components: 1
