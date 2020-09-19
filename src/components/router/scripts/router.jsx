@@ -64,12 +64,6 @@ export default function Router() {
         );
     }
 
-    function RouteNotFound() {
-        return (
-            <h2>404 - Nu vet jag inte vad du letar efter</h2>
-        );
-    }
-
     return (
         <div className="main">
             <BrowserRouter>
