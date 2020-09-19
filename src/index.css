@@ -14,3 +14,8 @@ h1 {
 span {
   margin: 25px;
 }
+
+.navigation {
+  display: inline-flex;
+  flex-direction: row;
+}
