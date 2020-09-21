@@ -1,8 +1,11 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import "../styles/router.css";
+import Navigation from  "../../navigation/scripts/navigation.jsx"
 
 //Use React.Lazy to load pages, components can be imported as usual
 const HomePage = lazy(() => import("../../../pages/home/scripts/home.jsx"));
+const NotFound = lazy(() => import("../../../pages/not-found/scripts/not-found.jsx"));
 
 export default function Router() {
     const [selected, setSelected] = useState(undefined);
@@ -40,12 +43,6 @@ export default function Router() {
         isActive: selected === "/registera"
     }];
 
-    function RouteNotFound() {
-        return (
-            <h2>404 - Nu vet jag inte vad du letar efter</h2>
-        );
-    }
-
     function CreateArgument() {
         return (
             <h2>Skapa ett argument ..</h2>
@@ -67,7 +64,7 @@ export default function Router() {
     return (
         <div className="main">
             <BrowserRouter>
-                <div className="navigation">
+                <Navigation>
                     <Link
                         onClick={() => {
                             onItemClick("/");
@@ -75,7 +72,9 @@ export default function Router() {
                         to={"/"}
                         key={"/"}
                     >
-                        Nfler
+                        <h1 className="fc-blue">
+                            Nfler
+                        </h1>
                     </Link>
                     {routes.map((route) => (
                         <Link onClick={() => {
@@ -88,16 +87,18 @@ export default function Router() {
                         </Link>
                     )
                     )}
+                </Navigation>
+                <div className="content-area">    
+                    <Suspense fallback={<div>Laddar..</div>}>
+                        <Switch>
+                            <Route path="/" exact component={HomePage} />
+                            <Route path="/skapa-argument" exact component={CreateArgument} />
+                            <Route path="/logga-in" exact component={Login} />
+                            <Route path="/registera" exact component={Register} />
+                            <Route component={NotFound} />
+                        </Switch>
+                    </Suspense>
                 </div>
-                <Suspense fallback={<div>Laddar..</div>}>
-                    <Switch>
-                        <Route path="/" exact component={HomePage} />
-                        <Route path="/skapa-argument" exact component={CreateArgument} />
-                        <Route path="/logga-in" exact component={Login} />
-                        <Route path="/registera" exact component={Register} />
-                        <Route component={RouteNotFound} />
-                    </Switch>
-                </Suspense>
             </BrowserRouter>
         </div>
     )
