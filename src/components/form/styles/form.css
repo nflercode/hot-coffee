@@ -1,0 +1,16 @@
+@supports(-webkit-appearance: none) or (-moz-appearance: none) {
+    input[type='checkbox'],
+    input[type='radio'] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+}
+
+input, input:focus, textarea:focus, select:focus{
+    outline: none;
+    background-color: white;
+}
+
+.input.errored {
+    border-color: red red;
+}
