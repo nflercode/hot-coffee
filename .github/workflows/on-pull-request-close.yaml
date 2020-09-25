@@ -11,7 +11,7 @@ jobs:
   clean-pr-env:
     runs-on: ubuntu-latest
     steps:
-      - name: Set permission and redeploy
+      - name: Removing pr env
         uses: appleboy/ssh-action@master
         with:
           script: |
