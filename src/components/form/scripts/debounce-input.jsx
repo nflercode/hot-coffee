@@ -4,6 +4,7 @@ import "../styles/form.css";
 export default function DebounceInput({type, onValidate}) {
     const [inputText, setInputText] = useState('');
     const [isErrored, setIsErrored] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [isTimeouted, setIsTimeouted] = useState(false);
     
     useEffect(() => {
