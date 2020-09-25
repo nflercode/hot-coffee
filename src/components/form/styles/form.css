@@ -7,10 +7,12 @@
 }
 
 input, input:focus, textarea:focus, select:focus{
-    outline: none;
     background-color: white;
+    color: black;
 }
 
-.input.errored {
+.input.errored, .input.errored:focus, .input.errored:checked {
     border-color: red red;
+    border-style: solid;
+    outline: red;
 }
