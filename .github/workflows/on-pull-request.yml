@@ -17,3 +17,15 @@ jobs:
       - run: |
           npm install
           npm run build
+
+      - name: Scp files to PR
+        uses: appleboy/scp-action@master
+        with:
+          host:  ${{secrets.DEPLOY_HOST}}
+          username: ${{secrets.DEPLOY_USERNAME}}
+          key: ${{secrets.DEPLOY_SSH_KEY}}
+          passphrase: ${{secrets.DEPLOY_SSH_PASSPHRASE}}
+          source: "build/*"
+          target: /opt/irish-coffee/nginx/nfler/www/pr-${{github.event.number}}
+          rm: true
+          strip_components: 1
