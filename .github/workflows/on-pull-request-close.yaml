@@ -1,0 +1,24 @@
+# This is a basic workflow that is manually triggered
+
+name: Close PR env
+
+on:
+  pull_request:
+    types: [closed]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  clean-pr-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set permission and redeploy
+        uses: appleboy/ssh-action@master
+        with:
+          script: |
+            cd /opt/irish-coffee/nginx/nfler/www
+            rm -rf pr-${{github.event.number}}
+          host:  ${{secrets.DEPLOY_HOST}}
+          username: ${{secrets.DEPLOY_USERNAME}}
+          key: ${{secrets.DEPLOY_SSH_KEY}}
+          passphrase: ${{secrets.DEPLOY_SSH_PASSPHRASE}}
+          port: 22
