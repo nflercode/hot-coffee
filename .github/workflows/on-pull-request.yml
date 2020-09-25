@@ -33,5 +33,5 @@ jobs:
       - uses: mshick/add-pr-comment@v1
         with:
           message: |
-            Created preview for hot-coffee at: https://pr-{{github.event.number}}.nfler.se
+            Created preview for hot-coffee at: https://pr-${{github.event.number}}.nfler.se
           repo-token: ${{ secrets.GITHUB_TOKEN }}
