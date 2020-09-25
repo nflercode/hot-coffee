@@ -29,3 +29,9 @@ jobs:
           target: /opt/irish-coffee/nginx/nfler/www/pr-${{github.event.number}}
           rm: true
           strip_components: 1
+          
+      - uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            Created preview for hot-coffee at: https://pr-{{github.event.number}}.nfler.se
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
