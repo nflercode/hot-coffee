@@ -2,10 +2,13 @@ import React, { useState, useEffect, Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import "../styles/router.css";
 import Navigation from  "../../navigation/scripts/navigation.jsx"
+import NavigationItem from  "../../navigation/scripts/nav-item.jsx";
 
 //Use React.Lazy to load pages, components can be imported as usual
 const HomePage = lazy(() => import("../../../pages/home/scripts/home.jsx"));
 const NotFound = lazy(() => import("../../../pages/not-found/scripts/not-found.jsx"));
+const LoginPage = lazy(() => import("../../../pages/loginregister/scripts/login-page.jsx"));
+const RegisterPage = lazy(() => import("../../../pages/loginregister/scripts/register-page.jsx"));
 
 export default function Router() {
     const [selected, setSelected] = useState(undefined);
@@ -18,18 +21,7 @@ export default function Router() {
         setSelected(window.location.pathname);
     }, []);
 
-    const routes = [{
-        content: "Hem",
-        type: "button",
-        linkTo: "/",
-        isActive: selected === "/"
-    },
-    {
-        content: "Skapa argument",
-        type: "button",
-        linkTo: "/skapa-argument",
-        isActive: selected === "/skapa-argument"
-    },
+    const routes = [
     {
         content: "Logga in",
         type: "button",
@@ -49,18 +41,6 @@ export default function Router() {
         );
     }
 
-    function Login() {
-        return (
-            <h2>Logga in ..</h2>
-        );
-    }
-
-    function Register() {
-        return (
-            <h2>Registrera dig ..</h2>
-        );
-    }
-
     return (
         <div className="main">
             <BrowserRouter>
@@ -72,9 +52,11 @@ export default function Router() {
                         to={"/"}
                         key={"/"}
                     >
+                        <NavigationItem logo>
                         <h1 className="fc-blue">
                             Nfler
                         </h1>
+                        </NavigationItem>
                     </Link>
                     {routes.map((route) => (
                         <Link onClick={() => {
@@ -83,7 +65,9 @@ export default function Router() {
                             to={route.linkTo}
                             key={route.linkTo}
                         >
-                            {route.content}
+                            <NavigationItem isActive={route.isActive}>
+                                {route.content}
+                            </NavigationItem>
                         </Link>
                     )
                     )}
@@ -93,8 +77,8 @@ export default function Router() {
                         <Switch>
                             <Route path="/" exact component={HomePage} />
                             <Route path="/skapa-argument" exact component={CreateArgument} />
-                            <Route path="/logga-in" exact component={Login} />
-                            <Route path="/registera" exact component={Register} />
+                            <Route path="/logga-in" exact component={LoginPage} />
+                            <Route path="/registera" exact component={RegisterPage} />
                             <Route component={NotFound} />
                         </Switch>
                     </Suspense>
