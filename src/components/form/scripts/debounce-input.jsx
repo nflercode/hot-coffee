@@ -1,38 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "../styles/form.css";
 
-export default function DebounceInput({type, onValidate}) {
+export default function DebounceInput({ type, onValidate }) {
     const [inputText, setInputText] = useState('');
     const [isErrored, setIsErrored] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [isTimeouted, setIsTimeouted] = useState(false);
-    
+
     useEffect(() => {
         InputResults(inputText);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputText])
 
     const debouncedInputFunction = () => {
-        if(!isTimeouted) {
-            console.log("basd");
+        if (!isTimeouted) {
             //setIsTimeouted(true);
             setIsErrored(!onValidate(inputText));
             //TODO: Fix the debounce timeout
         }
     };
 
-    const InputResults = () => { 
+    const InputResults = () => {
         if (inputText.length === 0) {
             return [];
-          } else {
+        } else {
             return debouncedInputFunction(inputText);
-          } 
-        };
-    
-    if(!type || !onValidate) {
+        }
+    };
+
+    if (!type || !onValidate) {
         console.log(new Error("Missing prop in DebounceInput"));
         return null;
     }
 
-    return <div><input className={`input ${isErrored ? 'errored' : ''}`} type={type} onChange={(e) => setInputText(e.target.value)}/></div>
+    return <div><input className={`input ${isErrored ? 'errored' : ''}`} type={type} onChange={(e) => setInputText(e.target.value)} /></div>
 }
