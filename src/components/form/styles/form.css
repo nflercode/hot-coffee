@@ -9,6 +9,9 @@
 input, input:focus, textarea:focus, select:focus{
     background-color: white;
     color: black;
+    font-size: 18px;
+    display: block;
+    padding: 5px 8px;
 }
 
 .input.errored, .input.errored:focus, .input.errored:checked {

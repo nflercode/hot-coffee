@@ -33,5 +33,5 @@ export default function DebounceInput({ type, onValidate }) {
         return null;
     }
 
-    return <div><input className={`input ${isErrored ? 'errored' : ''}`} type={type} onChange={(e) => setInputText(e.target.value)} /></div>
+    return <input className={`input ${isErrored ? 'errored' : ''}`} type={type} onChange={(e) => setInputText(e.target.value)} />
 }
