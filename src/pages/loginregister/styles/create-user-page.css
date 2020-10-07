@@ -1,0 +1,12 @@
+.create-user-wrapper input {
+    margin-bottom: 15px;
+}
+
+.create-user-wrapper span {
+    margin: 0;
+    display: block;
+}
+
+.create-user-wrapper-inner {
+    margin-top: 8px;
+}

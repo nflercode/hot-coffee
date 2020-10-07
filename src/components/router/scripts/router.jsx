@@ -7,8 +7,8 @@ import NavigationItem from  "../../navigation/scripts/nav-item.jsx";
 //Use React.Lazy to load pages, components can be imported as usual
 const HomePage = lazy(() => import("../../../pages/home/scripts/home.jsx"));
 const NotFound = lazy(() => import("../../../pages/not-found/scripts/not-found.jsx"));
-const LoginPage = lazy(() => import("../../../pages/loginregister/scripts/login-page.jsx"));
-const RegisterPage = lazy(() => import("../../../pages/loginregister/scripts/register-page.jsx"));
+const LoginPage = lazy(() => import("../../../pages/loginregister/containers/login-user.js"));
+const RegisterPage = lazy(() => import("../../../pages/loginregister/containers/create-user.js"));
 
 export default function Router() {
     const [selected, setSelected] = useState(undefined);
@@ -29,10 +29,10 @@ export default function Router() {
         isActive: selected === "/logga-in"
     },
     {
-        content: "register",
+        content: "Registrera",
         type: "button",
-        linkTo: "/registera",
-        isActive: selected === "/registera"
+        linkTo: "/registrera",
+        isActive: selected === "/registrera"
     }];
 
     function CreateArgument() {
@@ -78,7 +78,7 @@ export default function Router() {
                             <Route path="/" exact component={HomePage} />
                             <Route path="/skapa-argument" exact component={CreateArgument} />
                             <Route path="/logga-in" exact component={LoginPage} />
-                            <Route path="/registera" exact component={RegisterPage} />
+                            <Route path="/registrera" exact component={RegisterPage} />
                             <Route component={NotFound} />
                         </Switch>
                     </Suspense>

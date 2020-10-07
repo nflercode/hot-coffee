@@ -12,6 +12,7 @@ input, input:focus, textarea:focus, select:focus{
     font-size: 18px;
     display: block;
     padding: 5px 8px;
+    border-radius: 4px;
 }
 
 .input.errored, .input.errored:focus, .input.errored:checked {
