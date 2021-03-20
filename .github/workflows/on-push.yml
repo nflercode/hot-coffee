@@ -19,9 +19,15 @@ jobs:
         fetch-depth: 0                # fetch the whole repo history
         
     - name: Git Version
-      uses: PaulHatch/semantic-version@v3.1.2
+      uses: codacy/git-version@2.4.0
       with:
-        tag_prefix: abc
+        prefix: abc
+    
+    - name: This is the version
+      run: echo $VERSION
+      
+    - name: Testing to print branch name
+      run: echo ${{ github.event.pull_request.head.ref }} +  ${{ github.head_ref }}
       
       
     #- name: Set up QEMU
