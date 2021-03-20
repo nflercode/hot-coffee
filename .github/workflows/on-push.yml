@@ -20,6 +20,9 @@ jobs:
         
     - name: Git Version
       uses: codacy/git-version@2.2.0
+      with:
+        prefix: ${{ GITHUB_REF#refs/heads/ }}
+      
       
     #- name: Set up QEMU
     #  uses: docker/setup-qemu-action@v1
