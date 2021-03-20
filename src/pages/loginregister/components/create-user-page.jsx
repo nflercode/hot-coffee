@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import DebounceInput from "../../../components/form/scripts/debounce-input";
-import {validatePassword, validateEmail} from "../../../components/form/scripts/validations.js";
+import { validatePassword, validateEmail } from "../../../components/form/scripts/validations.js";
 import "../styles/create-user-page.css";
 
 export default function CreateUserpage({ onCreateUser, loading, success }) {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [hasRequestedCreateUser, setHasRequestedCreatedUser] = useState(false);
 
     const handleOnClick = () => {
         setHasRequestedCreatedUser(true);
-        onCreateUser(username, password);
+        onCreateUser(email, password);
     }
 
     return (
         <div className="create-user-wrapper">
-            <span>Registrera dig här om du vill {hasRequestedCreateUser && (success ? <div>Du är registrerad!</div> : <div>Registreringen misslyckades!</div>)}</span>
+            <span>Registrera dig här om du vill</span>
                 <div className="create-user-wrapper-inner">
                 <label>Email</label>
-                <DebounceInput onValidate={validateEmail} onChange={setUsername} type="email" />
+                <DebounceInput onValidate={validateEmail} onChange={setEmail} type="email" />
                 <label>Lösenord</label>
                 <DebounceInput onValidate={validatePassword} onChange={setPassword} type="password" />
                 <label>Repetera lösenord</label>
@@ -32,6 +32,6 @@ export default function CreateUserpage({ onCreateUser, loading, success }) {
 
 CreateUserpage.propTypes = {
     onCreateUser: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    success: PropTypes.bool.isRequired
+    loading: PropTypes.bool,
+    success: PropTypes.bool
 }

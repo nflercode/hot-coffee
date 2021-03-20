@@ -4,22 +4,23 @@ const loginUserInit = () => ({
     type: 'LOGIN_USER_INIT'
 });
 
-const loginUserSuccess = () => ({
-    type: 'LOGIN_USER_SUCCESS'
+const loginUserSuccess = (user) => ({
+    type: 'LOGIN_USER_SUCCESS',
+    user
 });
 
 const loginUserFailure = () => ({
     type: 'LOGIN_USER_FAILURE'
 });
 
-export const loginUserAction = (username, password) => async (dispatch) => {
+export const loginUserAction = (email, password) => async (dispatch) => {
     dispatch(loginUserInit());
 
     try {
-        const response = await loginUser(username, password);
+        const user = await loginUser(email, password);
 
-        if (response.status === 200)
-            dispatch(loginUserSuccess());
+        if (user)
+            dispatch(loginUserSuccess(user));
         else
             dispatch(loginUserFailure());
     } catch (err) {

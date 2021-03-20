@@ -12,13 +12,13 @@ const createUserFailure = () => ({
     type: 'CREATE_USER_FAILURE'
 });
 
-export const createUserAction = (username, password) => async (dispatch) => {
+export const createUserAction = (email, password) => async (dispatch) => {
     dispatch(createUserInit());
 
     try {
-        const response = await createUser(username, password);
+        const response = await createUser(email, password);
 
-        if (response.status === 200)
+        if (response)
             dispatch(createUserSuccess());
         else
             dispatch(createUserFailure());
