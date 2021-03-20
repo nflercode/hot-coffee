@@ -21,13 +21,7 @@ jobs:
     - name: Git Version
       uses: codacy/git-version@2.4.0
       with:
-        prefix: abc
-    
-    - name: This is the version
-      run: echo "${VERSION}"
-      
-    - name: Testing to print branch name
-      run: echo "${github.event.pull_request.head.ref} +  ${github.head_ref}"
+        prefix: ${{ github.base_ref }}
       
       
     #- name: Set up QEMU
