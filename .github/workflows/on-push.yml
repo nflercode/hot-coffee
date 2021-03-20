@@ -24,10 +24,10 @@ jobs:
         prefix: abc
     
     - name: This is the version
-      run: echo $VERSION
+      run: echo "${VERSION}"
       
     - name: Testing to print branch name
-      run: echo ${{ github.event.pull_request.head.ref }} +  ${{ github.head_ref }}
+      run: echo "${github.event.pull_request.head.ref} +  ${github.head_ref}"
       
       
     #- name: Set up QEMU
