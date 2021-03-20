@@ -19,9 +19,9 @@ jobs:
         fetch-depth: 0                # fetch the whole repo history
         
     - name: Git Version
-      uses: codacy/git-version@2.4.0
+      uses: PaulHatch/semantic-version@v3.1.2
       with:
-        prefix: ${{ github.head_ref }}
+        tag_prefix: ${{ github.head_ref }}
       
       
     #- name: Set up QEMU
