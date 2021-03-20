@@ -21,7 +21,7 @@ jobs:
     - name: Git Version
       uses: PaulHatch/semantic-version@v3.1.2
       with:
-        tag_prefix: ${{ github.head_ref }}
+        tag_prefix: abc
       
       
     #- name: Set up QEMU
