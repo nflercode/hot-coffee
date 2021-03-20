@@ -1,0 +1,23 @@
+version: '3.2'
+
+services:
+    letsencrypt:
+        image: hot-coffee-local
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Europe/Stockholm
+            - URL=nfler.se
+            - SUBDOMAINS=wildcard
+            - VALIDATION=dns
+            - DNSPLUGIN=digitalocean
+            - EMAIL=isaacpieber96@gmail.com
+        volumes:
+            #should be:
+            - C:/Users/isaac/projects/hot-coffee:/config/www
+            #- /opt/irish-coffee/nginx/nfler/dns-conf:/config/dns-conf
+            #- /opt/irish-coffee/nginx/nfler/letsencrypt:/config/etc/letsencrypt
+            #- /opt/irish-coffee/nginx/nfler/config:/config/nginx/site-confs
+        ports:
+            - 443:443
+            - 80:80

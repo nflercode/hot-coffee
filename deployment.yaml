@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hot-coffee-svc
+spec:
+  selector:
+    app: hot-coffee
+  ports:
+  - port: 80
+    targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hot-coffee-deployment
+  labels:
+    app: hot-coffee
+spec:
+  replicas: 1
+  selector: 
+   matchLabels:
+     app: hot-coffee
+  template:
+    metadata:
+      labels:
+        app: hot-coffee
+    spec:
+      containers:
+        - name: hot-coffee
+          image: nfler/hot-coffee:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hot-coffee-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+      - nfler.se
+      secretName: nfler-tls
+  rules:
+    - host: nfler.se
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hot-coffee-svc
+                port:
+                  number: 80
