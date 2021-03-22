@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styles/form.css";
+import PropTypes from 'prop-types';
 
-export default function DebounceInput({ type, onValidate }) {
+export default function DebounceInput({ type, onValidate, onChange }) {
     const [inputText, setInputText] = useState('');
     const [isErrored, setIsErrored] = useState(false);
     // eslint-disable-next-line no-unused-vars
@@ -33,5 +34,20 @@ export default function DebounceInput({ type, onValidate }) {
         return null;
     }
 
-    return <div><input className={`input ${isErrored ? 'errored' : ''}`} type={type} onChange={(e) => setInputText(e.target.value)} /></div>
+    const handleOnChange = (value) => {
+        onChange(value);
+        setInputText(value);
+    }
+
+    return <input className={`input ${isErrored ? 'errored' : ''}`} type={type} onChange={(e) => handleOnChange(e.target.value)} />
 }
+
+DebounceInput.propTypes = {
+    type: PropTypes.string.isRequired, // could be anyOf...
+    onValidate: PropTypes.func.isRequired,
+    onChange: PropTypes.func
+};
+
+DebounceInput.defaultProps = {
+    onChange: () => {}
+};
