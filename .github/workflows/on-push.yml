@@ -11,14 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Build and push
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: nfler/hot-coffee
-        registry: docker.io
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - uses: actions/checkout@v2
+        name: Check out code
 
-    - name: Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Build and push
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+         image: nfler/hot-coffee
+         registry: docker.io
+         username: ${{ secrets.DOCKERHUB_USERNAME }}
+         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
       
