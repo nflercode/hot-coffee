@@ -24,5 +24,15 @@ jobs:
          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Echo image tag
-        run: echo ${{ steps.build-and-push.outputs.imageName }}
+        run: echo ${{ steps.build-and-push.outputs.imageName }}:${{ steps.build-and-push.outputs.tags }}
+        
+      - name: Set up kubectl
+        uses: matootie/dokube@v1.3.3
+        with:
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN_K8S }}
+          clusterName: k8s-nfler-dev
+
+      - name: Get nodes
+        run: kubectl get nodes
+      
       
