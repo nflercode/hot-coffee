@@ -33,6 +33,6 @@ jobs:
           clusterName: k8s-nfler-dev
 
       - name: Get nodes
-        run: kubectl get nodes
-      
+        run: kubectl set image deployment/hot-coffee-deployment hot-coffee=${{ steps.build-and-push.outputs.imageName }}:${{ steps.build-and-push.outputs.tags }} --record
+
       
