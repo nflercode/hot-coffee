@@ -16,12 +16,13 @@ jobs:
 
       - name: Build and push
         uses: mr-smithers-excellent/docker-build-push@v5
+        id: build-and-push
         with:
          image: nfler/hot-coffee
          registry: docker.io
          username: ${{ secrets.DOCKERHUB_USERNAME }}
          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Echo image tag
+        run: echo ${{ steps.build-and-push.outputs.imageName }}
       
