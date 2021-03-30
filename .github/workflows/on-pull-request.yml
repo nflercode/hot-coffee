@@ -43,6 +43,6 @@ jobs:
       - uses: azure/setup-helm@v1
 
       - name: Deploy with helm
-        run: helm upgrade --set image.tag=${{ steps.meta.outputs.version }} --set ingress.host=pr-${{ github.event.number }}.nfler.se hot-coffee-pr-${{ github.event.number }}- ./hot-coffee-chart -i --create-namespace -n hot-coffee-pr-${{ github.event.number }}
+        run: helm upgrade --set image.tag=${{ steps.meta.outputs.version }} --set ingress.host=pr-${{ github.event.number }}.nfler.se hot-coffee-pr-${{ github.event.number }} ./hot-coffee-chart -i --create-namespace -n hot-coffee-pr-${{ github.event.number }}
 
 
