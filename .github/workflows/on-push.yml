@@ -38,6 +38,6 @@ jobs:
       #  run: kubectl set image deployment/hot-coffee-deployment hot-coffee=${{ steps.build-and-push.outputs.imageName }}:${{ steps.build-and-push.outputs.tags }} --record
       
       - name: Deploy with helm
-        run: helm upgrade --set image.tag=${{ steps.build-and-push.outputs.tags }} ./hot-coffee-chart
+        run: helm upgrade --set image.tag=${{ steps.build-and-push.outputs.tags }} hot-coffee ./hot-coffee-chart
 
       
