@@ -31,8 +31,13 @@ jobs:
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN_K8S }}
           clusterName: k8s-nfler-dev
+      
+      - uses: azure/setup-helm@v1
 
-      - name: Get nodes
-        run: kubectl set image deployment/hot-coffee-deployment hot-coffee=${{ steps.build-and-push.outputs.imageName }}:${{ steps.build-and-push.outputs.tags }} --record
+      #- name: Get nodes
+      #  run: kubectl set image deployment/hot-coffee-deployment hot-coffee=${{ steps.build-and-push.outputs.imageName }}:${{ steps.build-and-push.outputs.tags }} --record
+      
+      - name: Deploy with helm
+        run: helm upgrade --set image.tag=${{ steps.build-and-push.outputs.tags }} ./hot-coffee-chart
 
       
