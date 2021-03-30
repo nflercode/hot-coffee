@@ -28,20 +28,21 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Echo image tag
-        run: echo Tags ${{ steps.meta.outputs.tags }} Version ${{ steps.meta.outputs.version }}
+        run: echo Tags ${{ steps.meta.outputs.tags }} Version ${{ steps.meta.outputs.version }} ${{ github.event.number }}
         
-      #- name: Set up kubectl
-      #  uses: matootie/dokube@v1.3.4
-      #  with:
-      #    personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN_K8S }}
-      #    clusterName: k8s-nfler-dev
+      - name: Set up kubectl
+        uses: matootie/dokube@v1.3.4
+        with:
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN_K8S }}
+          clusterName: k8s-nfler-dev
       
-     # - uses: azure/setup-helm@v1
+      - uses: azure/setup-helm@v1
 
-     # - name: Deploy with helm
-     #   run: helm upgrade --set image.tag=${{  steps.meta.outputs.tags }} --set ingress.host=pr-${{ github.event.number }}.nfler.se hot-coffee-pr-${{ github.event.number }}- ./hot-coffee-chart -i --create-namespace -n hot-coffee-pr-${{ github.event.number }}
+      - name: Deploy with helm
+        run: helm upgrade --set image.tag=${{ steps.meta.outputs.version }} --set ingress.host=pr-${{ github.event.number }}.nfler.se hot-coffee-pr-${{ github.event.number }}- ./hot-coffee-chart -i --create-namespace -n hot-coffee-pr-${{ github.event.number }}
 
 
