@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hot-coffee-deployment
+  labels:
+    app: hot-coffee
+spec:
+  replicas: 1
+  selector: 
+   matchLabels:
+     app: hot-coffee
+  template:
+    metadata:
+      labels:
+        app: hot-coffee
+    spec:
+      containers:
+        - name: hot-coffee
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5000
