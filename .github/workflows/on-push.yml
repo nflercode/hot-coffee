@@ -13,8 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Check out code
-        with:
-          fetch-depth: 0
 
       - name: Build and push
         uses: mr-smithers-excellent/docker-build-push@v5
@@ -40,6 +38,6 @@ jobs:
       #  run: kubectl set image deployment/hot-coffee-deployment hot-coffee=${{ steps.build-and-push.outputs.imageName }}:${{ steps.build-and-push.outputs.tags }} --record
       
       - name: Deploy with helm
-        run: helm upgrade --set image.tag=${{ steps.build-and-push.outputs.tags }} hot-coffee ./hot-coffee-chart -i
+        run: helm upgrade --set image.tag=${{ steps.build-and-push.outputs.tags }} hot-coffee-prod ./hot-coffee-chart -i --create-namespace -n hot-coffee-prod
 
       
