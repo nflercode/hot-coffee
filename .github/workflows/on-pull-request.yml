@@ -31,7 +31,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Echo image tag
-        run: echo nfler/hot-coffee:${{ steps.build-and-push.outputs.tags }}
+        run: echo nfler/hot-coffee:${{ steps.meta.outputs.tags }}
         
       - name: Set up kubectl
         uses: matootie/dokube@v1.3.4
@@ -42,6 +42,6 @@ jobs:
       - uses: azure/setup-helm@v1
 
       - name: Deploy with helm
-        run: helm upgrade --set image.tag=${{  steps.build-and-push.outputs.tags }} --set ingress.host=pr-${{ github.event.number }}.nfler.se hot-coffee-pr-${{ github.event.number }}- ./hot-coffee-chart -i --create-namespace -n hot-coffee-pr-${{ github.event.number }}
+        run: helm upgrade --set image.tag=${{  steps.meta.outputs.tagss }} --set ingress.host=pr-${{ github.event.number }}.nfler.se hot-coffee-pr-${{ github.event.number }}- ./hot-coffee-chart -i --create-namespace -n hot-coffee-pr-${{ github.event.number }}
 
 
