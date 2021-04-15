@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
     - hosts:
-      - {{ .Values.ingress.host }}
+      - {{ template "ingress.host" . }}
       secretName: nfler-tls
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: {{ template "ingress.host" . }}
       http:
         paths:
           - path: /

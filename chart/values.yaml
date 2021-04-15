@@ -1,6 +1,4 @@
-# Default values for hot-coffee-chart.
-
-replicaCount: 1
+pr: null
 
 image:
   repository: nfler/hot-coffee
@@ -9,6 +7,3 @@ image:
 
 service:
   port: 80
-
-ingress:
-  host: nfler.se
