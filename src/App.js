@@ -12,7 +12,7 @@ export default function App() {
       return;
 
     console.log('table', table);
-    const socket = io('https://api.pr-5.nfler.se', {
+    const socket = io('http://localhost:3000', {
       auth: {
         token: auth.authToken
       }
@@ -20,6 +20,10 @@ export default function App() {
 
     socket.on('connect', () => {
       console.log('connected');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('disconneted');
     });
 
     socket.on('player-added', (player) => {
@@ -36,9 +40,9 @@ export default function App() {
 
   function handleCreateTableButtonClick() {
     async function fetchData() {
-      const { data } = await axios.post('https://api.pr-5.nfler.se/poker/tables', { name: 'My first group'});
+      const { data } = await axios.post('http://localhost:3000/poker/tables', { name: 'My first group'});
 
-      setAuth({authToken: data.authToken, refreshToken: data.refreshToken});
+      setAuth({authToken: data.authToken.token, refreshToken: data.refreshToken.token});
       setTable(data.table);
     }
 
@@ -50,13 +54,32 @@ export default function App() {
       if (!tableInvitationToken)
         return;
 
-      const { data } = await axios.post(`https://api.pr-5.nfler.se/poker/tables/${tableInvitationToken}`);
+      const { data } = await axios.post(`http://localhost:3000/poker/tables/${tableInvitationToken}`);
 
-      setAuth({authToken: data.authToken, refreshToken: data.refreshToken});
+      setAuth({authToken: data.authToken.token, refreshToken: data.refreshToken.token});
+      console.log(data.refreshToken.token);
       setTable(data.table);
     }
 
     joinGroup();
+  }
+
+  function handleRefreshTokenClick() {
+    async function refreshToken() {
+      const { data } = await axios.post(`http://localhost:3000/auth/refresh-token`, { refreshToken: auth.refreshToken });
+      setAuth({ ...auth, authToken: data.authToken.token });
+      console.log('refreshed auth');
+    }
+
+    refreshToken();
+  }
+
+  function handleLeave() {
+    async function leave() {
+      await axios.delete(`http://localhost:3000/poker/players`, { headers: { Authorization: `bearer ${auth.authToken}` }});
+    }
+
+    leave();
   }
 
   const isObject = (obj) => typeof obj === 'object' && obj !== null;
@@ -68,6 +91,8 @@ export default function App() {
       <br/>
       <input type="text" onChange={(e) => setTableInvitationToken(e.target.value)} />
       <button onClick={handleTableInvitationTokenButtonClick}>Gå med i bord</button>
+      <button onClick={handleRefreshTokenClick}>Ladda om auth token</button>
+      <button onClick={handleLeave}>Lämna</button>
 
       {
         Object.keys((table || {})).map((key) => (<div>{isObject(table[key]) ? '' : table[key]}</div>))
