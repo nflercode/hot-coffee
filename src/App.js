@@ -9,7 +9,7 @@ export default function App() {
     <>
     <Provider store={store}>
       <StartPage />
-    </Provider>   
+    </Provider>
     </>
   );
 }

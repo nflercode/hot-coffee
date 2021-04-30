@@ -1,60 +1,61 @@
 env:
   APP_NAME: 'hot-coffee'
 
-# FILE GENERATED WITH: npx ghat nflercode/ghtemplates/templates
-# SOURCE: https://github.com/nflercode/ghtemplates
-
 name: PR-Env
+ 
 on:
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
         name: Checkout code
         with:
-          fetch-depth: 0
+         fetch-depth: 0
+         
       - name: Bump version and push tag
         id: bumpver
         uses: anothrNick/github-tag-action@1.26.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          
       - name: bumpver output
-        run: >-
-          echo ${{ steps.bumpver.outputs.new_tag }} ${{
-          steps.bumpver.outputs.tag }} ${{ steps.bumpver.outputs.part }}
+        run: echo ${{ steps.bumpver.outputs.new_tag }} ${{ steps.bumpver.outputs.tag }} ${{ steps.bumpver.outputs.part }}
+        
       - name: Docker meta
         id: meta
         uses: crazy-max/ghaction-docker-meta@v2
         with:
           images: nfler/${{ env.APP_NAME }}
-          tags: >
-            type=semver,pattern={{version}},value=${{
-            steps.bumpver.outputs.new_tag }}
+          tags: |
+           type=semver,pattern={{version}},value=${{ steps.bumpver.outputs.new_tag }}
+        
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: Build and push
+      -
+        name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+        
       - name: Set up kubectl
         uses: matootie/dokube@v1.3.4
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN_K8S }}
           clusterName: k8s-nfler-dev
+      
       - uses: azure/setup-helm@v1
+
       - name: Deploy with helm
-        run: >-
-          helm upgrade --set image.tag=${{ steps.meta.outputs.version }} --set
-          pr=${{ github.event.number }} ${{ env.APP_NAME }}-pr-${{
-          github.event.number }} ./chart -i --create-namespace -n ${{
-          env.APP_NAME }}-pr-${{ github.event.number }}
+        run: helm upgrade --set environment=prenv --set image.tag=${{ steps.meta.outputs.version }} --set pr=${{ github.event.number }} ${{ env.APP_NAME }}-pr-${{ github.event.number }} ./chart -i --create-namespace -n ${{ env.APP_NAME }}-pr-${{ github.event.number }}
+
