@@ -6,9 +6,9 @@ import {  useSelector, useDispatch } from 'react-redux';
 export const StartPage = () => {
     
   const [ auth, setAuth ] = useState({});
-  const [ table, setTable ] = useState();
+  //const [ table, setTable ] = useState();
   const [ tableInvitationToken, setTableInvitationToken ] = useState("");
-  const board = useSelector((state) => state.board);
+  const table = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,13 +32,7 @@ export const StartPage = () => {
 
     socket.on('player-added', (player) => {
       console.log('player joined', player);
-      setTable({
-        ...table,
-        players: [
-          ...table.players,
-          player
-        ]
-      });
+      dispatch({ type: "PLAYER_JOINED", player: player });
     });
   }, [table]);
 
@@ -47,7 +41,7 @@ export const StartPage = () => {
       const { data } = await axios.post('https://api.pr-6.nfler.se/poker/tables', { name: 'My first group'});
 
       setAuth({authToken: data.authToken.token, refreshToken: data.refreshToken.token});
-      setTable(data.table);
+      dispatch({type: "CREATE_TABLE", table: data.table});
     }
 
     fetchData();
@@ -62,7 +56,7 @@ export const StartPage = () => {
 
       setAuth({authToken: data.authToken.token, refreshToken: data.refreshToken.token});
       console.log(data.refreshToken.token);
-      setTable(data.table);
+      dispatch({type: "CREATE_TABLE", table: data.table});
     }
 
     joinGroup();
