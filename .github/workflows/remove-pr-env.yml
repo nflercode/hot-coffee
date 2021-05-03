@@ -1,29 +1,31 @@
 env:
   APP_NAME: 'hot-coffee'
 
-# FILE GENERATED WITH: npx ghat nflercode/ghtemplates/templates
-# SOURCE: https://github.com/nflercode/ghtemplates
-
 name: Uninstall pr environment
+
 on:
   pull_request:
-    types:
-      - closed
+    types: [ closed ]
+
 jobs:
+
   pr-env-remove:
+
     runs-on: ubuntu-latest
+
     steps:
       - name: Set up kubectl
         uses: matootie/dokube@v1.3.4
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN_K8S }}
           clusterName: k8s-nfler-dev
+      
       - uses: azure/setup-helm@v1
+
       - name: uninstall with helm
-        run: >-
-          helm uninstall ${{ env.APP_NAME }}-pr-${{ github.event.number }} -n
-          ${{ env.APP_NAME }}-pr-${{ github.event.number }}
+        run: helm uninstall ${{ env.APP_NAME }}-pr-${{ github.event.number }} -n ${{ env.APP_NAME }}-pr-${{ github.event.number }}
+
       - name: delete namespace
-        run: >-
-          kubectl delete namespace ${{ env.APP_NAME }}-pr-${{
-          github.event.number }}
+        run: kubectl delete namespace ${{ env.APP_NAME }}-pr-${{ github.event.number }}
+
+      
