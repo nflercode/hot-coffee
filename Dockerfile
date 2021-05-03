@@ -1,9 +1,11 @@
 FROM node:15.1.0-buster-slim as build
 
+ARG BUILD_MODE=dev
+
 WORKDIR /app
 COPY . .
 RUN npm install --production
-RUN npm run build
+RUN npm run build:$BUILD_MODE
 
 FROM node:15.1.0-buster-slim
 

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client'
-import axios from 'axios';
 import {  useSelector, useDispatch } from 'react-redux';
 
+import tableService from '../services/table-service';
+import playerService from '../services/player-service';
+import tokenService from '../services/token-service';
+
 export const StartPage = () => {
-    
   const [ auth, setAuth ] = useState({});
   //const [ table, setTable ] = useState();
   const [ tableInvitationToken, setTableInvitationToken ] = useState("");
@@ -16,7 +18,7 @@ export const StartPage = () => {
       return;
 
     console.log('table', table);
-    const socket = io('https://api.pr-6.nfler.se/', {
+    const socket = io(process.env.REACT_APP_API_HOST, {
       auth: {
         token: auth.authToken
       }
@@ -38,7 +40,7 @@ export const StartPage = () => {
 
   function handleCreateTableButtonClick() {
     async function fetchData() {
-      const { data } = await axios.post('https://api.pr-6.nfler.se/poker/tables', { name: 'My first group'});
+      const { data } = await tableService.createTable('Mitt första bord!');
 
       setAuth({authToken: data.authToken.token, refreshToken: data.refreshToken.token});
       dispatch({type: "CREATE_TABLE", table: data.table});
@@ -52,7 +54,7 @@ export const StartPage = () => {
       if (!tableInvitationToken)
         return;
 
-      const { data } = await axios.post(`https://api.pr-6.nfler.se/poker/tables/${tableInvitationToken}`);
+      const { data } = await tableService.joinTable(tableInvitationToken);
 
       setAuth({authToken: data.authToken.token, refreshToken: data.refreshToken.token});
       console.log(data.refreshToken.token);
@@ -64,7 +66,7 @@ export const StartPage = () => {
 
   function handleRefreshTokenClick() {
     async function refreshToken() {
-      const { data } = await axios.post(`https://api.pr-6.nfler.se/auth/refresh-token`, { refreshToken: auth.refreshToken });
+      const { data } = await tokenService.refreshToken(auth.refreshToken);
       setAuth({ ...auth, authToken: data.authToken.token });
       console.log('refreshed auth');
     }
@@ -74,7 +76,7 @@ export const StartPage = () => {
 
   function handleLeave() {
     async function leave() {
-      await axios.delete(`https://api.pr-6.nfler.se/poker/players`, { headers: { Authorization: `bearer ${auth.authToken}` }});
+      await playerService.deletePlayer(auth.authToken);
     }
 
     leave();
