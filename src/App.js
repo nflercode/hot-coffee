@@ -1,7 +1,15 @@
 import React from 'react';
+import { store } from "./store/store";
+import { Provider } from 'react-redux';
+import { Router } from './components/router/router';
 
 export default function App() {
+
   return (
-    <h1>Hello world</h1>
+    <>
+    <Provider store={store}>
+      <Router />
+    </Provider>   
+    </>
   );
 }
