@@ -45,11 +45,11 @@ jobs:
       -
         name: Build and push
         uses: docker/build-push-action@v2
-        env:
-          REACT_APP_API_HOST: https://api.nfler.se
         with:
           context: .
           push: true
+          build-args: |
+            BUILD_MODE=prod
           tags: ${{ steps.meta.outputs.tags }}
         
       - name: Set up kubectl
