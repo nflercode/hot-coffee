@@ -10,4 +10,12 @@ async function createTable(name) {
   return await axios.post(`${REACT_APP_API_HOST}/poker/tables`, { name });
 }
 
-export default { joinTable, createTable };
+async function getTable(authToken) {
+  return await axios.get(`${REACT_APP_API_HOST}/poker/tables`, {
+    headers: {
+      Authorization: `bearer ${authToken}`
+    }
+  })
+}
+
+export default { joinTable, createTable, getTable };

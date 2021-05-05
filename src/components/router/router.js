@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Spinner } from "../spinner/spinner";
-import {StartPage} from "../../pages/start-page";
+import {StartPage} from "../../pages/start-page/start-page";
 const CreatePage = lazy(() => import("../../pages/create-page"));
 const JoinPage = lazy(() => import("../../pages/join-page"));
 
