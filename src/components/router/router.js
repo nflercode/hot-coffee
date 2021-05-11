@@ -2,8 +2,9 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Spinner } from "../spinner/spinner";
 import {StartPage} from "../../pages/start-page/start-page";
-const CreatePage = lazy(() => import("../../pages/create-page"));
-const JoinPage = lazy(() => import("../../pages/join-page"));
+const CreatePage = lazy(() => import("../../pages/create-page/create-page"));
+const JoinPage = lazy(() => import("../../pages/join-page/join-page"));
+const LobbyPage = lazy(() => import("../../pages/lobby-page/lobby-page"));
 
 export const Router = () => {
     const routes = 
@@ -13,13 +14,13 @@ export const Router = () => {
                 exact: true,
                 component: StartPage,
             },
-            {
+            {   
                 path: "/create",
                 exact: true,
                 component: CreatePage,
             },
             {
-                path: "/join",
+                path: "/join/:invitationToken",
                 exact: true,
                 component: JoinPage,
             },
@@ -27,6 +28,11 @@ export const Router = () => {
                 path: "/table",
                 exact: true,
                 component: StartPage,
+            },
+            {
+                path: '/lobby',
+                exact: true,
+                component: LobbyPage
             }
         ];
 

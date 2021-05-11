@@ -1,0 +1,38 @@
+/*
+ * Full-screen
+ */
+
+ html, body, #root, .create-page-main {
+  height: 100%;
+}
+
+.create-page-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  font-size: 18px;
+
+  margin-left: 2em;
+}
+
+.create-page-main-table-name, .create-page-main-minimum-stake {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.create-page-main-table-name input {
+  padding: 4px 6px;
+  font-size: 18px;
+}
+
+.create-page-main-minimum-stake input {
+  font-size: 14px;
+  padding: 4px 6px;
+}
+
+.create-page-main-available-seats, .create-page-main-connect-id {
+  font-size: 14px;
+  color: gray;
+}

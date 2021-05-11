@@ -12,7 +12,7 @@ export const store = createStore(
         table: {},
         auth: {
             authToken: {},
-            refreshToken: initialAuthState
+            refreshToken: initialAuthState || {}
         }
     },
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
