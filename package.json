@@ -20,9 +20,9 @@
     "socket.io-client": "^4.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build:dev": "env-cmd -f .env.dev react-scripts build",
-    "build:prod": "env-cmd -f .env.prod react-scripts build"
+    "start": "react-app-rewired start",
+    "build:dev": "env-cmd -f .env.dev react-app-rewired build",
+    "build:prod": "env-cmd -f .env.prod react-app-rewired build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,7 +40,9 @@
     ]
   },
   "devDependencies": {
+    "react-app-rewired": "^2.1.8",
     "redux-devtools": "^3.7.0",
-    "redux-devtools-extension": "^2.13.8"
+    "redux-devtools-extension": "^2.13.8",
+    "worker-loader": "^3.0.8"
   }
 }

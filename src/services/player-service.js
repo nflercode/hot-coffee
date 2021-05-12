@@ -10,4 +10,8 @@ async function deletePlayer(authToken) {
   });
 }
 
-export default { deletePlayer }
+const playerService = {
+  deletePlayer
+};
+
+export default playerService;

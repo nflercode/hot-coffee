@@ -3,13 +3,17 @@ import { store } from "./store/store";
 import { Provider } from 'react-redux';
 import { Router } from './components/router/router';
 
-export default function App() {
+import AuthController from './components/auth-controller/auth-controller';
+import Socket from './components/socket/socket';
 
+export default function App() {
   return (
     <>
-    <Provider store={store}>
-      <Router />
-    </Provider>   
+      <Provider store={store}>
+        <AuthController />
+        <Socket />
+        <Router />
+      </Provider>
     </>
   );
 }
