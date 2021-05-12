@@ -30,4 +30,12 @@ async function setTableName(authToken, name) {
   });
 }
 
-export default { joinTable, createTable, getTable, setTableName, getTableByInvitationToken };
+const tableService = {
+  joinTable,
+  createTable,
+  getTable,
+  getTableByInvitationToken,
+  setTableName
+}
+
+export default tableService;

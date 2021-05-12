@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {  useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import tableService from '../../services/table-service';
-import refreshTokenStorage from '../../storage/refresh-token-storage';
 
 import './style.css';
 
@@ -13,30 +12,15 @@ const CreatePage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [tableName, setTableName] = useState(tableState.name || '');
-    const [isCreatingTable, setIsCreatingTable] = useState(false);
 
     useEffect(() => {
-        async function createTable() {
-            const { data } = await tableService.createTable('Mitt första bord!');
-      
-            dispatch({type: "CREATE_TABLE", table: data.table});
-            dispatch({type: "CREATE_AUTH_TOKEN", authToken: data.authToken});
-            dispatch({type: "CREATE_REFRESH_TOKEN", refreshToken: data.refreshToken});
-            
-            refreshTokenStorage.setRefreshToken(data.refreshToken);
-            setIsCreatingTable(false);
-        }
-
         async function getTable() {
             const { data } = await tableService.getTable(authState.authToken.token);
             dispatch({type: "CREATE_TABLE", table: data});
         }
 
         // create table if no refreshToken exists
-        if (!refreshTokenStorage.getRefreshToken() && !isCreatingTable) {
-            setIsCreatingTable(true);
-            createTable();
-        } else if (authState.authToken.token && !tableState.id)
+        if (authState.authToken.token && !tableState.id)
             getTable();
 
     }, [authState, dispatch, tableState.id]);

@@ -12,4 +12,10 @@ function deleteRefreshToken() {
   localStorage.removeItem('refreshToken');
 }
 
-export default { setRefreshToken, getRefreshToken, deleteRefreshToken }
+const refreshTokenStorage = {
+  setRefreshToken,
+  getRefreshToken,
+  deleteRefreshToken
+};
+
+export default refreshTokenStorage;

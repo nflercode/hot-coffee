@@ -6,4 +6,8 @@ async function refreshToken(refreshToken) {
   return await axios.post(`${REACT_APP_API_HOST}/auth/refresh-token`, { refreshToken });
 }
 
-export default { refreshToken }
+const tokenService = {
+  refreshToken
+};
+
+export default tokenService;

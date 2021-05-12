@@ -38,9 +38,10 @@ const AuthController = () => {
     }
 
     return () => {
-      console.log('Terminating worker');
-      if (worker)
+      if (worker) {
+        console.log('Terminating worker');
         worker.terminate();
+      }
     }
   }, [authState, dispatch]);
 

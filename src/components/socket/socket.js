@@ -43,7 +43,7 @@ const Socket = () => {
       console.log('Disconnecting socket.');
       socket.disconnect();
     }
-  }, [authState, dispatch]);
+  }, [authState.authToken, dispatch]);
 
   return null;
 };

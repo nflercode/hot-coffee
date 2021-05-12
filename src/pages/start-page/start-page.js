@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
 import './style.css'
-import {  useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import tableService from '../../services/table-service';
+import refreshTokenStorage from '../../storage/refresh-token-storage';
 
 export const StartPage = () => {
   const [invitationToken, setInvitationToken] = useState("");
+  const [isCreatingTable, setIsCreatingTable] = useState(false);
+  const dispatch = useDispatch();
   const history = useHistory();
   const authState = useSelector((state) => state.auth);
 
   function handleCreateTableButtonClick() {
-    if (!authState.authToken.token) {
+    async function createTable() {
+      setIsCreatingTable(true);
+
+      const { data } = await tableService.createTable('Mitt första bord!');
+
+      dispatch({type: "CREATE_TABLE", table: data.table});
+      dispatch({type: "CREATE_AUTH_TOKEN", authToken: data.authToken});
+      dispatch({type: "CREATE_REFRESH_TOKEN", refreshToken: data.refreshToken});
+      
+      refreshTokenStorage.setRefreshToken(data.refreshToken);
+
       history.push('/create');
-    } else {
-      history.push('/lobby');
     }
+
+    createTable();
   }
 
   function handleInvitationTokenClick() {
     history.push(`/join/${invitationToken}`);
   }
 
-  const createOrReturnToTable = authState.authToken.token ? 'Tillbaka till bordet' : 'Skapa bord';
   return (
     <div className="start-page-container">
       <header className="start-page-header">
@@ -38,7 +51,14 @@ export const StartPage = () => {
           </>
         )}
         <div>
-          <button className="start-page-main-create-table-button" onClick={handleCreateTableButtonClick}>{createOrReturnToTable}</button>
+          {
+            !authState.authToken.token ? (
+              <button className="start-page-main-create-table-button" disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Skapa bord</button>
+            ) : (
+              <button className="start-page-main-create-table-button" onClick={() => history.push('/lobby')}>Till lobby</button>
+            )
+          }
+          
         </div>
       </main>
     </div>
