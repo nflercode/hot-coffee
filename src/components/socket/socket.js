@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client'
 
 function setUp(authToken) {
-  const socket = io(process.env.REACT_APP_API_HOST, {
+  const socket = io(`${process.env.REACT_APP_API_HOST}/table`, {
     auth: {
       token: authToken
     }

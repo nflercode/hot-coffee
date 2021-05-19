@@ -4,8 +4,11 @@ import tableService from '../../services/table-service';
 import playerService from '../../services/player-service';
 import refreshTokenStorage from '../../storage/refresh-token-storage';
 import { useHistory } from 'react-router';
+import LazyLoad from 'react-lazyload';
 
 import './style.css';
+
+const imageHostBaseUrl = 'https://nimage.nfler.se/';
 
 const LobbyPage = () => {
   const tableState = useSelector(state => state.table);
@@ -39,7 +42,7 @@ const LobbyPage = () => {
     <div className="lobby-page-container">
       <header className="lobby-page-header">
         <div className="lobby-page-header-upper-header">
-          <span>url: https://nfler.se/join/{tableState.invitationToken}</span>
+          <span>url: {window.origin}/join/{tableState.invitationToken}</span>
           <button className="lobby-page-header-leave-table-button" onClick={handleLeaveTable}>Lämna bord</button>
         </div>
         <div>
@@ -47,10 +50,20 @@ const LobbyPage = () => {
         </div>
       </header>
       <main className="lobby-page-main">
-        <div>
+        <div className="lobby-player-list">
           {
-            tableState.players && tableState.players.map((player) => (
-              <div>[ICON] <span>{player.name}</span></div>
+            tableState.players && tableState.players.map((player, i) => (
+              <div className="lobby-player-list-item" key={`player-list-item-${i}`}>
+                <div>
+                  <LazyLoad height={60}>
+                    <img alt={`Avatar for ${player.avatar.name}`} src={`${imageHostBaseUrl}/${player.avatar.imageName}`} />
+                  </LazyLoad>
+                </div>
+                <div className="lobby-player-list-item-name-section">
+                  <span className="lobby-player-list-item-name-section-avatar-name">{player.avatar.name}</span>
+                  <span className="lobby-player-list-item-name-section-player-name">Aka: {player.name}</span>
+                </div>
+              </div>
             ))
           }
         </div>
