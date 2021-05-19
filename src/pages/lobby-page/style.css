@@ -31,3 +31,28 @@ html, body, #root, .lobby-page-container {
 .lobby-page-main {
   flex-grow: 4;
 }
+
+.lobby-player-list-item {
+  display: flex;
+  margin: 25px 0;
+}
+
+.lobby-player-list-item img {
+  width: 70px;
+  height: auto;
+}
+
+.lobby-player-list-item-name-section {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.lobby-player-list-item-name-section-avatar-name {
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.lobby-player-list-item-name-section-player-name {
+  font-size: 14px;
+}

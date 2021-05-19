@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -9,14 +9,13 @@ const JoinPage = () => {
     const dispatch = useDispatch();
     const tableState = useSelector(state => state.table);
     const authState = useSelector(state => state.auth);
-    const [playerName, setPlayerName] = useState('');
     const { invitationToken } = useParams();
     const history = useHistory();
 
     useEffect(() => {
         async function getTable() {
             const { data } = await tableService.getTableByInvitationToken(invitationToken)
-            dispatch({type: "CREATE_TABLE", table: data.table});
+            dispatch({type: "CREATE_TABLE", table: data });
         }
 
         getTable();
@@ -24,7 +23,7 @@ const JoinPage = () => {
 
     function handleJoinTableButtonClick() {
         async function joinTable() {
-            const { data } = await tableService.joinTable(tableState.invitationToken, playerName);
+            const { data } = await tableService.joinTable(tableState.invitationToken);
 
             dispatch({type: "CREATE_TABLE", table: data.table});
             dispatch({type: "CREATE_AUTH_TOKEN", authToken: data.authToken});
@@ -42,15 +41,11 @@ const JoinPage = () => {
     return authState.authToken.token ? renderAlreadyMember(tableState) : (
         <div>
             <header>
-                <span>url: https://nfler.se/join/{tableState.invitationToken}</span>
+                <span>url: {window.origin}/join/{tableState.invitationToken}</span>
             </header>
             <main>
                 <div>
                     <span>{(tableState.players || []).length} {annanOrAndra} sitter vid det här bordet</span>
-                </div>
-                <div>
-                    <span>Ange alias:</span>
-                    <input type="text" value={playerName} onChange={(e) => setPlayerName(e.target.value)} />
                 </div>
                 <div>
                     <button onClick={handleJoinTableButtonClick}>Anslut till bord</button>

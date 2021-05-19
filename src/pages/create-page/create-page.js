@@ -19,7 +19,6 @@ const CreatePage = () => {
             dispatch({type: "CREATE_TABLE", table: data});
         }
 
-        // create table if no refreshToken exists
         if (authState.authToken.token && !tableState.id)
             getTable();
 
@@ -49,7 +48,7 @@ const CreatePage = () => {
                 <span>Platser vid bordet: 4 st</span>
             </div>
             <div className="create-page-main-connect-url">
-                <input type="text" readOnly value={`https://nfler.se/join/${tableState.invitationToken}`}/>
+                <input type="text" readOnly value={`${window.origin}/join/${tableState.invitationToken}`}/>
                 <button>Copy</button>
             </div>
             <div className="create-page-main-connect-id">

@@ -10,7 +10,7 @@ const hasTokenExpired = (token) => {
 
 async function refreshAuthToken(refreshToken, dispatch) {
   const authResp = await tokenService.refreshToken(refreshToken);
-  dispatch({type: "CREATE_AUTH_TOKEN", authToken: authResp.data.authToken});
+  dispatch({type: "CREATE_AUTH_TOKEN", authToken: authResp.data});
 }
 
 const isValidToken = (token) => token.token && !hasTokenExpired(token);
