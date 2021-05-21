@@ -10,8 +10,17 @@ async function deletePlayer(authToken) {
   });
 }
 
+async function changePlayerName(authToken, name) {
+  return await axios.put(`${REACT_APP_API_HOST}/poker/players`, {name}, {
+    headers: {
+      Authorization: `bearer ${authToken}`
+    }
+  });
+}
+
 const playerService = {
-  deletePlayer
+  deletePlayer,
+  changePlayerName
 };
 
 export default playerService;

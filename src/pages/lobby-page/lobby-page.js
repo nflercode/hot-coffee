@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import tableService from '../../services/table-service';
 import playerService from '../../services/player-service';
@@ -61,7 +61,7 @@ const LobbyPage = () => {
                 </div>
                 <div className="lobby-player-list-item-name-section">
                   <span className="lobby-player-list-item-name-section-avatar-name">{player.avatar.name}</span>
-                  <span className="lobby-player-list-item-name-section-player-name">Aka: {player.name}</span>
+                  <span className="lobby-player-list-item-name-section-player-name">Aka: <span>{player.name}</span> {player.isMe && <span>*</span>}</span>
                 </div>
               </div>
             ))
