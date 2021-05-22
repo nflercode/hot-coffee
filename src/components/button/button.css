@@ -3,7 +3,25 @@
   font-size: 18px;
   border-radius: 4px;
   border: none;
-  box-shadow: 0 0 2px rgb(0 1 0 / 5%);
+  box-shadow: 0 0 10px 0 rgb(0 1 0 / 15%);
+  position: relative;
+}
+
+.button:not(.button-disabled)::before {
+  content: " ";
+  position: absolute;
+  box-shadow: 2px 4px 12px 0 rgb(0 1 0 / 25%);
+  opacity: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 4px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.button:not(.button-disabled):hover::before {
+  opacity: 1;
 }
 
 .button-default {
@@ -24,13 +42,16 @@
 
 .button-disabled.button-positive {
   background-color: #a1faf17e;
+  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
   color: #767a76;
 }
 .button-disabled.button-negative {
   background-color: #ff7a767e;
+  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
   color: #f0faf1;
 }
 .button-disabled.button-default {
   background-color: #517a557e;
+  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
   color: #f0faf1;
 }
