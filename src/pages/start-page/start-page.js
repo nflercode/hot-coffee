@@ -4,6 +4,8 @@ import {  useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import tableService from '../../services/table-service';
 import refreshTokenStorage from '../../storage/refresh-token-storage';
+import { Button } from '../../components/button/button';
+import playerService from '../../services/player-service';
 
 export const StartPage = () => {
   const [invitationToken, setInvitationToken] = useState("");
@@ -12,6 +14,16 @@ export const StartPage = () => {
   const history = useHistory();
   const authState = useSelector((state) => state.auth);
 
+  function handleLeaveTable() {
+    async function leave() {
+      await playerService.deletePlayer(authState.authToken.token);
+      refreshTokenStorage.deleteRefreshToken();
+      dispatch({ type: "PLAYER_LEFT_TABLE" });
+      history.push('/');
+    }
+
+    leave();
+  }
   function handleCreateTableButtonClick() {
     async function createTable() {
       setIsCreatingTable(true);
@@ -45,7 +57,7 @@ export const StartPage = () => {
           <>
           <div className="start-page-main-inv-link-container">
             <input className="start-page-main-inv-link-input" type="text" onChange={(e) => setInvitationToken(e.target.value)} value={invitationToken} />
-            <button className="start-page-main-inv-link-button" onClick={handleInvitationTokenClick}>Gå med</button>
+            <Button disabled={invitationToken.length <= 41} onClick={handleInvitationTokenClick}>Gå med</Button>
           </div>
           <span className="start-page-main-or">Eller</span>
           </>
@@ -53,9 +65,16 @@ export const StartPage = () => {
         <div>
           {
             !authState.authToken.token ? (
-              <button className="start-page-main-create-table-button" disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Skapa bord</button>
+              <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Skapa bord</Button>
             ) : (
-              <button className="start-page-main-create-table-button" onClick={() => history.push('/lobby')}>Till lobby</button>
+              <>
+                <p>Det ser ut som att du är med i ett bord redan</p>
+                <div className="start-page-leave-or-join">
+                  <Button  onClick={() => history.push('/lobby')}>Till lobby</Button>
+                  Eller
+                  <Button theme="negative" onClick={handleLeaveTable}>Lämna</Button>
+                </div>
+              </>
             )
           }
           

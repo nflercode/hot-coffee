@@ -2,9 +2,12 @@
  * Full-screen
  */
 
- html, body, #root, .start-page-container {
-   height: 100%;
- }
+html,
+body,
+#root,
+.start-page-container {
+  height: 100%;
+}
 
 .start-page-container {
   display: flex;
@@ -29,7 +32,7 @@
   flex-direction: column;
   align-items: center;
   flex-grow: 4;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 .start-page-main-inv-link-container {
@@ -58,4 +61,12 @@
   background-color: white;
   color: black;
   font-size: 18px;
+}
+
+.start-page-leave-or-join {
+  margin-top: 1em;
+  display: inline-flex;
+  justify-content: space-between;
+  min-width: 100%;
+  align-items: center;
 }
