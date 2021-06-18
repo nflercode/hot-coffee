@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {  useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { DialogsContext } from '../../components/dialogs/dialogs-context';
 import playerService from '../../services/player-service';
 import tableService from '../../services/table-service';
 
@@ -15,7 +16,11 @@ const CreatePage = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const dialogerinos = useContext(DialogsContext);
 
+    useEffect(() => {
+        dialogerinos.onShowDialog({});
+    }, [])
     useEffect(() => {
         async function getTable() {
             const { data } = await tableService.getTable(authState.authToken.token);
