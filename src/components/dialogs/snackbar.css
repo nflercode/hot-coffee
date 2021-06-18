@@ -1,0 +1,33 @@
+.snackbar-container {
+  bottom: 0px;
+  position: fixed;
+  min-width: 100%;
+  background-color: #fdfffd;
+  box-shadow: 0ch;
+  padding: 0.75em;
+  max-height: 150px;
+  height: 150px;
+  box-shadow: 0 0 10px 0 rgb(0 1 0 / 15%);
+  animation: moveSnackbar 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  border-radius: 4px;
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.snackbar-btns-container {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+}
+@keyframes moveSnackbar {
+  from {
+    bottom: -175px;
+  }
+  to {
+    bottom: 0;
+  }
+}
+
+.snackbar-title {
+  font-weight: 700;
+  font-size: 24px;
+}
