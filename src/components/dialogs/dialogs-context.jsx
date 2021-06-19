@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useContext, useState } from 'react';
+import React, { Suspense, lazy, useContext, useState, useMemo } from 'react';
 import { dialogConstants } from './dialog-constants';
 
 import { Dialogs } from './dialogs';
@@ -7,33 +7,40 @@ export const DialogsContext = React.createContext({});
 
 export const DialogsContextProvider = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [title, setTitle] = useState(null);
+  const [message, setMessage] = useState(null);
+
   const [type, setType] = useState(dialogConstants.type.SNACKBAR);
-  const [dialogCallbackPositive, setDialogCallbackPositive] = useState(
-    () => {}
-  );
-  const [dialogCallbackNegative, setDialogCallbackNegative] = useState(
-    () => {}
-  );
+  const [positiveButton, setPositiveButton] = useState(null);
+  const [negativeButton, setNegativeButton] = useState(null);
 
   const onShowDialog = ({
-    type = dialogConstants.type.SNACKBAR,
+    typeProp = dialogConstants.type.SNACKBAR,
     mode = dialogConstants.mode.info,
-    callbackPositive,
-    callbackNegative
+    positiveButtonProp,
+    negativeButtonProp,
+    message: messageProp,
+    title: titleProp
   }) => {
     console.log('ran show dialog');
-    setType(type);
+    setType(typeProp);
     setIsVisible(true);
-    //setDialogCallbackPositive(() => {
-    //  setIsVisible(false);
-    //  if (callbackPositive) callbackPositive();
-    //});
-    //setDialogCallbackNegative(() => {
-    //  setDialogCallbackNegative(() => {
-    //    setIsVisible(false);
-    //    if (callbackNegative) callbackNegative();
-    //  });
-    //});
+    setTitle(titleProp);
+    setMessage(messageProp);
+    setPositiveButton({
+      callback: () => {
+        setIsVisible(false);
+        if (positiveButtonProp) positiveButtonProp.callback();
+      },
+      content: positiveButtonProp.content
+    });
+    setNegativeButton({
+      callback: () => {
+        setIsVisible(false);
+        if (negativeButtonProp) negativeButtonProp.callback();
+      },
+      content: positiveButtonProp.content
+    });
   };
 
   return (
@@ -41,9 +48,11 @@ export const DialogsContextProvider = ({ children }) => {
       {children}
       {isVisible ? (
         <Dialogs
-          onPositive={dialogCallbackPositive}
-          onNegative={dialogCallbackNegative}
           type={type}
+          title={title}
+          message={message}
+          positiveButton={positiveButton}
+          negativeButton={negativeButton}
         />
       ) : (
         'Ingen dialog'

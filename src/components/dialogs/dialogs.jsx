@@ -4,14 +4,20 @@ import { dialogConstants } from './dialog-constants';
 import { DialogsContext } from './dialogs-context';
 import { Snackbar } from './snackbar';
 
-export const Dialogs = ({ type, onclick }) => {
+export const Dialogs = ({
+  type,
+  title,
+  message,
+  positiveButton,
+  negativeButton
+}) => {
   if (type === dialogConstants.type.SNACKBAR) {
     return (
       <Snackbar
-        title='test'
-        message='asdads'
-        positiveButton={{ onclick, content: 'blöblö' }}
-        negativeButton={{ onclick, content: 'blöblö' }}
+        title={title}
+        message={message}
+        positiveButton={positiveButton}
+        negativeButton={negativeButton}
       />
     );
   }

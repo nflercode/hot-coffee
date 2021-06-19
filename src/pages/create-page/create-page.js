@@ -19,7 +19,15 @@ const CreatePage = () => {
     const dialogerinos = useContext(DialogsContext);
 
     useEffect(() => {
-        dialogerinos.onShowDialog({});
+        dialogerinos.onShowDialog({
+            mode:"info",
+            positiveButtonProp: {
+                callback: () => {},
+                content:"Okej"
+            },
+            message: "Vår site funkar tyvärr inte utan kakor, om det känns obehagligt, då får du sluta använda denna hemsida. Genom att fortsätta så godkänner du kakor.",
+            title: "Vi använder kakor för att levera denna tjänst"
+        });
     }, [])
     useEffect(() => {
         async function getTable() {
