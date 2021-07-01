@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import tableService from '../../services/table-service';
 import playerService from '../../services/player-service';
@@ -8,7 +8,7 @@ import LazyLoad from 'react-lazyload';
 
 import './style.css';
 
-const imageHostBaseUrl = 'https://nimage.nfler.se/';
+const imageHostBaseUrl = 'https://nimage.nfler.se';
 
 const LobbyPage = () => {
   const tableState = useSelector(state => state.table);
