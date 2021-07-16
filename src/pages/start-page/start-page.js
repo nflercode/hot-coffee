@@ -24,6 +24,7 @@ export const StartPage = () => {
 
     leave();
   }
+  
   function handleCreateTableButtonClick() {
     async function createTable() {
       setIsCreatingTable(true);
@@ -53,15 +54,6 @@ export const StartPage = () => {
         <span className="start-page-header-sub-title">Your chip's online</span>
       </header>
       <main className="start-page-main">
-        {!authState.authToken.token && (
-          <>
-          <div className="start-page-main-inv-link-container">
-            <input className="start-page-main-inv-link-input" type="text" onChange={(e) => setInvitationToken(e.target.value)} value={invitationToken} />
-            <Button disabled={invitationToken.length <= 41} onClick={handleInvitationTokenClick}>Gå med</Button>
-          </div>
-          <span className="start-page-main-or">Eller</span>
-          </>
-        )}
         <div>
           {
             !authState.authToken.token ? (
@@ -77,7 +69,6 @@ export const StartPage = () => {
               </>
             )
           }
-          
         </div>
       </main>
     </div>

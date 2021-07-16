@@ -22,13 +22,14 @@ const CreatePage = () => {
         dialogerinos.onShowDialog({
             mode:"info",
             positiveButtonProp: {
-                callback: () => {},
+                callback: () => {console.log("accepterat")},
                 content:"Okej"
             },
             message: "Vår site funkar tyvärr inte utan kakor, om det känns obehagligt, då får du sluta använda denna hemsida. Genom att fortsätta så godkänner du kakor.",
             title: "Vi använder kakor för att levera denna tjänst"
         });
     }, [])
+    
     useEffect(() => {
         async function getTable() {
             const { data } = await tableService.getTable(authState.authToken.token);

@@ -11,14 +11,26 @@
   animation: moveSnackbar 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
   border-radius: 4px;
   display: grid;
-  grid-template-rows: 1fr;
+  grid-column: 5fr auto 1fr;
+  /*grid-template-rows: 1fr; */
 }
 
 .snackbar-btns-container {
   display: inline-grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 15px;
 }
+
+.snackbar-btns-container.snackbar-btns-container-duo {
+  grid-template-columns: 1fr 1fr;
+}
+
+.snackbar-btns-container.snackbar-btns-container-single {
+  grid-template-columns: 1fr;
+  margin-right: 1em;
+  width: 100%;
+  align-items: center;
+}
+
 @keyframes moveSnackbar {
   from {
     bottom: -175px;

@@ -27,20 +27,22 @@ export const DialogsContextProvider = ({ children }) => {
     setIsVisible(true);
     setTitle(titleProp);
     setMessage(messageProp);
-    setPositiveButton({
-      callback: () => {
-        setIsVisible(false);
-        if (positiveButtonProp) positiveButtonProp.callback();
-      },
-      content: positiveButtonProp.content
-    });
-    setNegativeButton({
-      callback: () => {
-        setIsVisible(false);
-        if (negativeButtonProp) negativeButtonProp.callback();
-      },
-      content: positiveButtonProp.content
-    });
+    if (positiveButtonProp)
+      setPositiveButton({
+        callback: () => {
+          setIsVisible(false);
+          if (positiveButtonProp) positiveButtonProp.callback();
+        },
+        content: positiveButtonProp.content
+      });
+    if (negativeButtonProp)
+      setNegativeButton({
+        callback: () => {
+          setIsVisible(false);
+          if (negativeButtonProp) negativeButtonProp.callback();
+        },
+        content: positiveButtonProp.content
+      });
   };
 
   return (

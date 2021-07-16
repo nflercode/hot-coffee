@@ -10,21 +10,32 @@ export const Snackbar = ({
   <div className='snackbar-container'>
     <div className='snackbar-title'>{title}</div>
     <div className='snackbar-message'>{message}</div>
-    <div className='snackbar-btns-container'>
-      <div>
-        {negativeButton && (
-          <Button theme='negative' block className='snackbar-negative-button'>
-            {negativeButton.content}
-          </Button>
-        )}
-      </div>
-      <div>
-        {positiveButton && (
-          <Button block className='snackbar-positive-button'>
-            {positiveButton.content}
-          </Button>
-        )}
-      </div>
+    <div
+      className={`snackbar-btns-container ${
+        negativeButton && positiveButton
+          ? 'snackbar-btns-container-dual'
+          : 'snackbar-btns-container-single'
+      }`}
+    >
+      {negativeButton && (
+        <Button
+          theme='negative'
+          block
+          className='snackbar-negative-button'
+          onClick={positiveButton.callback}
+        >
+          {negativeButton.content}
+        </Button>
+      )}
+      {positiveButton && (
+        <Button
+          block
+          onClick={positiveButton.callback}
+          className='snackbar-positive-button'
+        >
+          {positiveButton.content}
+        </Button>
+      )}
     </div>
   </div>
 );
