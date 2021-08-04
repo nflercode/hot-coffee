@@ -48,7 +48,7 @@ export const DialogsContextProvider = ({ children }) => {
   return (
     <DialogsContext.Provider value={{ onShowDialog }}>
       {children}
-      {isVisible ? (
+      {isVisible && (
         <Dialogs
           type={type}
           title={title}
@@ -56,8 +56,6 @@ export const DialogsContextProvider = ({ children }) => {
           positiveButton={positiveButton}
           negativeButton={negativeButton}
         />
-      ) : (
-        'Ingen dialog'
       )}
     </DialogsContext.Provider>
   );
