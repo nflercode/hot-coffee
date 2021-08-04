@@ -1,0 +1,36 @@
+.chip {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chip-larger {
+  height: 45px;
+  width: 45px;
+}
+
+.chip-red {
+  background-color: rgba(220, 35, 0, 1);
+}
+
+.chip-white {
+  background-color: rgb(231 225 225);
+  border: 1px solid black;
+}
+
+.chip-black {
+  background-color: black;
+}
+
+.chip-green {
+  background-color: rgb(0 139 72);
+  color: white;
+}
+
+.chip-blue {
+  background-color: rgb(0 75 176);
+  color: white;
+}

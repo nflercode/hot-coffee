@@ -5,14 +5,17 @@ import playerService from '../../services/player-service';
 import refreshTokenStorage from '../../storage/refresh-token-storage';
 import { useHistory } from 'react-router';
 import LazyLoad from 'react-lazyload';
+import { Button } from '../../components/button/button.js'
 
 import './style.css';
+import axios from 'axios';
 
 const imageHostBaseUrl = 'https://nimage.nfler.se';
 
 const LobbyPage = () => {
   const tableState = useSelector(state => state.table);
   const authState = useSelector(state => state.auth);
+  const gameState = useSelector(state => state.game);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -26,6 +29,12 @@ const LobbyPage = () => {
         getTable();
 
   }, [authState.authToken, dispatch]);
+
+  useEffect(() => {
+    if (gameState.status === "ONGOING") {
+      history.push('/game');
+    }
+  }, [gameState, history]);
 
   function handleLeaveTable() {
     async function leave() {
@@ -67,6 +76,15 @@ const LobbyPage = () => {
             ))
           }
         </div>
+        <Button onClick={() => {
+          axios.post('http://localhost:3001/chippie/game', {}, {
+            headers: {
+              Authorization: `bearer ${authState.authToken.token}`
+            }
+          }, (data) => {
+            console.log(data);
+          });
+        }}>Starta spel</Button>
       </main>
     </div>
   );
