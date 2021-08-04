@@ -1,0 +1,17 @@
+.input {
+  display: inline-flex;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.input > label {
+  font-weight: 550;
+  color: #3f3f3f;
+}
+.input > input {
+  min-width: 300px;
+  max-width: 300px;
+  height: 35px;
+  font-size: 22px;
+}

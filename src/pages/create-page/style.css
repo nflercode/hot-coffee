@@ -2,37 +2,49 @@
  * Full-screen
  */
 
- html, body, #root, .create-page-main {
+html,
+body,
+#root,
+.create-page-main {
   height: 100%;
 }
 
+.create-page-done-btn {
+  padding-bottom: 2em;
+  align-self: flex-end;
+}
+
 .create-page-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 3fr;
   font-size: 18px;
-
   margin-left: 2em;
 }
 
-.create-page-main-table-name, .create-page-main-minimum-stake {
+.create-page-main-table-name,
+.create-page-main-minimum-stake {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
-.create-page-main-table-name input {
-  padding: 4px 6px;
-  font-size: 18px;
-}
-
-.create-page-main-minimum-stake input {
-  font-size: 14px;
-  padding: 4px 6px;
-}
-
-.create-page-main-available-seats, .create-page-main-connect-id {
+.create-page-main-available-seats,
+.create-page-main-connect-id {
   font-size: 14px;
   color: gray;
+}
+
+.create-page-main-connect-url {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.create-page-main-connect-url > button {
+  height: 45px;
+  margin-top: 36px;
+  margin-left: 0.25em;
+}
+
+.create-page-main-connect-url > .input > input {
+  min-width: 250px;
+  max-width: 250px;
 }

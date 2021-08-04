@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import {  useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { DialogsContext } from '../../components/dialogs/dialogs-context';
 import playerService from '../../services/player-service';
 import tableService from '../../services/table-service';
-
+import {Button} from '../../components/button/button';
+import { Input } from '../../components/input-field/input';
 import './style.css';
 
 const CreatePage = () => {
@@ -15,7 +17,20 @@ const CreatePage = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const dialogerinos = useContext(DialogsContext);
 
+    useEffect(() => {
+        dialogerinos.onShowDialog({
+            mode:"info",
+            positiveButtonProp: {
+                callback: () => {console.log("accepterat")},
+                content:"Okej"
+            },
+            message: "Vår site funkar tyvärr inte utan kakor. Genom att fortsätta så godkänner du kakor.",
+            title: "Vi använder kakor för att levera denna tjänst"
+        });
+    }, []);
+    
     useEffect(() => {
         async function getTable() {
             const { data } = await tableService.getTable(authState.authToken.token);
@@ -51,30 +66,38 @@ const CreatePage = () => {
         changeTableName();
     }
 
+    const handleDone = () => {
+        if (tableName) (async () => handleChangeTableNameClick())();
+        if (playerName) (async () => handleChangePlayerNameClick())();
+           
+        history.push('/lobby');
+    }
+
+    const handleCopy = () => {
+        const copyText = document.querySelector("#copy-input").querySelector("input");
+
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+
+        document.execCommand("copy");
+    };
+
     return (
         <main className="create-page-main">
-            <div>
-                <label>Alias</label>
-                <input type="text" value={playerName} onChange={(e) => setPlayerName(e.target.value)} />
-                <button onClick={handleChangePlayerNameClick}>Ok</button>
-            </div>
+            <h2>Skapa bord</h2>
+            <Input label="Alias" type="text" value={playerName} onDebouncedChange={(val) => setPlayerName(val)} />
             <div className="create-page-main-table-name">
-                <label>Bordets namn</label>
-                <input type="text" value={tableName} onChange={(e) => setTableName(e.target.value)} />
-                <button onClick={handleChangeTableNameClick}>Ok</button>
+                <Input label="Bordets namn" type="text" value={tableName} onDebouncedChange={(val) => setTableName(val)} />                    
+            </div>
+            <div className="create-page-main-connect-url">
+                <Input id="copy-input" label="Delbar länk" type="text" isReadOnly value={`${window.origin}/join/${tableState.invitationToken}`}/>
+                <Button onClick={handleCopy}>Copy</Button>
             </div>
             <div className="create-page-main-available-seats">
                 <span>Platser vid bordet: 4 st</span>
             </div>
-            <div className="create-page-main-connect-url">
-                <input type="text" readOnly value={`${window.origin}/join/${tableState.invitationToken}`}/>
-                <button>Copy</button>
-            </div>
-            <div className="create-page-main-connect-id">
-                <span>Anslutnings ID: {tableState.invitationToken}</span>
-            </div>
-            <div>
-                <button onClick={() => history.push('/lobby')}>Gå till lobby</button>
+            <div className="create-page-done-btn">
+                <Button block onClick={handleDone}>Klar</Button>
             </div>
         </main>
     );
