@@ -73,6 +73,15 @@ const CreatePage = () => {
         history.push('/lobby');
     }
 
+    const handleCopy = () => {
+        const copyText = document.querySelector("#copy-input").querySelector("input");
+
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+
+        document.execCommand("copy");
+    };
+
     return (
         <main className="create-page-main">
             <h2>Skapa bord</h2>
@@ -81,8 +90,8 @@ const CreatePage = () => {
                 <Input label="Bordets namn" type="text" value={tableName} onDebouncedChange={(val) => setTableName(val)} />                    
             </div>
             <div className="create-page-main-connect-url">
-                <Input label="Delbar länk" type="text" isReadOnly value={`${window.origin}/join/${tableState.invitationToken}`}/>
-                <Button>Copy</Button>
+                <Input id="copy-input" label="Delbar länk" type="text" isReadOnly value={`${window.origin}/join/${tableState.invitationToken}`}/>
+                <Button onClick={handleCopy}>Copy</Button>
             </div>
             <div className="create-page-main-available-seats">
                 <span>Platser vid bordet: 4 st</span>
