@@ -7,8 +7,18 @@
   position: relative;
 }
 
+.button:hover {
+  cursor: pointer;
+}
+
+.button-block {
+  width: 100%;
+  max-width: 450px;
+  max-height: 45px;
+}
+
 .button:not(.button-disabled)::before {
-  content: " ";
+  content: ' ';
   position: absolute;
   box-shadow: 2px 4px 12px 0 rgb(0 1 0 / 25%);
   opacity: 0;
