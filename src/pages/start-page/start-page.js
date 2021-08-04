@@ -8,7 +8,6 @@ import { Button } from '../../components/button/button';
 import playerService from '../../services/player-service';
 
 export const StartPage = () => {
-  const [invitationToken, setInvitationToken] = useState("");
   const [isCreatingTable, setIsCreatingTable] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -43,9 +42,6 @@ export const StartPage = () => {
     createTable();
   }
 
-  function handleInvitationTokenClick() {
-    history.push(`/join/${invitationToken}`);
-  }
 
   return (
     <div className="start-page-container">

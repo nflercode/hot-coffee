@@ -1,0 +1,34 @@
+html,
+body,
+#root,
+.join-page-main {
+  height: 100%;
+}
+
+.join-page-main {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 3fr;
+  font-size: 18px;
+  margin-left: 2em;
+}
+
+.join-page-main-connect-url {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.join-page-main-connect-url > button {
+  height: 45px;
+  margin-top: 36px;
+  margin-left: 0.25em;
+}
+
+.join-page-main-connect-url > .input > input {
+  min-width: 250px;
+  max-width: 250px;
+}
+
+.join-page-done-btn {
+  padding-bottom: 2em;
+  align-self: flex-end;
+}
