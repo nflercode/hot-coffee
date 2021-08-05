@@ -8,7 +8,7 @@ import { DialogsContextProvider } from './components/dialogs/dialogs-context';
 
 export default function App() {
   return (
-    <>
+    <div className="main-wrapper">
       <Provider store={store}>
         <AuthController />
           <Socket />
@@ -16,6 +16,6 @@ export default function App() {
           <Router />
         </DialogsContextProvider>
       </Provider>
-    </>
+    </div>
   );
 }
