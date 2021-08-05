@@ -6,6 +6,7 @@ import { POT_REQUEST_FETCHED } from '../../store/reducers/pot-request';
 
 function setUpMarkerWorld(authToken) {
   const socket = io(`${process.env.REACT_APP_MARKERWORLD_HOST}`, {
+    path: '/markerworld/socket.io',
     auth: {
       token: authToken
     }
@@ -16,6 +17,7 @@ function setUpMarkerWorld(authToken) {
 
 function setUpChippie(authToken) {
   const socket = io(`${process.env.REACT_APP_CHIPPIE_HOST}`, {
+    path: '/chippie/socket.io',
     auth: {
       token: authToken
     }
