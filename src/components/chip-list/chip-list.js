@@ -8,7 +8,8 @@ const ChipList = ({
     chips,
     hasEnabledChips,
     currentBettingChips = {},
-    onClick,
+    onChipClick,
+    onReduceClick,
     larger
   }) => (
     <div className="chip-list-container">
@@ -19,13 +20,13 @@ const ChipList = ({
                 chip={chip}
                 isEnabled={hasEnabledChips}
                 larger={larger}
-                onClick={(clickedChip) => onClick(clickedChip)}/>
+                onClick={(clickedChip) => onChipClick(clickedChip)}/>
               <div className="chip-holder-betting-chips">
                 {hasEnabledChips && Object.keys(currentBettingChips).map((id) => (
                   chip.chipId === id && (
                     <>
                       <b>{currentBettingChips[id]}</b>
-                      <span>-</span>
+                      <Button onClick={() => onReduceClick(chip)} theme="negative">-</Button>
                     </>
                   )
                 ))}

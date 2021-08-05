@@ -41,7 +41,7 @@ export const DialogsContextProvider = ({ children }) => {
           setIsVisible(false);
           if (negativeButtonProp) negativeButtonProp.callback();
         },
-        content: positiveButtonProp.content
+        content: negativeButtonProp.content
       });
   };
 

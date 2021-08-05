@@ -65,16 +65,16 @@ function handleEventsChippie(socket, dispatch) {
     dispatch({ type: GAME_UPDATED, game });
   });
 
-  socket.on('hand-created', (hand) => {
-    console.log('Hand created!', JSON.stringify(hand, null, 2));
-  });
-
-  socket.on('hand-updated', (hand) => {
-    console.log('Hand updated!', JSON.stringify(hand, null, 2));
-  });
-
   socket.on('action-created', (action) => {
     console.log('Action created!', JSON.stringify(action, null, 2));
+  });
+
+  socket.on('pot-request-created', (potRequest) => {
+    console.log('Pot request created!', JSON.stringify(potRequest, null, 2));
+  });
+
+  socket.on('pot-request-updated', (potRequest) => {
+    console.log('Pot request updated!', JSON.stringify(potRequest, null, 2));
   });
 }
 

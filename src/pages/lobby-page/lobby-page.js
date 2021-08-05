@@ -5,7 +5,7 @@ import playerService from '../../services/player-service';
 import refreshTokenStorage from '../../storage/refresh-token-storage';
 import { useHistory } from 'react-router';
 import LazyLoad from 'react-lazyload';
-import { Button } from '../../components/button/button.js'
+import { Button } from '../../components/button/button'
 
 import './style.css';
 import axios from 'axios';

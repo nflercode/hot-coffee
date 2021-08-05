@@ -25,10 +25,43 @@ async function raise(authToken, gameId, chips) {
 }
 
 async function check(authToken, gameId) {
-  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/check`,
+  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/check/${gameId}`,
   {
-    gameId
+    headers: {
+      Authorization: `bearer ${authToken}`
+    }
+  }, (data) => {
+    console.log(data);
+  })
+}
+
+async function createPotRequest(authToken, gameId) {
+  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot/request`,
+  {
+    headers: {
+      Authorization: `bearer ${authToken}`
+    }
+  }, (data) => {
+    console.log(data);
+  })
+}
+
+async function updatePotRequest(authToken, potRequestId, answer) {
+  return await axios.put(`${REACT_APP_CHIPPIE_HOST}/game/pot/request/${potRequestId}`,
+  {
+    answer
   }, {
+    headers: {
+      Authorization: `bearer ${authToken}`
+    }
+  }, (data) => {
+    console.log(data);
+  })
+}
+
+async function getAwaitingPotRequest(authToken, gameId) {
+  return await axios.get(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot/request`,
+  {
     headers: {
       Authorization: `bearer ${authToken}`
     }
@@ -40,7 +73,10 @@ async function check(authToken, gameId) {
 const gameService = {
   getGameOngoing,
   raise,
-  check
+  check,
+  createPotRequest,
+  updatePotRequest,
+  getAwaitingPotRequest
 }
 
 export default gameService;

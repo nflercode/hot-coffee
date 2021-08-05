@@ -17,16 +17,6 @@ export const Snackbar = ({
           : 'snackbar-btns-container-single'
       }`}
     >
-      {negativeButton && (
-        <Button
-          theme='negative'
-          block
-          className='snackbar-negative-button'
-          onClick={positiveButton.callback}
-        >
-          {negativeButton.content}
-        </Button>
-      )}
       {positiveButton && (
         <Button
           block
@@ -34,6 +24,16 @@ export const Snackbar = ({
           className='snackbar-positive-button'
         >
           {positiveButton.content}
+        </Button>
+      )}
+            {negativeButton && (
+        <Button
+          theme='negative'
+          block
+          className='snackbar-negative-button'
+          onClick={positiveButton.callback}
+        >
+          {negativeButton.content}
         </Button>
       )}
     </div>
