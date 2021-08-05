@@ -9,6 +9,7 @@ import { Button } from '../../components/button/button'
 
 import './style.css';
 import axios from 'axios';
+import gameService from '../../services/game-service';
 
 const imageHostBaseUrl = 'https://nimage.nfler.se';
 
@@ -76,15 +77,7 @@ const LobbyPage = () => {
             ))
           }
         </div>
-        <Button onClick={() => {
-          axios.post('http://localhost:3001/chippie/game', {}, {
-            headers: {
-              Authorization: `bearer ${authState.authToken.token}`
-            }
-          }, (data) => {
-            console.log(data);
-          });
-        }}>Starta spel</Button>
+        <Button onClick={() => gameService.createGame(authState.authToken.token)}>Starta spel</Button>
       </main>
     </div>
   );

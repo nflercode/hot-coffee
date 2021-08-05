@@ -4,6 +4,10 @@
   flex-wrap: wrap;
 }
 
+.larger {
+  flex-wrap: nowrap;
+}
+
 .chip-list-container-chip-holder {
   flex-direction: column;
   margin: 0 5px;

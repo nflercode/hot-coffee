@@ -38,7 +38,7 @@ export const table = (state = 0, action) => {
         case PLAYER_REMOVED: {
             return {
                 ...state,
-                players: state.players.filter(player => player.id !== action.playerId)
+                players: (state.players || []).filter(player => player.id !== action.playerId)
             }
         }
         default: 

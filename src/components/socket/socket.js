@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client'
 import { GAME_CREATED, GAME_UPDATED } from '../../store/reducers/game-reducer';
+import { POT_REQUEST_FETCHED } from '../../store/reducers/pot-request';
 
 function setUpMarkerWorld(authToken) {
   const socket = io(`${process.env.REACT_APP_MARKERWORLD_HOST}`, {
@@ -70,11 +71,11 @@ function handleEventsChippie(socket, dispatch) {
   });
 
   socket.on('pot-request-created', (potRequest) => {
-    console.log('Pot request created!', JSON.stringify(potRequest, null, 2));
+    dispatch({ type: POT_REQUEST_FETCHED, potRequest})
   });
 
   socket.on('pot-request-updated', (potRequest) => {
-    console.log('Pot request updated!', JSON.stringify(potRequest, null, 2));
+    dispatch({ type: POT_REQUEST_FETCHED, potRequest})
   });
 }
 

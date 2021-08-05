@@ -66,17 +66,20 @@ const GamePage = () => {
   const dialogerinos = useContext(DialogsContext);
 
   useEffect(() => {
+    if (potRequestState.status !== "AWAITING") {
+      return;
+    }
+
     const requestingPlayer = memoizedPlayersWithParticipants.find(p => p.playerId === potRequestState.playerId);
     if (!requestingPlayer || requestingPlayer.isMe) {
-      console.log('is you, you wont see this one ;)')
       return;
     }
 
     const isMePlayer = memoizedPlayersWithParticipants.find(p => p.isMe);
     const myAnswer = potRequestState.participantAnswers.find(p => p.playerId === isMePlayer.playerId);
-    console.log(JSON.stringify(myAnswer, null, 2));
-    if (myAnswer && myAnswer.answer !== 'AWAITING')
+    if (myAnswer && myAnswer.answer !== 'AWAITING') {
       return;
+    }
 
     dialogerinos.onShowDialog({
         mode:"info",
@@ -112,7 +115,8 @@ const GamePage = () => {
         dispatch({ type: CHIPS_FETCHED, chips: chipsResponse.data.chips });
 
         const potRequestData = await gameService.getAwaitingPotRequest(authState.authToken.token, ongoingGameResp.data.game.id);
-        dispatch({ type: POT_REQUEST_FETCHED, potRequest: potRequestData.data.potRequest})
+        if (potRequestData.data.potRequest)
+          dispatch({ type: POT_REQUEST_FETCHED, potRequest: potRequestData.data.potRequest})
     }
 
     if (authState.authToken.token)
@@ -178,7 +182,6 @@ const GamePage = () => {
                         onChipClick={(clickedChip) => handleChipClick(clickedChip, 1)}
                         onReduceClick={(reducedChip) => handleChipClick(reducedChip, -1)}
                         larger={playerParticipant.isMe}
-                        styleDirection={playerParticipant.isMe ? 'row' : 'column'}
                       />
                       {playerParticipant.isMe && (
                         <div className="participant-section-button-group">
@@ -187,12 +190,12 @@ const GamePage = () => {
                               Object.keys(currentBettingChips).map((id) => ({
                                 chipId: id,
                                 amount: currentBettingChips[id]
-                              })))
+                              })));
+                            setCurrentBettingChips({});
                           }}>Call/Raise</Button>
                           <Button
                             disabled={!playerParticipant.isCurrentTurn}
-                            onClick={() => gameService.check(authState.authToken.token, gameState.id)}
-                            >
+                            onClick={() => gameService.check(authState.authToken.token, gameState.id)}>
                             Check
                           </Button>
                         </div>

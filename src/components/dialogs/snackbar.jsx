@@ -31,7 +31,7 @@ export const Snackbar = ({
           theme='negative'
           block
           className='snackbar-negative-button'
-          onClick={positiveButton.callback}
+          onClick={negativeButton.callback}
         >
           {negativeButton.content}
         </Button>

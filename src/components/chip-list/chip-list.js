@@ -12,7 +12,7 @@ const ChipList = ({
     onReduceClick,
     larger
   }) => (
-    <div className="chip-list-container">
+    <div className={`chip-list-container ${larger && 'larger'}`}>
       {
         chips.map((chip) => (
             <div className="chip-list-container-chip-holder">
