@@ -46,7 +46,7 @@ const LobbyPage = () => {
           <button className="lobby-page-header-leave-table-button" onClick={handleLeaveTable}>Lämna bord</button>
         </div>
         <div>
-          <h1 className="lobby-page-header-table-name">{tableState.name}</h1>
+          <h2 className="lobby-page-header-table-name">{tableState.name}</h2>
         </div>
       </header>
       <main className="lobby-page-main">

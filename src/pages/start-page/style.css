@@ -25,6 +25,11 @@ body,
   font-weight: 100;
   font-size: 54px;
   text-decoration: underline;
+  color: #747474;
+}
+
+.start-page-header-sub-title {
+  color: #747474;
 }
 
 .start-page-main {
