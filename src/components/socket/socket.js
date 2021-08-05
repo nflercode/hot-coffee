@@ -5,7 +5,7 @@ import { GAME_CREATED, GAME_UPDATED } from '../../store/reducers/game-reducer';
 import { POT_REQUEST_FETCHED } from '../../store/reducers/pot-request';
 
 function setUpMarkerWorld(authToken) {
-  const socket = io(`${process.env.REACT_APP_MARKERWORLD_HOST}`, {
+  const socket = io(`https://api.pr-14.nfler.se`, {
     path: '/markerworld/socket',
     auth: {
       token: authToken
@@ -16,7 +16,7 @@ function setUpMarkerWorld(authToken) {
 }
 
 function setUpChippie(authToken) {
-  const socket = io(`${process.env.REACT_APP_CHIPPIE_HOST}`, {
+  const socket = io(`https://api.pr-1.nfler.se`, {
     path: '/chippie/socket',
     auth: {
       token: authToken
