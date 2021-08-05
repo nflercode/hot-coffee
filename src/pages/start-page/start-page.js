@@ -46,7 +46,7 @@ export const StartPage = () => {
   return (
     <div className="start-page-container">
       <header className="start-page-header">
-        <h1 className="start-page-header-title"><b>n</b>fler</h1>
+        <h2 className="start-page-header-title"><b>n</b>fler</h2>
         <span className="start-page-header-sub-title">Your chip's online</span>
       </header>
       <main className="start-page-main">
