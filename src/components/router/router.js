@@ -5,6 +5,7 @@ import {StartPage} from "../../pages/start-page/start-page";
 const CreatePage = lazy(() => import("../../pages/create-page/create-page"));
 const JoinPage = lazy(() => import("../../pages/join-page/join-page"));
 const LobbyPage = lazy(() => import("../../pages/lobby-page/lobby-page"));
+const GamePage = lazy(() => import("../../pages/game-page/game-page"));
 
 export const Router = () => {
     const routes = 
@@ -33,6 +34,11 @@ export const Router = () => {
                 path: '/lobby',
                 exact: true,
                 component: LobbyPage
+            },
+            {
+                path: '/game',
+                exact: true,
+                component: GamePage
             }
         ];
 
