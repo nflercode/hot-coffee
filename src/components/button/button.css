@@ -40,9 +40,13 @@
 }
 
 .button-positive {
-  background-color: #a1faf1;
+  background-color: #517a55;
   color: #767a76;
   /*Cool blue color #A1FAF1*/
+}
+
+.button-neutral {
+  background-color: #76b1ff;
 }
 
 .button-negative {
@@ -51,17 +55,25 @@
 }
 
 .button-disabled.button-positive {
-  background-color: #a1faf17e;
+  background-color: #517a557e;
   box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
   color: #767a76;
 }
+
 .button-disabled.button-negative {
   background-color: #ff7a767e;
   box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
   color: #f0faf1;
 }
+
 .button-disabled.button-default {
   background-color: #517a557e;
+  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
+  color: #f0faf1;
+}
+
+.button-disabled.button-neutral {
+  background-color: #76b1ff7e;
   box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
   color: #f0faf1;
 }

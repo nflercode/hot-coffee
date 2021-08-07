@@ -63,7 +63,8 @@
 }
 
 .participant-section-button-group {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   justify-content: space-between;
+  grid-gap: 0.25em;
 }

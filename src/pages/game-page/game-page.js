@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import tableService from '../../services/table-service';
-import LazyLoad from 'react-lazyload';
 
 import { DialogsContext } from '../../components/dialogs/dialogs-context';
 
@@ -14,8 +13,7 @@ import { POT_REQUEST_FETCHED } from '../../store/reducers/pot-request';
 
 import { Button } from '../../components/button/button';
 import { ChipList } from '../../components/chip-list/chip-list';
-
-const imageHostBaseUrl = 'https://nimage.nfler.se';
+import { Player } from '../../components/player/player';
 
 const GamePage = () => {
   const tableState = useSelector(state => state.table);
@@ -166,14 +164,7 @@ const GamePage = () => {
                   return (
                     <div className={classes}>
                       <div>
-                        <LazyLoad height={60}>
-                          <img width={50}
-                                alt={`Avatar for ${playerParticipant.avatar.name}`}
-                                src={`${imageHostBaseUrl}/${playerParticipant.avatar.imageName}`} />
-                        </LazyLoad>
-                        <span>
-                          {playerParticipant.name} <b>#{playerParticipant.turnOrder}</b>
-                        </span>
+                        <Player playerParticipant={playerParticipant} />
                       </div>
                       <ChipList
                         chips={playerParticipant.chips}
@@ -192,11 +183,23 @@ const GamePage = () => {
                                 amount: currentBettingChips[id]
                               })));
                             setCurrentBettingChips({});
-                          }}>Call/Raise</Button>
+                          }}>Call</Button>
+                          <Button disabled={!playerParticipant.isCurrentTurn} onClick={() => {
+                            gameService.raise(authState.authToken.token, gameState.id,
+                              Object.keys(currentBettingChips).map((id) => ({
+                                chipId: id,
+                                amount: currentBettingChips[id]
+                              })));
+                            setCurrentBettingChips({});
+                          }}>Raise</Button>
                           <Button
                             disabled={!playerParticipant.isCurrentTurn}
+                            theme="neutral"
                             onClick={() => gameService.check(authState.authToken.token, gameState.id)}>
                             Check
+                          </Button>
+                          <Button theme="negative" disabled={!playerParticipant.isCurrentTurn}>
+                            Fold
                           </Button>
                         </div>
                       )}

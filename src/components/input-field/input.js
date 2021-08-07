@@ -3,7 +3,6 @@ import './input.css';
 
 export const Input = ({type, id, placeholder, value, label, isReadOnly, onChange, onDebouncedChange, onBlur}) => {
     const timer = useRef(null);
-    const isMountedRef = useRef(false);
     const [compValue, setCompValue] = useState(value);
 
     const killTimer = () => {
@@ -19,9 +18,7 @@ export const Input = ({type, id, placeholder, value, label, isReadOnly, onChange
       
 
     useEffect(() => {
-      isMountedRef.current = true;
       return () => {
-        isMountedRef.current = false;
         killTimer();
       }; 
     }, []);
@@ -33,11 +30,7 @@ export const Input = ({type, id, placeholder, value, label, isReadOnly, onChange
         }
         killTimer();
 
-        if(isMountedRef.current) {
             timer.current = setTimeout(() => cb(val), 200);
-        } else {
-            cb(val);
-          }
     };
 
     return (
