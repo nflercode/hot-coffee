@@ -20,7 +20,6 @@ body,
 .main-wrapper {
   height: 100%;
   overflow: hidden;
-  overflow: hidden;
 }
 
 #root::before {
@@ -43,6 +42,7 @@ body,
   z-index: -1;
   transform: rotate(90deg);
   overflow: hidden;
+  right: 0;
 }
 
 h2 {
