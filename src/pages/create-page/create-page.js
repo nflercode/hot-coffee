@@ -80,6 +80,12 @@ const CreatePage = () => {
         copyText.setSelectionRange(0, 99999);
 
         document.execCommand("copy");
+        
+        dialogerinos.onShowDialog({
+            type: "ALERT",
+            title: "Kopierat",
+            icon: "fa-copy"
+        });
     };
 
     return (

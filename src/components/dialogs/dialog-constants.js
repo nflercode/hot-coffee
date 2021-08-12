@@ -1,6 +1,7 @@
 export const dialogConstants = {
     type: {
-        SNACKBAR: "SNACKBAR"
+        SNACKBAR: "SNACKBAR",
+        ALERT: "ALERT"
     },
     mode: {
         INFO: 'INFO',

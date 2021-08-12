@@ -1,15 +1,15 @@
 import React, { Suspense, lazy, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { dialogConstants } from './dialog-constants';
-import { DialogsContext } from './dialogs-context';
 import { Snackbar } from './snackbar';
-
+import { Alert } from './alert';
 export const Dialogs = ({
   type,
   title,
   message,
   positiveButton,
-  negativeButton
+  negativeButton,
+  icon
 }) => {
   if (type === dialogConstants.type.SNACKBAR) {
     return (
@@ -20,6 +20,8 @@ export const Dialogs = ({
         negativeButton={negativeButton}
       />
     );
+  } else if (type === dialogConstants.type.ALERT) {
+    return <Alert title={title} icon={icon} />;
   }
   return <div>Jag är en dialog</div>;
 };
