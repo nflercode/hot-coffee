@@ -5,6 +5,7 @@ import { Router } from './components/router/router';
 import AuthController from './components/auth-controller/auth-controller';
 import Socket from './components/socket/socket';
 import { DialogsContextProvider } from './components/dialogs/dialogs-context';
+import '@fortawesome/fontawesome-free/js/all.js';
 
 export default function App() {
   return (

@@ -1,0 +1,57 @@
+.alert-container {
+  background: white;
+  padding: 4em;
+  position: fixed;
+  text-align: center;
+  min-width: 15em;
+  min-height: 10em;
+  max-width: 15em;
+  max-height: 10em;
+  margin: 0 auto; /* Will not center vertically and won't work in IE6/7. */
+  left: 0;
+  right: 0;
+  top: 35%;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 0 rgb(0 1 0 / 15%);
+  animation: alertAppear 0.15s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+@keyframes alertAppear {
+  from {
+    transform: scale(0, 0.4);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes contentAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  70% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.alert-icon {
+  font-size: 5em;
+  color: #14a76c;
+  animation: contentAppear 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.alert-title {
+  animation: contentAppear 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
