@@ -16,7 +16,8 @@ export const store = createStore(
         auth: {
             authToken: {},
             refreshToken: initialAuthState || {}
-        }
+        }, 
+        game: {}
     },
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

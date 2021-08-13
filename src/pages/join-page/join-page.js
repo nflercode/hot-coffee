@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import tableService from '../../services/table-service';
@@ -7,6 +7,7 @@ import {Button} from '../../components/button/button';
 import { Input } from '../../components/input-field/input';
 import playerService from '../../services/player-service';
 import './join-page.css';
+import { DialogsContext } from '../../components/dialogs/dialogs-context';
 
 const JoinPage = () => {
     const dispatch = useDispatch();
@@ -15,7 +16,20 @@ const JoinPage = () => {
     const [playerName, setPlayerName] = useState('');
     const { invitationToken } = useParams();
     const history = useHistory();
+    const dialogerinos = useContext(DialogsContext);
 
+    useEffect(() => {
+        dialogerinos.onShowDialog({
+            mode:"info",
+            positiveButtonProp: {
+                callback: () => {console.log("accepterat")},
+                content:"Okej"
+            },
+            message: "Vår site funkar tyvärr inte utan kakor. Genom att fortsätta så godkänner du kakor.",
+            title: "Vi använder kakor för att levera denna tjänst"
+        });
+    }, []);
+    
     useEffect(() => {
         async function getTable() {
             const { data } = await tableService.getTableByInvitationToken(invitationToken)
@@ -49,6 +63,13 @@ const JoinPage = () => {
         copyText.setSelectionRange(0, 99999);
 
         document.execCommand("copy");
+
+        
+        dialogerinos.onShowDialog({
+            type: "ALERT",
+            title: "Kopierat",
+            icon: "fa-copy"
+        });
     };
 
 

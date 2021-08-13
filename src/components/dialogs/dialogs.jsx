@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { dialogConstants } from './dialog-constants';
 import { Snackbar } from './snackbar';
 import { Alert } from './alert';
+import './dialogs.css';
 export const Dialogs = ({
   type,
   title,

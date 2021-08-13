@@ -14,14 +14,15 @@ import { POT_REQUEST_FETCHED } from '../../store/reducers/pot-request';
 import { Button } from '../../components/button/button';
 import { ChipList } from '../../components/chip-list/chip-list';
 import { Player } from '../../components/player/player';
-
+    
 const GamePage = () => {
   const tableState = useSelector(state => state.table);
   const authState = useSelector(state => state.auth);
   const gameState = useSelector(state => state.game);
   const chipsState = useSelector(state => state.chips);
   const potRequestState = useSelector(state => state.potRequest);
-
+  const dialogerinos = useContext(DialogsContext);
+  
   const [currentBettingChips, setCurrentBettingChips] = useState({});
 
   const dispatch = useDispatch();
@@ -34,14 +35,21 @@ const GamePage = () => {
       ...chip
     }
   };
+  const memoizedMeId = useMemo(() => 
+    ((tableState.players || []).find(p => p.isMe) || {}).id
+, [tableState.players]);
+
+const participantMe = useMemo(() => {
+  return (gameState.participants || []).find((participant) => participant.playerId === memoizedMeId);
+},
+  [gameState.participants, memoizedMeId])
 
   const memoizedOrderedPlayersClasses = useMemo(() => {
     if (!(tableState.players && gameState.participants))
       return [];
 
-    const isMePlayerId = tableState.players.find(p => p.isMe).id;
     const leftTopRight = ['left', 'top', 'right'];
-    return gameState.participants.filter(p => p.playerId !== isMePlayerId)
+    return gameState.participants.filter(p => p.playerId !== memoizedMeId)
         .sort((a, b) => a.turnOrder - b.turnOrder)
         .map((p, i) => ({ playerId: p.playerId, className: leftTopRight[i] }));
   }, [gameState, tableState]);
@@ -61,7 +69,17 @@ const GamePage = () => {
     });
   }, [tableState.players, gameState.participants, chipsState]);
 
-  const dialogerinos = useContext(DialogsContext);
+
+  useEffect(() => {
+    if(participantMe?.isCurrentTurn) {
+      dialogerinos.onShowDialog({
+        type: "ALERT",
+        title: "Det är din tur!",
+        icon: "fa-dice"
+      }); 
+    }
+  }, [participantMe, dialogerinos])
+
 
   useEffect(() => {
     if (potRequestState.status !== "AWAITING") {
