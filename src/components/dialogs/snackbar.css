@@ -7,11 +7,9 @@
   max-height: 150px;
   height: 150px;
   box-shadow: 0 0 10px 0 rgb(0 1 0 / 15%);
-  animation: moveSnackbar 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
   border-radius: 4px;
   display: grid;
   grid-column: 5fr auto 1fr;
-  /*grid-template-rows: 1fr; */
 }
 
 .snackbar-btns-container {
@@ -30,11 +28,52 @@
   align-items: center;
 }
 
-@keyframes moveSnackbar {
+.dialog-visible .snackbar-container {
+  animation: moveSnackbarAppear 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.dialog-invisible .snackbar-container {
+  bottom: -175px;
+  animation: moveSnackbarDissappear 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.dialog-visible .snackbar-title,
+.dialog-visible .snackbar-message,
+.dialog-visible .snackbar-btns-container {
+  animation: moveSnackbarContentAppear 0.4s
+    cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+@keyframes moveSnackbarDissappear {
   from {
-    bottom: -175px;
+    bottom: 0;
   }
   to {
+    bottom: -175px;
+  }
+}
+
+@keyframes moveSnackbarContentAppear {
+  from {
+    padding-top: 50px;
+  }
+
+  to {
+    padding-top: 0;
+  }
+}
+
+@keyframes moveSnackbarAppear {
+  0% {
+    bottom: -175px;
+  }
+  30% {
+    bottom: 5px;
+  }
+  60% {
+    bottom: -15px;
+  }
+  100% {
     bottom: 0;
   }
 }

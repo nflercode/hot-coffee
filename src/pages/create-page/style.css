@@ -48,3 +48,12 @@ body,
   min-width: 250px;
   max-width: 250px;
 }
+
+@media only screen and (min-width: 480px) {
+  .create-page-main {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+}

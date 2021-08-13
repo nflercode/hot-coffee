@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useContext, useState, useMemo } from 'react';
+import React, { useState, useRef } from 'react';
 import { dialogConstants } from './dialog-constants';
 
 import { Dialogs } from './dialogs';
@@ -6,7 +6,7 @@ import { Dialogs } from './dialogs';
 export const DialogsContext = React.createContext({});
 
 export const DialogsContextProvider = ({ children }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const dialogElement = useRef();
   const [title, setTitle] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -25,14 +25,14 @@ export const DialogsContextProvider = ({ children }) => {
     title: titleProp
   }) => {
     setType(typeProp);
-    setIsVisible(true);
     if (titleProp) setTitle(titleProp);
     if (messageProp) setMessage(messageProp);
     if (iconProp) setIcon(iconProp);
     if (positiveButtonProp)
       setPositiveButton({
         callback: () => {
-          setIsVisible(false);
+          if (dialogElement.current)
+            dialogElement.current.className = 'dialog-invisible';
           if (positiveButtonProp) positiveButtonProp.callback();
         },
         content: positiveButtonProp.content
@@ -40,15 +40,20 @@ export const DialogsContextProvider = ({ children }) => {
     if (negativeButtonProp)
       setNegativeButton({
         callback: () => {
-          setIsVisible(false);
+          if (dialogElement.current)
+            dialogElement.current.className = 'dialog-invisible';
           if (negativeButtonProp) negativeButtonProp.callback();
         },
         content: negativeButtonProp.content
       });
 
+    if (dialogElement.current)
+      dialogElement.current.className = 'dialog-visible';
+
     if (typeProp === 'ALERT') {
       setTimeout(() => {
-        setIsVisible(false);
+        if (dialogElement.current)
+          dialogElement.current.className = 'dialog-invisible';
       }, 1200);
     }
   };
@@ -56,7 +61,12 @@ export const DialogsContextProvider = ({ children }) => {
   return (
     <DialogsContext.Provider value={{ onShowDialog }}>
       {children}
-      {isVisible && (
+      <div
+        className='dialog-first-render'
+        ref={(element) => {
+          dialogElement.current = element;
+        }}
+      >
         <Dialogs
           type={type}
           title={title}
@@ -65,7 +75,7 @@ export const DialogsContextProvider = ({ children }) => {
           negativeButton={negativeButton}
           icon={icon}
         />
-      )}
+      </div>
     </DialogsContext.Provider>
   );
 };
