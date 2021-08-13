@@ -12,7 +12,7 @@ const ChipList = ({
     onReduceClick,
     larger
   }) => (
-    <div className={`chip-list-container ${larger && 'larger'}`}>
+    <div className={`chip-list-container ${larger ? 'larger' : ''}`}>
       {
         chips.map((chip) => (
             <div className="chip-list-container-chip-holder">
@@ -24,10 +24,10 @@ const ChipList = ({
               <div className="chip-holder-betting-chips">
                 {hasEnabledChips && Object.keys(currentBettingChips).map((id) => (
                   chip.chipId === id && (
-                    <>
+                    <div>
                       <b>{currentBettingChips[id]}</b>
                       <Button onClick={() => onReduceClick(chip)} theme="negative">-</Button>
-                    </>
+                    </div>
                   )
                 ))}
               </div>

@@ -53,3 +53,15 @@ body,
 p {
   color: #747474;
 }
+
+.fc-gold {
+  color: #d4af37;
+}
+
+.fc-grey {
+  color: #747474;
+}
+
+.f-center {
+  text-align: center;
+}

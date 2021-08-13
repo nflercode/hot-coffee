@@ -5,6 +5,7 @@
   flex-direction: column;
   border-radius: 4px;
   border: 3px solid #1f2605;
+  transform: scale(1);
 }
 
 .player-active {
@@ -16,6 +17,20 @@
   align-self: center;
   padding-bottom: 0.25em;
   padding-top: 0.25em;
+}
+
+.player-badge {
+  right: -0.6em;
+  top: -0.8em;
+  position: absolute;
+  background-color: #111;
+  padding: 0.4em;
+  border-radius: 50%;
+}
+
+.player-active > .player-badge {
+  right: -1em;
+  top: -1.2em;
 }
 
 @keyframes pulse {

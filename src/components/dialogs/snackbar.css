@@ -9,7 +9,7 @@
   box-shadow: 0 0 10px 0 rgb(0 1 0 / 15%);
   border-radius: 4px;
   display: grid;
-  grid-column: 5fr auto 1fr;
+  grid-template-rows: 1fr 2fr auto;
 }
 
 .snackbar-btns-container {
@@ -17,7 +17,7 @@
   column-gap: 15px;
 }
 
-.snackbar-btns-container.snackbar-btns-container-duo {
+.snackbar-btns-container.snackbar-btns-container-dual {
   grid-template-columns: 1fr 1fr;
 }
 
