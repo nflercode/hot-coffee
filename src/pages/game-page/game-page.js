@@ -58,27 +58,54 @@ const participantMe = useMemo(() => {
     if (!(tableState.players && gameState.participants && chipsState))
       return [];
 
-    return tableState.players.map((player) => {
+    const mappedPlayers = tableState.players.map((player) => {
       const participant = gameState.participants.find((participant) => participant.playerId === player.id);
+      
+      const mappedChips = participant.chips.map(mapChipWithActualChip);
+
+      let totalValue = 0;
+      mappedChips.forEach((chip) => {totalValue = totalValue + (chip.amount * chip.value)})
 
       return {
         ...participant,
-        chips: participant.chips.map(mapChipWithActualChip),
+        chips: mappedChips,
+        totalValue,
         ...player
       };
     });
-  }, [tableState.players, gameState.participants, chipsState]);
+
+    let highestValuePlayer = {value: null, player: null};
+    let lowestValuePlayer = {value: null, player: null};
+    
+    mappedPlayers.forEach(({totalValue, playerId}) => {
+      if (highestValuePlayer.value === null || totalValue > highestValuePlayer.value ) {
+        highestValuePlayer.value = totalValue;
+        highestValuePlayer.player = playerId;
+      } else if (lowestValuePlayer.value === null || totalValue < lowestValuePlayer.value ) {
+        lowestValuePlayer.value = totalValue;
+        lowestValuePlayer.player = playerId;
+      } 
+    });
+
+    return mappedPlayers.map((player) => {
+      return {
+        ...player,
+        isBest: highestValuePlayer.player === player.playerId,
+        isWorst: lowestValuePlayer.player === player.playerId,
+      }
+    });
+  }, [chipsState, gameState.participants, mapChipWithActualChip, tableState.players]);
 
 
   useEffect(() => {
-    if(participantMe?.isCurrentTurn) {
+    if(participantMe?.isCurrentTurn && potRequestState.status !== "AWAITING") {
       dialogerinos.onShowDialog({
         type: "ALERT",
         title: "Det är din tur!",
         icon: "fa-dice"
       }); 
     }
-  }, [participantMe, dialogerinos])
+  }, [participantMe, dialogerinos, potRequestState.status])
 
 
   useEffect(() => {
@@ -107,8 +134,8 @@ const participantMe = useMemo(() => {
           callback: () => {gameService.updatePotRequest(authState.authToken.token, potRequestState.id, "NO")},
           content: 'I deny'
         },
-        message: `${requestingPlayer.name} are requesting to receive the pot. Do you give permission?`,
-        title: `${requestingPlayer.name} are requesting the pot.`
+        message: `${requestingPlayer.name} is requesting to receive the pot. Do you give permission?`,
+        title: `${requestingPlayer.name} is requesting the pot.`
     });
   }, [memoizedPlayersWithParticipants, potRequestState]);
 
@@ -166,7 +193,7 @@ const participantMe = useMemo(() => {
                 disabled={memoizedPotChips.length === 0}
                 onClick={() => gameService.createPotRequest(authState.authToken.token, gameState.id)}
                 >
-                ( )
+                <i className="fas fa-hand-holding-usd"></i>
               </Button>
             </div>
               {

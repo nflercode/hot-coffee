@@ -7,6 +7,7 @@ export const DialogsContext = React.createContext({});
 
 export const DialogsContextProvider = ({ children }) => {
   const dialogElement = useRef();
+  const timer = useRef();
   const [title, setTitle] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -25,6 +26,7 @@ export const DialogsContextProvider = ({ children }) => {
     title: titleProp
   }) => {
     setType(typeProp);
+    clearTimeout(timer.current);
     if (titleProp) setTitle(titleProp);
     if (messageProp) setMessage(messageProp);
     if (iconProp) setIcon(iconProp);
@@ -51,7 +53,7 @@ export const DialogsContextProvider = ({ children }) => {
       dialogElement.current.className = 'dialog-visible';
 
     if (typeProp === 'ALERT') {
-      setTimeout(() => {
+      timer.current = setTimeout(() => {
         if (dialogElement.current)
           dialogElement.current.className = 'dialog-invisible';
       }, 1200);

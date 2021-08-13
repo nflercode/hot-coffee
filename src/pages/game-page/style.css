@@ -62,6 +62,10 @@
   align-items: center;
 }
 
+.game-page-pot-container .fa-hand-holding-usd {
+  font-size: 1.5em;
+}
+
 .participant-section-button-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
