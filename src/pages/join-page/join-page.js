@@ -6,8 +6,9 @@ import refreshTokenStorage from '../../storage/refresh-token-storage';
 import {Button} from '../../components/button/button';
 import { Input } from '../../components/input-field/input';
 import playerService from '../../services/player-service';
-import './join-page.css';
+import { CopyLink } from '../../components/copy-link/copy-link';
 import { DialogsContext } from '../../components/dialogs/dialogs-context';
+import './join-page.css';
 
 const JoinPage = () => {
     const dispatch = useDispatch();
@@ -55,23 +56,6 @@ const JoinPage = () => {
         joinTable();
     }
 
-    
-    const handleCopy = () => {
-        const copyText = document.querySelector("#copy-input").querySelector("input");
-
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-
-        document.execCommand("copy");
-
-        
-        dialogerinos.onShowDialog({
-            type: "ALERT",
-            title: "Kopierat",
-            icon: "fa-copy"
-        });
-    };
-
 
     if(authState.authToken.token) return (
         <main className="join-page-main">
@@ -98,13 +82,12 @@ const JoinPage = () => {
     return (
         <main className="join-page-main">
             <h2>Anslut till bord</h2>
-            <div className="join-page-main-connect-url">
-                <Input id="copy-input" label="Delbar länk" type="text" isReadOnly value={`${window.origin}/join/${tableState.invitationToken}`}/>
-                <Button onClick={handleCopy}>Copy</Button>
-            </div>
             <Input label="Alias" type="text" value={playerName} onDebouncedChange={(val) => setPlayerName(val)} />
             <div>
                 <span>{(tableState.players || []).length} {annanOrAndra} sitter vid det här bordet</span>
+            </div>
+            <div>
+                <CopyLink invitationToken={tableState.invitationToken}  />
             </div>
             <div className="join-page-done-btn">
                 <Button block onClick={handleJoinTableButtonClick}>Anslut till bord</Button>

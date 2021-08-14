@@ -1,0 +1,11 @@
+.copy-link-container {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.copy-link-container > .button {
+  max-height: 40px;
+  margin-top: 18px;
+  margin-left: 0.5em;
+}
