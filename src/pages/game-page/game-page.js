@@ -106,11 +106,6 @@ const GamePage = () => {
     });
   }, [participantPlayers, potRequestState]);
 
-  /*
-   `<b>${requestingPlayer.name}</b> is requesting to receive the pot. Do you give permission?
-        \n If approved: this will also start a new round.`
-        */
-
   useEffect(() => {
     // TODO: move this function to a getTableService, this blob is not necessary in the component
     // Also make requests run parlell
