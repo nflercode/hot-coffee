@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { potChipsSelector } from '../../selectors/combined-states';
 import { ChipList } from '../../components/chip-list/chip-list';

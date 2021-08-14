@@ -44,6 +44,10 @@
     cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 
+.snackbar-message {
+  white-space: pre-line;
+}
+
 @keyframes moveSnackbarDissappear {
   from {
     bottom: 0;

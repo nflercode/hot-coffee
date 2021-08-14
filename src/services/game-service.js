@@ -12,8 +12,26 @@ async function createGame(authToken) {
     });
 }
 
+async function closeGame(authToken, gameId) {
+  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/close`, {}, {
+      headers: {
+        Authorization: `bearer ${authToken}`
+      }
+    }, (data) => {
+      console.log(data);
+    });
+}
+
 async function getGameOngoing(authToken) {
   return await axios.get(`${REACT_APP_CHIPPIE_HOST}/game/ongoing`, {
+    headers: {
+      Authorization: `bearer ${authToken}`
+    }
+  });
+}
+
+async function nextRound(authToken, gameId) {
+  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/round/next`, {}, {
     headers: {
       Authorization: `bearer ${authToken}`
     }
@@ -46,8 +64,20 @@ async function check(authToken, gameId) {
   })
 }
 
+async function fold(authToken, gameId) {
+  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/fold`,
+  {},
+  {
+    headers: {
+      Authorization: `bearer ${authToken}`
+    }
+  }, (data) => {
+    console.log(data);
+  })
+}
+
 async function createPotRequest(authToken, gameId) {
-  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot/request`,
+  return await axios.post(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot-requests`,
   {},
   {
     headers: {
@@ -72,7 +102,7 @@ async function updatePotRequest(authToken, potRequestId, answer) {
 }
 
 async function getAwaitingPotRequest(authToken, gameId) {
-  return await axios.get(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot/request`,
+  return await axios.get(`${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot-requests/ongoing`,
   {
     headers: {
       Authorization: `bearer ${authToken}`
@@ -84,12 +114,15 @@ async function getAwaitingPotRequest(authToken, gameId) {
 
 const gameService = {
   createGame,
+  closeGame,
   getGameOngoing,
   raise,
   check,
+  fold,
   createPotRequest,
   updatePotRequest,
-  getAwaitingPotRequest
+  getAwaitingPotRequest,
+  nextRound
 }
 
 export default gameService;
