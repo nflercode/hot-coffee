@@ -75,3 +75,9 @@ body,
   min-width: 100%;
   align-items: center;
 }
+
+.logotype {
+  background: url('./logotype.png');
+  height: 151px;
+  width: 285px;
+}
