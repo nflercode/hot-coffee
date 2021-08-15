@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import './player.css';
-const imageHostBaseUrl = 'https://nimage.nfler.se';
+const imageHostBaseUrl = 'https://image.mychips.online';
 
 export const Player = ({ playerParticipant }) => {
   const [showCash, setShowCash] = useState(false);
