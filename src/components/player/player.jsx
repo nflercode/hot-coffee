@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LazyLoad from 'react-lazyload';
 import './player.css';
-const imageHostBaseUrl = 'https://image.mychips.online';
+const imageHostBaseUrl = 'https://image.mychips.online/avatars';
 
 export const Player = ({ playerParticipant }) => {
   const [showCash, setShowCash] = useState(false);
