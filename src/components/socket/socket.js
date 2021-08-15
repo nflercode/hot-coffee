@@ -36,17 +36,14 @@ function handleEventsMarkerWorld(socket, dispatch) {
   });
 
   socket.on('player-added', (player) => {
-    console.log('player joined', player);
     dispatch({ type: "PLAYER_JOINED", player });
   });
 
   socket.on('player-removed', (playerId) => {
-    console.log('Player removed', playerId);
     dispatch({ type: "PLAYER_REMOVED", playerId });
   });
 
   socket.on('player-name-change', (player) => {
-    console.log('Player name changed', player);
     dispatch({ type: "PLAYER_NAME_CHANGE", player });
   });
 }

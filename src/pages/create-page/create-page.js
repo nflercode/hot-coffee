@@ -3,10 +3,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { DialogsContext } from '../../components/dialogs/dialogs-context';
-import playerService from '../../services/player-service';
-import tableService from '../../services/table-service';
 import {Button} from '../../components/button/button';
 import { Input } from '../../components/input-field/input';
+import { CopyLink } from '../../components/copy-link/copy-link';
+import playerService from '../../services/player-service';
+import tableService from '../../services/table-service';
 import './style.css';
 
 const CreatePage = () => {
@@ -73,21 +74,6 @@ const CreatePage = () => {
         history.push('/lobby');
     }
 
-    const handleCopy = () => {
-        const copyText = document.querySelector("#copy-input").querySelector("input");
-
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-
-        document.execCommand("copy");
-        
-        dialogerinos.onShowDialog({
-            type: "ALERT",
-            title: "Kopierat",
-            icon: "fa-copy"
-        });
-    };
-
     return (
         <main className="create-page-main">
             <h2>Skapa bord</h2>
@@ -95,9 +81,8 @@ const CreatePage = () => {
             <div className="create-page-main-table-name">
                 <Input label="Bordets namn" type="text" value={tableName} onDebouncedChange={(val) => setTableName(val)} />                    
             </div>
-            <div className="create-page-main-connect-url">
-                <Input id="copy-input" label="Delbar länk" type="text" isReadOnly value={`${window.origin}/join/${tableState.invitationToken}`}/>
-                <Button onClick={handleCopy}>Copy</Button>
+            <div>
+                <CopyLink invitationToken={tableState.invitationToken}  />
             </div>
             <div className="create-page-main-available-seats">
                 <span>Platser vid bordet: 4 st</span>

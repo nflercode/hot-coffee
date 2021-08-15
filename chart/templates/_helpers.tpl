@@ -1,7 +1,7 @@
 {{- define "ingress.host" }}
 {{- if .Values.pr -}}
-    pr-{{ .Values.pr }}.nfler.se
+    pr-{{ .Values.pr }}.mychips.online
 {{- else -}}
-    nfler.se
+    mychips.online
 {{- end -}}
 {{- end }}

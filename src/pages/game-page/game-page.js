@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useContext } from 'react';
+import React, { useEffect, useMemo, useState, useContext, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import tableService from '../../services/table-service';
 
@@ -14,247 +14,204 @@ import { POT_REQUEST_FETCHED } from '../../store/reducers/pot-request';
 import { Button } from '../../components/button/button';
 import { ChipList } from '../../components/chip-list/chip-list';
 import { Player } from '../../components/player/player';
-    
+import { playerMeSelector, playersSeletor } from '../../selectors/table-state';
+import { authSelector } from '../../selectors/authState';
+import { gameSelector, myParticipantSelector, participantsSelector } from '../../selectors/game-state';
+import { potSelector } from '../../selectors/pot-request-state';
+import { participantPlayerSelector } from '../../selectors/combined-states';
+import { GamePot } from './game-pot';
+import usePrevious from '../../helpers/use-previous';
+
 const GamePage = () => {
-  const tableState = useSelector(state => state.table);
-  const authState = useSelector(state => state.auth);
-  const gameState = useSelector(state => state.game);
-  const chipsState = useSelector(state => state.chips);
-  const potRequestState = useSelector(state => state.potRequest);
+  const authState = useSelector(authSelector);
+  const gameState = useSelector(gameSelector);
+  const potRequestState = useSelector(potSelector);
+  const playerMe = useSelector(playerMeSelector)
+  const myParticipant = useSelector((state) => myParticipantSelector(state, playerMe?.id))
+  const participants = useSelector(participantsSelector)
+  const players = useSelector(playersSeletor);
+  const participantPlayers = useSelector(participantPlayerSelector);
   const dialogerinos = useContext(DialogsContext);
-  
   const [currentBettingChips, setCurrentBettingChips] = useState({});
+
+  const prevPotRequestStatus = usePrevious(potRequestState.status)
 
   const dispatch = useDispatch();
 
-  const mapChipWithActualChip = (chip) => {
-    const actualChip = chipsState.find((actualChip => actualChip.id === chip.chipId));
-              
-    return {
-      ...actualChip,
-      ...chip
-    }
-  };
-  const memoizedMeId = useMemo(() => 
-    ((tableState.players || []).find(p => p.isMe) || {}).id
-, [tableState.players]);
-
-const participantMe = useMemo(() => {
-  return (gameState.participants || []).find((participant) => participant.playerId === memoizedMeId);
-},
-  [gameState.participants, memoizedMeId])
+  const meId = playerMe?.id;
 
   const memoizedOrderedPlayersClasses = useMemo(() => {
-    if (!(tableState.players && gameState.participants))
+    if (!(players && participants))
       return [];
 
     const leftTopRight = ['left', 'top', 'right'];
-    return gameState.participants.filter(p => p.playerId !== memoizedMeId)
-        .sort((a, b) => a.turnOrder - b.turnOrder)
-        .map((p, i) => ({ playerId: p.playerId, className: leftTopRight[i] }));
-  }, [gameState, tableState]);
-
-  const memoizedPlayersWithParticipants = useMemo(() => {
-    if (!(tableState.players && gameState.participants && chipsState))
-      return [];
-
-    const mappedPlayers = tableState.players.map((player) => {
-      const participant = gameState.participants.find((participant) => participant.playerId === player.id);
-      
-      const mappedChips = participant.chips.map(mapChipWithActualChip);
-
-      let totalValue = 0;
-      mappedChips.forEach((chip) => {totalValue = totalValue + (chip.amount * chip.value)})
-
-      return {
-        ...participant,
-        chips: mappedChips,
-        totalValue,
-        ...player
-      };
-    });
-
-    let highestValuePlayer = {value: null, player: null};
-    let lowestValuePlayer = {value: null, player: null};
-    
-    mappedPlayers.forEach(({totalValue, playerId}) => {
-      if (highestValuePlayer.value === null || totalValue > highestValuePlayer.value ) {
-        highestValuePlayer.value = totalValue;
-        highestValuePlayer.player = playerId;
-      } else if (lowestValuePlayer.value === null || totalValue < lowestValuePlayer.value ) {
-        lowestValuePlayer.value = totalValue;
-        lowestValuePlayer.player = playerId;
-      } 
-    });
-
-    return mappedPlayers.map((player) => {
-      return {
-        ...player,
-        isBest: highestValuePlayer.player === player.playerId,
-        isWorst: lowestValuePlayer.player === player.playerId,
-      }
-    });
-  }, [chipsState, gameState.participants, mapChipWithActualChip, tableState.players]);
-
+    return participants.filter(p => p.playerId !== meId)
+      .sort((a, b) => a.turnOrder - b.turnOrder)
+      .map((p, i) => ({ playerId: p.playerId, className: leftTopRight[i] }));
+  }, [meId, participants, players]);
 
   useEffect(() => {
-    if(participantMe?.isCurrentTurn && potRequestState.status !== "AWAITING") {
+    if (myParticipant?.isCurrentTurn && potRequestState.status !== "AWAITING") {
       dialogerinos.onShowDialog({
         type: "ALERT",
         title: "Det är din tur!",
         icon: "fa-dice"
-      }); 
+      });
     }
-  }, [participantMe, dialogerinos, potRequestState.status])
+  }, [myParticipant, dialogerinos, potRequestState.status]);
 
+  useEffect(() => {
+    const requestingPlayer = participantPlayers.find(p => p.playerId === potRequestState.playerId);
+    if (requestingPlayer?.isMe
+      && potRequestState.status === "APPROVED"
+      && prevPotRequestStatus === "AWAITING") {
+      gameService.nextRound(authState.authToken.token, gameState.id);
+    }
+  }, [participantPlayers, potRequestState.status]);
 
   useEffect(() => {
     if (potRequestState.status !== "AWAITING") {
       return;
     }
 
-    const requestingPlayer = memoizedPlayersWithParticipants.find(p => p.playerId === potRequestState.playerId);
+    const requestingPlayer = participantPlayers.find(p => p.playerId === potRequestState.playerId);
     if (!requestingPlayer || requestingPlayer.isMe) {
       return;
     }
 
-    const isMePlayer = memoizedPlayersWithParticipants.find(p => p.isMe);
+    const isMePlayer = participantPlayers.find(p => p.isMe);
     const myAnswer = potRequestState.participantAnswers.find(p => p.playerId === isMePlayer.playerId);
     if (myAnswer && myAnswer.answer !== 'AWAITING') {
       return;
     }
 
     dialogerinos.onShowDialog({
-        mode:"info",
-        positiveButtonProp: {
-            callback: () => {gameService.updatePotRequest(authState.authToken.token, potRequestState.id, "OK")},
-            content:"I accept"
-        },
-        negativeButtonProp: {
-          callback: () => {gameService.updatePotRequest(authState.authToken.token, potRequestState.id, "NO")},
-          content: 'I deny'
-        },
-        message: `${requestingPlayer.name} is requesting to receive the pot. Do you give permission?`,
-        title: `${requestingPlayer.name} is requesting the pot.`
+      mode: "info",
+      positiveButtonProp: {
+        callback: () => { gameService.updatePotRequest(authState.authToken.token, potRequestState.id, "OK") },
+        content: "I accept"
+      },
+      negativeButtonProp: {
+        callback: () => { gameService.updatePotRequest(authState.authToken.token, potRequestState.id, "NO") },
+        content: 'I deny'
+      },
+      message: (
+        <div>
+          <b>{requestingPlayer.name}</b> is requesting to receive the pot.
+          <br />
+          <br />
+          <i>If approved: this will also start a new round.</i>
+        </div>),
+      title: `${requestingPlayer.name} is requesting the pot.`
     });
-  }, [memoizedPlayersWithParticipants, potRequestState]);
-
-  const memoizedPotChips = useMemo(() => {
-    if (!(gameState.pot && chipsState))
-      return [];
-
-    return gameState.pot.map(mapChipWithActualChip);
-  }, [gameState.pot, chipsState]);
+  }, [participantPlayers, potRequestState]);
 
   useEffect(() => {
+    // TODO: move this function to a getTableService, this blob is not necessary in the component
+    // Also make requests run parlell
     async function getTable() {
-        const tableResp = await tableService.getTable(authState.authToken.token);
-        dispatch({ type: "CREATE_TABLE", table: tableResp.data });
+      const tableResp = await tableService.getTable(authState.authToken.token);
+      dispatch({ type: "CREATE_TABLE", table: tableResp.data });
 
-        const ongoingGameResp = await gameService.getGameOngoing(authState.authToken.token);
-        dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
+      const ongoingGameResp = await gameService.getGameOngoing(authState.authToken.token);
+      dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
 
-        const chipsResponse = await chipService.getChips(authState.authToken.token);
-        dispatch({ type: CHIPS_FETCHED, chips: chipsResponse.data.chips });
+      const chipsResponse = await chipService.getChips(authState.authToken.token);
+      dispatch({ type: CHIPS_FETCHED, chips: chipsResponse.data.chips });
 
-        const potRequestData = await gameService.getAwaitingPotRequest(authState.authToken.token, ongoingGameResp.data.game.id);
-        if (potRequestData.data.potRequest)
-          dispatch({ type: POT_REQUEST_FETCHED, potRequest: potRequestData.data.potRequest})
+      const potRequestData = await gameService.getAwaitingPotRequest(authState.authToken.token, ongoingGameResp.data.game.id);
+      if (potRequestData.data.potRequest)
+        dispatch({ type: POT_REQUEST_FETCHED, potRequest: potRequestData.data.potRequest })
     }
 
     if (authState.authToken.token)
-        getTable();
+      getTable();
 
   }, [authState.authToken, dispatch]);
 
   function handleChipClick(chip, incDec) {
-    const newAmount = (currentBettingChips[chip.chipId] || 0)+incDec;
+    const newAmount = (currentBettingChips[chip.chipId] || 0) + incDec;
     if (newAmount < 0 || newAmount > chip.amount) {
       return;
     }
 
     setCurrentBettingChips({
       ...currentBettingChips,
-      [chip.chipId]: newAmount 
+      [chip.chipId]: newAmount
     });
   }
 
   return (
-      <div className="game-page-container">
-          <main className="game-page-main">
-            <div className="game-page-pot-container">
-              <ChipList
-                chips={memoizedPotChips}
-                hasEnabledChips={false}
-                onClick={() => {}}
-                styleDirection={'row'}
-              />
-              <Button
-                disabled={memoizedPotChips.length === 0}
-                onClick={() => gameService.createPotRequest(authState.authToken.token, gameState.id)}
-                >
-                <i className="fas fa-hand-holding-usd"></i>
-              </Button>
-            </div>
-              {
-                memoizedPlayersWithParticipants && memoizedPlayersWithParticipants.map((playerParticipant) => {
-                  const classObj = memoizedOrderedPlayersClasses.find(p => p.playerId === playerParticipant.id);
+    <div className="game-page-container">
+      <main className="game-page-main">
+        <div className="game-page-pot-container">
+          <GamePot />
+        </div>
+        {
+          participantPlayers && participantPlayers.map((playerParticipant) => {
+            if (!playerParticipant) return null;
+            const classObj = memoizedOrderedPlayersClasses.find(p => p.playerId === playerParticipant.id);
 
-                  let classes = 'game-page-participant-container';
-                  if (playerParticipant.isMe)
-                    classes += ' current-participant';
-                  else
-                    classes += ` participant-section-${classObj.className}`;
+            let classes =
+              `game-page-participant-container ${!playerParticipant.isParticipating ? 'participant-inactive' : ''}`;
 
-                  return (
-                    <div className={classes}>
-                      <div>
-                        <Player playerParticipant={playerParticipant} />
-                      </div>
-                      <ChipList
-                        chips={playerParticipant.chips}
-                        hasEnabledChips={playerParticipant.isMe && playerParticipant.isCurrentTurn}
-                        currentBettingChips={currentBettingChips}
-                        onChipClick={(clickedChip) => handleChipClick(clickedChip, 1)}
-                        onReduceClick={(reducedChip) => handleChipClick(reducedChip, -1)}
-                        larger={playerParticipant.isMe}
-                      />
-                      {playerParticipant.isMe && (
-                        <div className="participant-section-button-group">
-                          <Button disabled={!playerParticipant.isCurrentTurn} onClick={() => {
-                            gameService.raise(authState.authToken.token, gameState.id,
-                              Object.keys(currentBettingChips).map((id) => ({
-                                chipId: id,
-                                amount: currentBettingChips[id]
-                              })));
-                            setCurrentBettingChips({});
-                          }}>Call</Button>
-                          <Button disabled={!playerParticipant.isCurrentTurn} onClick={() => {
-                            gameService.raise(authState.authToken.token, gameState.id,
-                              Object.keys(currentBettingChips).map((id) => ({
-                                chipId: id,
-                                amount: currentBettingChips[id]
-                              })));
-                            setCurrentBettingChips({});
-                          }}>Raise</Button>
-                          <Button
-                            disabled={!playerParticipant.isCurrentTurn}
-                            theme="neutral"
-                            onClick={() => gameService.check(authState.authToken.token, gameState.id)}>
-                            Check
-                          </Button>
-                          <Button theme="negative" disabled={!playerParticipant.isCurrentTurn}>
-                            Fold
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  )
-                })
-              }
-          </main>
-      </div>
-    );
+            if (playerParticipant.isMe)
+              classes += ' current-participant';
+            else
+              classes += ` participant-section-${classObj?.className}`;
+
+            return (
+              <div className={classes}>
+                <div>
+                  <Player playerParticipant={playerParticipant} />
+                </div>
+                <ChipList
+                  chips={playerParticipant.chips}
+                  hasEnabledChips={playerParticipant.isMe && playerParticipant.isCurrentTurn}
+                  currentBettingChips={currentBettingChips}
+                  onChipClick={(clickedChip) => handleChipClick(clickedChip, 1)}
+                  onReduceClick={(reducedChip) => handleChipClick(reducedChip, -1)}
+                  larger={playerParticipant.isMe}
+                />
+                {playerParticipant.isMe && (
+                  <div className="participant-section-button-group">
+                    <Button disabled={!playerParticipant.isCurrentTurn} onClick={() => {
+                      gameService.raise(authState.authToken.token, gameState.id,
+                        Object.keys(currentBettingChips).map((id) => ({
+                          chipId: id,
+                          amount: currentBettingChips[id]
+                        })));
+                      setCurrentBettingChips({});
+                    }}>Call</Button>
+                    <Button disabled={!playerParticipant.isCurrentTurn} onClick={() => {
+                      gameService.raise(authState.authToken.token, gameState.id,
+                        Object.keys(currentBettingChips).map((id) => ({
+                          chipId: id,
+                          amount: currentBettingChips[id]
+                        })));
+                      setCurrentBettingChips({});
+                    }}>Raise</Button>
+                    <Button
+                      disabled={!playerParticipant.isCurrentTurn}
+                      theme="neutral"
+                      onClick={() => gameService.check(authState.authToken.token, gameState.id)}>
+                      Check
+                      </Button>
+                    <Button
+                      theme="negative"
+                      disabled={!playerParticipant.isCurrentTurn}
+                      onClick={() => gameService.fold(authState.authToken.token, gameState.id)}>
+                      Fold
+                      </Button>
+                  </div>
+                )}
+              </div>
+            )
+          })
+        }
+      </main>
+    </div>
+  );
 };
 
 export default GamePage;

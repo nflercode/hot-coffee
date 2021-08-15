@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import LazyLoad from 'react-lazyload';
 import tableService from '../../services/table-service';
 import playerService from '../../services/player-service';
+import gameService from '../../services/game-service';
 import refreshTokenStorage from '../../storage/refresh-token-storage';
 import { useHistory } from 'react-router';
-import LazyLoad from 'react-lazyload';
 import { Button } from '../../components/button/button'
-
+import { CopyLink } from '../../components/copy-link/copy-link';
 import './style.css';
-import axios from 'axios';
-import gameService from '../../services/game-service';
 
-const imageHostBaseUrl = 'https://nimage.nfler.se';
+const imageHostBaseUrl = 'https://image.mychips.online/avatars';
 
 const LobbyPage = () => {
   const tableState = useSelector(state => state.table);
@@ -52,7 +51,6 @@ const LobbyPage = () => {
     <div className="lobby-page-container">
       <header className="lobby-page-header">
         <div className="lobby-page-header-upper-header">
-          <span>url: {window.origin}/join/{tableState.invitationToken}</span>
           <button className="lobby-page-header-leave-table-button" onClick={handleLeaveTable}>Lämna bord</button>
         </div>
         <div>
@@ -77,6 +75,10 @@ const LobbyPage = () => {
             ))
           }
         </div>
+        <div>
+          <CopyLink invitationToken={tableState.invitationToken}  />
+        </div>
+
         <Button onClick={() => gameService.createGame(authState.authToken.token)}>Starta spel</Button>
       </main>
     </div>
