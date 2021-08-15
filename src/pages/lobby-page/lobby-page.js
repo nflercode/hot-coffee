@@ -10,7 +10,7 @@ import { Button } from '../../components/button/button'
 import { CopyLink } from '../../components/copy-link/copy-link';
 import './style.css';
 
-const imageHostBaseUrl = 'https://nimage.nfler.se';
+const imageHostBaseUrl = 'https://image.mychips.online';
 
 const LobbyPage = () => {
   const tableState = useSelector(state => state.table);
