@@ -6,6 +6,7 @@ import tableService from '../../services/table-service';
 import refreshTokenStorage from '../../storage/refresh-token-storage';
 import { Button } from '../../components/button/button';
 import playerService from '../../services/player-service';
+import { LogoType } from './logotype';
 
 export const StartPage = () => {
   const [isCreatingTable, setIsCreatingTable] = useState(false);
@@ -46,21 +47,20 @@ export const StartPage = () => {
   return (
     <div className="start-page-container">
       <header className="start-page-header">
-        <h2 className="start-page-header-title"><b>n</b>fler</h2>
-        <span className="start-page-header-sub-title">Your chip's online</span>
+        <LogoType/>
       </header>
       <main className="start-page-main">
         <div>
           {
             !authState.authToken.token ? (
-              <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Skapa bord</Button>
+              <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Create table</Button>
             ) : (
               <>
-                <p>Det ser ut som att du är med i ett bord redan</p>
+                <p>It seems like you are in a lobby alread, do you want to join it again?</p>
                 <div className="start-page-leave-or-join">
-                  <Button  onClick={() => history.push('/lobby')}>Till lobby</Button>
+                  <Button  onClick={() => history.push('/lobby')}>To lobby</Button>
                   Eller
-                  <Button theme="negative" onClick={handleLeaveTable}>Lämna</Button>
+                  <Button theme="negative" onClick={handleLeaveTable}>Leave lobby</Button>
                 </div>
               </>
             )
