@@ -2,6 +2,8 @@
  * Full-screen
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
 html,
 body,
 #root,
@@ -77,7 +79,10 @@ body,
 }
 
 .logotype {
-  background: url('./logotype.png');
-  height: 151px;
-  width: 285px;
+  transition: opacity ease-in-out 125ms;
+}
+
+.logotype-gray-scale {
+  filter: grayScale(25%);
+  opacity: 0.01;
 }
