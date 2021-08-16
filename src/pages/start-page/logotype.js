@@ -1,33 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Logo } from './logo-state-1';
 
 export const LogoType = () => {
-    const [imageToShow, setImageToShow] = useState(1);
-    const isLooping = useRef();
-   const randomNumber = () => Math.floor(Math.random() * (20000 - 5000) + 5000);
-
-   const doFlicker = () => {
-       setImageToShow(.4);
-       isLooping.current = true;
-       setTimeout(() => { 
-           setImageToShow(1);
-           setTimeout(() => {
-               setImageToShow(.1); 
-               setTimeout(() => {
-                    isLooping.current = false;
-                   setImageToShow(1);
-                   doFlickerAfterTimeout();
-               }, 100);
-           }, 250);
-       }, 200);
-   };
-
+   const [showAnimation, setShowAnimation] = useState(false);
+   const randomNumber = () => 5000; // Math.floor(Math.random() * (10000 - 5000) + 5000);
+   
    const doFlickerAfterTimeout = () => {
+       setShowAnimation(false);
        setTimeout(() => {
-           if(!isLooping.current)doFlicker();
+           setShowAnimation(true);
+           setTimeout(() => {
+               doFlickerAfterTimeout();
+           }, 4000);
        }, randomNumber());
    };
-
+   
    useEffect(() => {
        doFlickerAfterTimeout();
    // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +23,7 @@ export const LogoType = () => {
 
     return (
     <h1>
-        <Logo className={`logotype ${imageToShow === 0.1 ? 'logotype-gray-scale': ''}`} style={{opacity: imageToShow}} />    
+        <Logo className={`logotype${showAnimation ? ' logotype-animation': ''}`} />    
     </h1>
     );
 };
