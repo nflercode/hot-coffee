@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Logo } from './logo-state-1';
-import { LogoStateTwo } from './logo-state-2';
-import { LogoStateThree } from './logo-state-3';
 
 export const LogoType = () => {
     const [imageToShow, setImageToShow] = useState(1);
