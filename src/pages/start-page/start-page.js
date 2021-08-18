@@ -7,6 +7,7 @@ import refreshTokenStorage from '../../storage/refresh-token-storage';
 import { Button } from '../../components/button/button';
 import playerService from '../../services/player-service';
 import { LogoType } from './logotype';
+import { InfoBall } from '../../components/info-ball/info-ball';
 
 export const StartPage = () => {
   const [isCreatingTable, setIsCreatingTable] = useState(false);
@@ -53,8 +54,16 @@ export const StartPage = () => {
         <div>
           {
             !authState.authToken.token ? (
-              <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Create table</Button>
-            ) : (
+              <div>
+                  <h2 className="f-center">Lets start!</h2>
+                <div className="start-page-new-player">
+                  <InfoBall icon="fa-edit" title="create table"/>
+                  <InfoBall icon="fa-user-plus" title="invite friends" />
+                  <InfoBall icon="fa-dice" title="play together"/>
+                </div>
+                <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Create table</Button>
+              </div>
+              ) : (
               <>
                 <p>It seems like you are in a lobby alread, do you want to join it again?</p>
                 <div className="start-page-leave-or-join">

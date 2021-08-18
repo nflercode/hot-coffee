@@ -78,7 +78,7 @@
   color: #f0faf1;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 480px) {
   .button-block {
     max-width: 95%;
   }
