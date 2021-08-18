@@ -62,7 +62,7 @@ body,
   flex-grow: 4;
   justify-content: flex-end;
   width: 40%;
-  padding-bottom: 4em;
+  padding-bottom: 10em;
 }
 
 .start-page-main-inv-link-container {
@@ -127,6 +127,8 @@ body,
 .start-page-new-player {
   bottom: 0;
   justify-content: space-between;
+  display: inline-flex;
+  flex-direction: row;
 }
 
 @keyframes flicker1 {
@@ -164,5 +166,15 @@ body,
 @media only screen and (max-width: 850px) {
   .logotypes {
     left: 1em;
+  }
+  .start-page-main {
+    padding-bottom: 4em;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .logotypes {
+    left: 1em;
+    top: 1em;
   }
 }

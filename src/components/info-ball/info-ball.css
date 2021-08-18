@@ -2,6 +2,8 @@
   color: #f0faf1;
   display: inline-flex;
   flex-direction: column;
+  margin: 1.5em;
+  align-items: center;
 }
 
 .info-ball-title {
@@ -9,6 +11,7 @@
 }
 
 .info-ball-ball {
+  margin-top: 0.5em;
   height: 35px;
   width: 35px;
   border-radius: 50px;

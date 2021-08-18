@@ -61,7 +61,11 @@ export const StartPage = () => {
                   <InfoBall icon="fa-user-plus" title="invite friends" />
                   <InfoBall icon="fa-dice" title="play together"/>
                 </div>
-                <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Create table</Button>
+                <br />
+                <br />
+                <div className="margin-auto">
+                  <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Create table</Button>
+                </div>
               </div>
               ) : (
               <>
