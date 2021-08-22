@@ -105,14 +105,13 @@ body,
   bottom: 0;
   display: grid;
   grid-template-columns: 1fr;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .new-player-section {
   display: grid;
   grid-template-columns: 1fr auto;
-}
-
-.new-player-section {
 }
 
 @keyframes flicker1 {
