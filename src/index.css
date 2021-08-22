@@ -66,6 +66,14 @@ p {
   text-align: center;
 }
 
+.fc-white {
+  color: #f0faf1;
+}
+
+.f-size-2 {
+  font-size: 2em;
+}
+
 .padding-2 {
   padding-left: 1em;
 }
@@ -76,4 +84,9 @@ p {
 
 .align-items-center {
   align-items: center;
+}
+
+.margin-auto {
+  margin-left: auto;
+  margin-right: auto;
 }

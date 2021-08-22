@@ -8,6 +8,7 @@ import { Button } from '../../components/button/button';
 import playerService from '../../services/player-service';
 import { LogoType } from './logotype';
 import { InfoBall } from '../../components/info-ball/info-ball';
+import { Container } from '../../components/container/container';
 
 export const StartPage = () => {
   const [isCreatingTable, setIsCreatingTable] = useState(false);
@@ -48,25 +49,41 @@ export const StartPage = () => {
   return (
     <div className="start-page-container">
       <header className="start-page-header">
-        <LogoType/>
+        <Container>
+          <LogoType/>
+        </Container>
       </header>
       <main className="start-page-main">
-        <div>
+      <Container isMaxHeight>
+        <div className="start-page-main-content">
           {
             !authState.authToken.token ? (
-              <div>
-                  <h2 className="f-center">Lets start!</h2>
+              <>
+                <h2 className="f-center f-size-2">Let's start!</h2>
                 <div className="start-page-new-player">
-                  <InfoBall icon="fa-edit" title="create table"/>
-                  <InfoBall icon="fa-user-plus" title="invite friends" />
-                  <InfoBall icon="fa-dice" title="play together"/>
+                  <div className="new-player-section">
+                    <InfoBall icon="fa-edit" />
+                    <div className="new-player-text">
+                      <h2 className="fc-white">Create table</h2>
+                      <p>Customize the table to your liking. No login required!</p>
+                    </div>
+                  </div>
+                  <div className="new-player-section">
+                    <InfoBall icon="fa-user-plus"/> 
+                    <div className="new-player-text">
+                      <h2 className="fc-white">Invite friends</h2>
+                      <p>Just send your friends a link and you're good to go!</p>
+                    </div>
+                  </div>
+                  <div className="new-player-section"> 
+                    <InfoBall icon="fa-dice" />
+                    <div className="new-player-text">
+                      <h2 className="fc-white">Play</h2>
+                      <p>Shuffle your card deck and you're ready to go! We'll keep track of the chips and who's turn it is!</p>
+                    </div>
+                  </div>
                 </div>
-                <br />
-                <br />
-                <div className="margin-auto">
-                  <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Create table</Button>
-                </div>
-              </div>
+              </>
               ) : (
               <>
                 <p>It seems like you are in a lobby alread, do you want to join it again?</p>
@@ -79,7 +96,15 @@ export const StartPage = () => {
             )
           }
         </div>
+        </Container>
       </main>
+      <footer className="start-page-footer">
+        <Container>
+          <div className="f-center">
+            <Button disabled={isCreatingTable} onClick={handleCreateTableButtonClick}>Create table</Button>
+          </div>
+        </Container>
+      </footer>
     </div>
   );
 }

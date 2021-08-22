@@ -2,7 +2,7 @@ import React from 'react';
 import "./info-ball.css";
 
 export const InfoBall = ({icon, title, isLightMode}) => {
-    if(!title || !icon) {
+    if(!icon) {
         console(new Error("No title or no icon supplied to info balls"));
 
         return null;
