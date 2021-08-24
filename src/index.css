@@ -13,13 +13,19 @@ body,
   min-height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #1b1f1b;
   font-family: 'Cabin', sans-serif;
   /* background-color: #272727; /*#f0faf1; #454745*/
 }
 
 .main-wrapper {
   height: 100%;
-  overflow: hidden;
+}
+
+h1,
+h2 {
+  margin-block-end: 0;
+  margin-block-start: 0;
 }
 
 #root::before {
@@ -32,6 +38,7 @@ body,
   overflow: hidden;
 }
 
+/**
 .main-wrapper::before {
   background: url('./splatter1.svg');
   content: ' ';
@@ -43,7 +50,7 @@ body,
   transform: rotate(90deg);
   overflow: hidden;
   right: 0;
-}
+} **/
 
 h2 {
   color: #14a76c;
@@ -75,7 +82,11 @@ p {
 }
 
 .padding-2 {
-  padding-left: 1em;
+  padding: 1em;
+}
+
+.padding-2-bottom {
+  padding: 1em;
 }
 
 .justify-center {

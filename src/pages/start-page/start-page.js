@@ -59,7 +59,7 @@ export const StartPage = () => {
           {
             !authState.authToken.token ? (
               <>
-                <h2 className="f-center f-size-2">Let's start!</h2>
+                <h2 className="f-center f-size-2 padding-2-bottom">Let's start!</h2>
                 <div className="start-page-new-player">
                   <div className="new-player-section">
                     <InfoBall icon="fa-edit" />
