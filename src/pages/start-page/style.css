@@ -31,10 +31,16 @@ body,
 .start-page-container {
   display: grid;
   grid-template-rows: 0.5fr 2fr 0.3fr;
-  background-color: #1b1f1b;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    0deg,
+    rgb(22, 41, 18) 10%,
+    rgba(45, 86, 38, 1) 20%
+  );
+
   justify-content: stretch;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 5%;
+  padding-right: 8%;
   row-gap: 1em;
 }
 
