@@ -32,11 +32,12 @@ body,
   display: grid;
   grid-template-rows: 0.5fr 2fr 0.3fr;
   background: rgb(2, 0, 36);
-  background: linear-gradient(
-    0deg,
-    rgb(22, 41, 18) 10%,
-    rgba(45, 86, 38, 1) 20%
-  );
+  background: linear-gradient(246deg, #7acd5a, #2d5626, #071402);
+  background-size: 600% 600%;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
 
   justify-content: stretch;
   padding-left: 5%;
@@ -154,6 +155,40 @@ body,
   to {
     opacity: 1;
     filter: none;
+  }
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
   }
 }
 
