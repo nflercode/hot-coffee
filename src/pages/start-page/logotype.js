@@ -17,7 +17,6 @@ export const LogoType = () => {
 
     useEffect(() => {
         doFlickerAfterTimeout();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -3,6 +3,7 @@ import "./button.css";
 
 //Button theme can only be one of default, positive or negative
 export const Button = ({
+    // eslint-disable-next-line no-empty-function
     onClick = () => {},
     block,
     children,

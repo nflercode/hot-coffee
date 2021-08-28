@@ -18,6 +18,7 @@ export const GamePot = () => {
             <ChipList
                 chips={potChips || []}
                 hasEnabledChips={false}
+                // eslint-disable-next-line no-empty-function
                 onClick={() => {}}
                 styleDirection={"row"}
             />
