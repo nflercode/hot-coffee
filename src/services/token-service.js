@@ -10,7 +10,7 @@ async function refreshToken(refreshToken) {
 }
 
 const tokenService = {
-    refreshToken,
+    refreshToken
 };
 
 export default tokenService;

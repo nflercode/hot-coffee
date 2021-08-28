@@ -1,6 +1,6 @@
 import tokenService from "../../services/token-service";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Worker from "../../worker/auth.worker.js";
 
 const hasTokenExpired = (token) => {

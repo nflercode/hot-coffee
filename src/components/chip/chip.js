@@ -6,7 +6,7 @@ const chipClasses = {
     RED: "red",
     BLUE: "blue",
     GREEN: "green",
-    BLACK: "black",
+    BLACK: "black"
 };
 
 const Chip = ({ chip, isEnabled, larger, onClick }) => {

@@ -11,15 +11,15 @@ async function joinTable(invitationToken, name) {
 
 async function createTable(name) {
     return await axios.post(`${REACT_APP_MARKERWORLD_HOST}/poker/tables`, {
-        name,
+        name
     });
 }
 
 async function getTable(authToken) {
     return await axios.get(`${REACT_APP_MARKERWORLD_HOST}/poker/tables`, {
         headers: {
-            Authorization: `bearer ${authToken}`,
-        },
+            Authorization: `bearer ${authToken}`
+        }
     });
 }
 
@@ -35,8 +35,8 @@ async function setTableName(authToken, name) {
         { name },
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         }
     );
 }
@@ -46,7 +46,7 @@ const tableService = {
     createTable,
     getTable,
     getTableByInvitationToken,
-    setTableName,
+    setTableName
 };
 
 export default tableService;

@@ -5,7 +5,7 @@ export const Snackbar = ({
     title,
     message,
     positiveButton,
-    negativeButton,
+    negativeButton
 }) => (
     <div className="snackbar-container">
         <div className="snackbar-title">{title}</div>

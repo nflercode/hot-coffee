@@ -27,11 +27,11 @@ const CreatePage = () => {
                 callback: () => {
                     console.log("accepterat");
                 },
-                content: "Okej",
+                content: "Okej"
             },
             message:
                 "Vår site funkar tyvärr inte utan kakor. Genom att fortsätta så godkänner du kakor.",
-            title: "Vi använder kakor för att levera denna tjänst",
+            title: "Vi använder kakor för att levera denna tjänst"
         });
     }, []);
 

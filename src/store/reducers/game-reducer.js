@@ -7,7 +7,7 @@ export const game = (state = {}, action) => {
         case GAME_CREATED:
             return {
                 ...state,
-                ...action.game,
+                ...action.game
             };
         default:
             return state;

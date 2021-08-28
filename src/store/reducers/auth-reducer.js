@@ -8,19 +8,19 @@ export const auth = (state = {}, action) => {
         case CREATE_AUTH_TOKEN: {
             return {
                 ...state,
-                authToken: action.authToken,
+                authToken: action.authToken
             };
         }
         case CREATE_REFRESH_TOKEN: {
             return {
                 ...state,
-                refreshToken: action.refreshToken,
+                refreshToken: action.refreshToken
             };
         }
         case PLAYER_LEFT_TABLE: {
             return {
                 authToken: {},
-                refreshToken: {},
+                refreshToken: {}
             };
         }
         default:

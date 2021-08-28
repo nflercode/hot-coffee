@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from "react";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +40,7 @@ export const StartPage = () => {
             dispatch({ type: "CREATE_AUTH_TOKEN", authToken: data.authToken });
             dispatch({
                 type: "CREATE_REFRESH_TOKEN",
-                refreshToken: data.refreshToken,
+                refreshToken: data.refreshToken
             });
 
             refreshTokenStorage.setRefreshToken(data.refreshToken);

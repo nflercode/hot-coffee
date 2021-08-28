@@ -10,18 +10,18 @@ export const table = (state = 0, action) => {
         case CREATE_TABLE:
             return {
                 ...state,
-                ...action.table,
+                ...action.table
             };
         case PLAYER_JOINED: {
             return {
                 ...state,
-                players: [...state.players, action.player],
+                players: [...state.players, action.player]
             };
         }
         case TABLE_NAME_CHANGE: {
             return {
                 ...state,
-                name: action.name,
+                name: action.name
             };
         }
         case PLAYER_LEFT_TABLE: {
@@ -34,7 +34,7 @@ export const table = (state = 0, action) => {
                     player.id === action.player.id
                         ? { ...player, name: action.player.name }
                         : player
-                ),
+                )
             };
         }
         case PLAYER_REMOVED: {
@@ -42,7 +42,7 @@ export const table = (state = 0, action) => {
                 ...state,
                 players: (state.players || []).filter(
                     (player) => player.id !== action.playerId
-                ),
+                )
             };
         }
         default:
