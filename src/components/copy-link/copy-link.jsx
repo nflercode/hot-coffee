@@ -20,7 +20,7 @@ export const CopyLink = ({ invitationToken }) => {
         dialogerinos.onShowDialog({
             type: "ALERT",
             title: "Kopierat",
-            icon: "fa-copy",
+            icon: "fa-copy"
         });
     };
 

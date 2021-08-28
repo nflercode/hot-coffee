@@ -10,7 +10,7 @@ export const Dialogs = ({
     message,
     positiveButton,
     negativeButton,
-    icon,
+    icon
 }) => {
     if (type === dialogConstants.type.SNACKBAR) {
         return (

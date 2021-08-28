@@ -8,7 +8,7 @@ export const Button = ({
     block,
     children,
     theme = "default",
-    disabled,
+    disabled
 }) => {
     return (
         <button
