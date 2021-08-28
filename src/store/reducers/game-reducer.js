@@ -2,14 +2,14 @@ export const GAME_CREATED = "GAME_CREATED";
 export const GAME_UPDATED = "GAME_UPDATED";
 
 export const game = (state = {}, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case GAME_UPDATED:
         case GAME_CREATED:
             return {
                 ...state,
-                ...action.game
+                ...action.game,
             };
-        default: 
+        default:
             return state;
     }
 };

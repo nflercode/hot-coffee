@@ -1,0 +1,21 @@
+.info-ball {
+  color: #f0faf1;
+  display: inline-flex;
+  flex-direction: column;
+  margin: 1.5em;
+  align-items: center;
+}
+
+.info-ball-title {
+  font-size: 14px;
+}
+
+.info-ball-ball {
+  margin-top: 0.5em;
+  height: 35px;
+  width: 35px;
+  border-radius: 50px;
+  padding: 0.5em;
+  font-size: 28px;
+  background-color: #131313;
+}

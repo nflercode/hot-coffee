@@ -1,3 +1,3 @@
-const potSelector = ({potRequest}) => potRequest;
+const potSelector = ({ potRequest }) => potRequest;
 
-export {potSelector};
+export { potSelector };

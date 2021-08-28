@@ -1,17 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 
 const { REACT_APP_CHIPPIE_HOST } = process.env;
 
 async function getChips(authToken) {
-  return await axios.get(`${REACT_APP_CHIPPIE_HOST}/chips`, {
-    headers: {
-      Authorization: `bearer ${authToken}`
-    }
-  });
+    return await axios.get(`${REACT_APP_CHIPPIE_HOST}/chips`, {
+        headers: {
+            Authorization: `bearer ${authToken}`,
+        },
+    });
 }
 
 const chipService = {
-  getChips
-}
+    getChips,
+};
 
 export default chipService;

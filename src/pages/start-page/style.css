@@ -11,35 +11,50 @@ body,
   height: 100%;
 }
 
-.start-page-container {
-  display: flex;
+.start-page-header {
+  margin-top: 1em;
+}
+
+.start-page-header > h1 {
+  min-width: 100%;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.logotypes {
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
-.start-page-header {
-  text-align: center;
-  flex-grow: 1;
+.start-page-container {
+  display: grid;
+  grid-template-rows: 0.5fr 2fr 0.3fr;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(246deg, #7acd5a, #2d5626, #071402);
+  background-size: 600% 600%;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+
+  justify-content: stretch;
+  padding-left: 5%;
+  padding-right: 8%;
+  row-gap: 1em;
 }
 
-.start-page-header-title {
-  margin: 0;
-  font-weight: 100;
-  font-size: 54px;
-  text-decoration: underline;
-  color: #747474;
-}
-
-.start-page-header-sub-title {
-  color: #747474;
+.start-page-footer {
+  justify-content: end;
 }
 
 .start-page-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 4;
-  justify-content: flex-start;
+  padding-bottom: 1em;
+}
+
+.start-page-main-content {
+  height: 100%;
 }
 
 .start-page-main-inv-link-container {
@@ -85,7 +100,7 @@ body,
 .logotype-animation {
   animation-fill-mode: forwards;
   animation-name: flicker1, flicker2, flicker3, flicker4;
-  animation-delay: 0.1s, 0.5s, 1s, 1.25s;
+  animation-delay: 0.1s, 0.5s, 0.8s, 1.25s;
   animation-duration: 0.3s;
 }
 
@@ -93,7 +108,26 @@ body,
   margin-top: -105px; /* Not really perfect, but will do for now.. */
 }
 
-.logotypes {
+.start-page-new-player {
+  display: inline-grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin: 0 auto;
+  float: none;
+  min-height: 100%;
+  justify-content: space-between;
+}
+
+.new-player-section {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+}
+
+.new-player-section > .info-ball {
+  justify-content: center;
+}
+
+.new-player-text {
+  justify-content: center;
   display: inline-flex;
   flex-direction: column;
 }
@@ -113,7 +147,7 @@ body,
 @keyframes flicker3 {
   to {
     opacity: 0.3;
-    /* /filter: grayScale(75%); */
+    filter: grayScale(75%);
   }
 }
 
@@ -121,5 +155,59 @@ body,
   to {
     opacity: 1;
     filter: none;
+  }
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
+}
+
+@media only screen and (min-width: 1680px) {
+  .start-page-container {
+    padding-left: 35%;
+    padding-right: 35%;
+  }
+}
+
+@media only screen and (max-width: 1680px) and (min-width: 850px) {
+  .start-page-container {
+    padding-left: 30%;
+    padding-right: 30%;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .start-page-new-player {
+    width: 100%;
   }
 }

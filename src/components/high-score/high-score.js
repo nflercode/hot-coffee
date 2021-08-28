@@ -1,3 +1,1 @@
-export const HighScore = () => {
-
-};
+export const HighScore = () => {};

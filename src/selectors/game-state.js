@@ -1,4 +1,4 @@
-const gameSelector = ({game}) => game;
+const gameSelector = ({ game }) => game;
 
 const participantsSelector = (state) => {
     const game = gameSelector(state);
@@ -7,7 +7,10 @@ const participantsSelector = (state) => {
 
 const myParticipantSelector = (state, playerId) => {
     const participants = participantsSelector(state);
-    return participants?.find((participant) => participant.playerId === playerId);
+
+    return participants?.find((participant) => {
+        return participant.playerId === playerId;
+    });
 };
 
-export {gameSelector,myParticipantSelector, participantsSelector};
+export { gameSelector, myParticipantSelector, participantsSelector };

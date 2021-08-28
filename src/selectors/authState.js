@@ -1,2 +1,2 @@
-const authSelector = ({auth}) => auth;
-export {authSelector};
+const authSelector = ({ auth }) => auth;
+export { authSelector };
