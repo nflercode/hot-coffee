@@ -3,20 +3,20 @@ module.exports = {
     parser: "babel-eslint",
     env: {
         browser: true,
-        es2021: true,
+        es2021: true
     },
     extends: [
         "prettier",
         "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
+        "plugin:react-hooks/recommended"
     ],
     plugins: ["prettier"],
     rules: {
         "prettier/prettier": [
             "error",
             {
-                endOfLine: "auto",
-            },
+                endOfLine: "auto"
+            }
         ],
         "no-empty-function": "error",
         "react/jsx-uses-react": "error",
@@ -28,6 +28,6 @@ module.exports = {
         "react/prop-types": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
-        "prefer-template": "error",
-    },
+        "prefer-template": "error"
+    }
 };
