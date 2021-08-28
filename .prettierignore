@@ -1,0 +1,14 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore all HTML files:
+*.html
+*.yaml
+*.json
+*.jsonc
+
+node_modules
+.vscode
+chart
+public

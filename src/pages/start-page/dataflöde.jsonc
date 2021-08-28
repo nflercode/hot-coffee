@@ -1,0 +1,36 @@
+
+//minimum pott är 10
+
+//Spelare 1
+{
+    "myLastPot": 0,
+    "potToPut": 40,
+    "neededPot": 10,  // uträkningen för neededPot är (lastPlayerPot - myTotalPot) || minimumPot
+    "myTotalPot": 40
+}
+
+//spelares 2 tur och då ser statet ut såhär för spelare 2: 
+
+{
+    "myLastPot": 0,
+    "potToPut": 100,
+    "neededPot": 40-0,
+    "myTotalPot": 100
+}
+
+
+//Spelare 1
+{
+    "myLastPot": 40,
+    "potToPut": 60,
+    "neededPot": 100-40 = 60,
+    "myTotalPot": 100
+}
+
+//Spelare 2
+{
+    "myLastPot": 100,
+    "potToPut": 0,
+    "neededPot": 100-100 = 60,
+    "myTotalPot": 100
+}
