@@ -20,7 +20,7 @@ const participantPlayerSelector = (state) => {
 
         return {
             ...actualChip,
-            ...chip,
+            ...chip
         };
     };
 
@@ -39,7 +39,7 @@ const participantPlayerSelector = (state) => {
             ...participant,
             ...player,
             chips: mappedChips,
-            totalValue,
+            totalValue
         };
     });
 
@@ -66,7 +66,7 @@ const participantPlayerSelector = (state) => {
         return {
             ...player,
             isBest: highestValuePlayer.player === player.playerId,
-            isWorst: lowestValuePlayer.player === player.playerId,
+            isWorst: lowestValuePlayer.player === player.playerId
         };
     });
 };
@@ -78,7 +78,7 @@ const mapChipWithActualChip = (state, chip) => {
 
     return {
         ...actualChip,
-        ...chip,
+        ...chip
     };
 };
 

@@ -15,7 +15,7 @@ function deleteRefreshToken() {
 const refreshTokenStorage = {
     setRefreshToken,
     getRefreshToken,
-    deleteRefreshToken,
+    deleteRefreshToken
 };
 
 export default refreshTokenStorage;

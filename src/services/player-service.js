@@ -5,8 +5,8 @@ const { REACT_APP_MARKERWORLD_HOST } = process.env;
 async function deletePlayer(authToken) {
     return await axios.delete(`${REACT_APP_MARKERWORLD_HOST}/poker/players`, {
         headers: {
-            Authorization: `bearer ${authToken}`,
-        },
+            Authorization: `bearer ${authToken}`
+        }
     });
 }
 
@@ -16,15 +16,15 @@ async function changePlayerName(authToken, name) {
         { name },
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         }
     );
 }
 
 const playerService = {
     deletePlayer,
-    changePlayerName,
+    changePlayerName
 };
 
 export default playerService;

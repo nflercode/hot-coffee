@@ -26,11 +26,11 @@ const JoinPage = () => {
                 callback: () => {
                     console.log("accepterat");
                 },
-                content: "Okej",
+                content: "Okej"
             },
             message:
                 "Vår site funkar tyvärr inte utan kakor. Genom att fortsätta så godkänner du kakor.",
-            title: "Vi använder kakor för att levera denna tjänst",
+            title: "Vi använder kakor för att levera denna tjänst"
         });
     }, []);
 
@@ -56,7 +56,7 @@ const JoinPage = () => {
             dispatch({ type: "CREATE_AUTH_TOKEN", authToken: data.authToken });
             dispatch({
                 type: "CREATE_REFRESH_TOKEN",
-                refreshToken: data.refreshToken,
+                refreshToken: data.refreshToken
             });
 
             refreshTokenStorage.setRefreshToken(data.refreshToken);

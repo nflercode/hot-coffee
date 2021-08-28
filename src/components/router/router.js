@@ -12,33 +12,33 @@ export const Router = () => {
         {
             path: "/",
             exact: true,
-            component: StartPage,
+            component: StartPage
         },
         {
             path: "/create",
             exact: true,
-            component: CreatePage,
+            component: CreatePage
         },
         {
             path: "/join/:invitationToken",
             exact: true,
-            component: JoinPage,
+            component: JoinPage
         },
         {
             path: "/table",
             exact: true,
-            component: StartPage,
+            component: StartPage
         },
         {
             path: "/lobby",
             exact: true,
-            component: LobbyPage,
+            component: LobbyPage
         },
         {
             path: "/game",
             exact: true,
-            component: GamePage,
-        },
+            component: GamePage
+        }
     ];
 
     return (

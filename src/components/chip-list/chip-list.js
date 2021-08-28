@@ -10,12 +10,12 @@ const ChipList = ({
     currentBettingChips = {},
     onChipClick,
     onReduceClick,
-    larger,
+    larger
 }) => (
     <div className={`chip-list-container ${larger ? "larger" : ""}`}>
         {chips.map((chip) => (
             <div
-                key={"_" + chip.type + "_" + chip.amount}
+                key={`_${chip.type}_${chip.amount}`}
                 className="chip-list-container-chip-holder"
             >
                 <Chip

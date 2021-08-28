@@ -19,7 +19,7 @@ import { authSelector } from "../../selectors/authState";
 import {
     gameSelector,
     myParticipantSelector,
-    participantsSelector,
+    participantsSelector
 } from "../../selectors/game-state";
 import { potSelector } from "../../selectors/pot-request-state";
 import { participantPlayerSelector } from "../../selectors/combined-states";
@@ -55,7 +55,7 @@ const GamePage = () => {
             .sort((a, b) => a.turnOrder - b.turnOrder)
             .map((p, i) => ({
                 playerId: p.playerId,
-                className: leftTopRight[i],
+                className: leftTopRight[i]
             }));
     }, [meId, participants, players]);
 
@@ -67,7 +67,7 @@ const GamePage = () => {
             dialogerinos.onShowDialog({
                 type: "ALERT",
                 title: "Det är din tur!",
-                icon: "fa-dice",
+                icon: "fa-dice"
             });
         }
     }, [myParticipant, dialogerinos, potRequestState.status]);
@@ -115,7 +115,7 @@ const GamePage = () => {
                         "OK"
                     );
                 },
-                content: "I accept",
+                content: "I accept"
             },
             negativeButtonProp: {
                 callback: () => {
@@ -125,7 +125,7 @@ const GamePage = () => {
                         "NO"
                     );
                 },
-                content: "I deny",
+                content: "I deny"
             },
             message: (
                 <div>
@@ -136,7 +136,7 @@ const GamePage = () => {
                     <i>If approved: this will also start a new round.</i>
                 </div>
             ),
-            title: `${requestingPlayer.name} is requesting the pot.`,
+            title: `${requestingPlayer.name} is requesting the pot.`
         });
     }, [participantPlayers, potRequestState]);
 
@@ -166,7 +166,7 @@ const GamePage = () => {
             if (potRequestData.data.potRequest)
                 dispatch({
                     type: POT_REQUEST_FETCHED,
-                    potRequest: potRequestData.data.potRequest,
+                    potRequest: potRequestData.data.potRequest
                 });
         }
 
@@ -181,7 +181,7 @@ const GamePage = () => {
 
         setCurrentBettingChips({
             ...currentBettingChips,
-            [chip.chipId]: newAmount,
+            [chip.chipId]: newAmount
         });
     }
 
@@ -250,7 +250,7 @@ const GamePage = () => {
                                                         chipId: id,
                                                         amount: currentBettingChips[
                                                             id
-                                                        ],
+                                                        ]
                                                     }))
                                                 );
                                                 setCurrentBettingChips({});
@@ -272,7 +272,7 @@ const GamePage = () => {
                                                         chipId: id,
                                                         amount: currentBettingChips[
                                                             id
-                                                        ],
+                                                        ]
                                                     }))
                                                 );
                                                 setCurrentBettingChips({});

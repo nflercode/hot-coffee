@@ -8,8 +8,8 @@ function setUpMarkerWorld(authToken) {
     const socket = io(process.env.REACT_APP_MARKERWORLD_SOCKET_HOST, {
         path: "/markerworld/socket",
         auth: {
-            token: authToken,
-        },
+            token: authToken
+        }
     });
 
     return socket;
@@ -19,8 +19,8 @@ function setUpChippie(authToken) {
     const socket = io(process.env.REACT_APP_CHIPPIE_SOCKET_HOST, {
         path: "/chippie/socket",
         auth: {
-            token: authToken,
-        },
+            token: authToken
+        }
     });
 
     return socket;

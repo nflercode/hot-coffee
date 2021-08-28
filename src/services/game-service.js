@@ -8,8 +8,8 @@ async function createGame(authToken) {
         {},
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -23,8 +23,8 @@ async function closeGame(authToken, gameId) {
         {},
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -35,8 +35,8 @@ async function closeGame(authToken, gameId) {
 async function getGameOngoing(authToken) {
     return await axios.get(`${REACT_APP_CHIPPIE_HOST}/game/ongoing`, {
         headers: {
-            Authorization: `bearer ${authToken}`,
-        },
+            Authorization: `bearer ${authToken}`
+        }
     });
 }
 
@@ -46,8 +46,8 @@ async function nextRound(authToken, gameId) {
         {},
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         }
     );
 }
@@ -57,12 +57,12 @@ async function raise(authToken, gameId, chips) {
         `${REACT_APP_CHIPPIE_HOST}/game/raise`,
         {
             gameId,
-            chips,
+            chips
         },
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -76,8 +76,8 @@ async function check(authToken, gameId) {
         {},
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -91,8 +91,8 @@ async function fold(authToken, gameId) {
         {},
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -106,8 +106,8 @@ async function createPotRequest(authToken, gameId) {
         {},
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -119,12 +119,12 @@ async function updatePotRequest(authToken, potRequestId, answer) {
     return await axios.put(
         `${REACT_APP_CHIPPIE_HOST}/game/pot/request/${potRequestId}`,
         {
-            answer,
+            answer
         },
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -137,8 +137,8 @@ async function getAwaitingPotRequest(authToken, gameId) {
         `${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot-requests/ongoing`,
         {
             headers: {
-                Authorization: `bearer ${authToken}`,
-            },
+                Authorization: `bearer ${authToken}`
+            }
         },
         (data) => {
             console.log(data);
@@ -156,7 +156,7 @@ const gameService = {
     createPotRequest,
     updatePotRequest,
     getAwaitingPotRequest,
-    nextRound,
+    nextRound
 };
 
 export default gameService;

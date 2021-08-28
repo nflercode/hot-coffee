@@ -10,7 +10,7 @@ export const Input = ({
     isReadOnly,
     onChange,
     onDebouncedChange,
-    onBlur,
+    onBlur
 }) => {
     const timer = useRef(null);
     const [compValue, setCompValue] = useState(value);
