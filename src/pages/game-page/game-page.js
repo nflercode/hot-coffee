@@ -210,7 +210,10 @@ const GamePage = () => {
                             classes += ` participant-section-${classObj?.className}`;
 
                         return (
-                            <div className={classes}>
+                            <div
+                                className={classes}
+                                key={playerParticipant.playerId}
+                            >
                                 <div>
                                     <Player
                                         playerParticipant={playerParticipant}
