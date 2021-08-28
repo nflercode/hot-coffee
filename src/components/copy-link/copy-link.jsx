@@ -34,7 +34,7 @@ export const CopyLink = ({ invitationToken }) => {
                 value={`${window.origin}/join/${invitationToken}`}
             />
             <Button onClick={handleCopy}>
-                <i class="fas fa-copy"></i>
+                <i className="fas fa-copy"></i>
             </Button>
         </div>
     );
