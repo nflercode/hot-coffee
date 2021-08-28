@@ -2,23 +2,20 @@
  * Full-screen
  */
 
-html,
-body,
-#root,
-.create-page-main {
-  height: 100%;
-}
-
 .create-page-done-btn {
   padding-bottom: 2em;
   align-self: flex-end;
+}
+
+.create-page-main>.container-component {
+  height: 100%;
 }
 
 .create-page-main {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 3fr;
   font-size: 18px;
-  margin-left: 2em;
+  margin-top: 10%;
 }
 
 .create-page-main-table-name,
@@ -30,7 +27,7 @@ body,
 .create-page-main-available-seats,
 .create-page-main-connect-id {
   font-size: 14px;
-  color: gray;
+  color: #14a76c;
 }
 
 .create-page-main-connect-url {
@@ -49,6 +46,20 @@ body,
   max-width: 250px;
 }
 
+@media only screen and (max-width: 480px) {
+  .create-page-main>.container-component {
+    margin: .5em;
+  }
+
+  .create-page-main>.container-component{
+    min-width: 0;
+  }
+  
+  .copy-link-container > .input > input {
+    min-width: 200px;
+    max-width: 200px;
+  }
+}
 @media only screen and (min-width: 480px) {
   .create-page-main {
     max-width: 480px;

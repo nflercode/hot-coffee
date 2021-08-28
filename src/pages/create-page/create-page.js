@@ -8,6 +8,8 @@ import { Input } from "../../components/input-field/input";
 import { CopyLink } from "../../components/copy-link/copy-link";
 import playerService from "../../services/player-service";
 import tableService from "../../services/table-service";
+import { Container } from "../../components/container/container";
+
 import "./style.css";
 
 const CreatePage = () => {
@@ -87,32 +89,34 @@ const CreatePage = () => {
 
     return (
         <main className="create-page-main">
-            <h2>Skapa bord</h2>
-            <Input
-                label="Alias"
-                type="text"
-                value={playerName}
-                onDebouncedChange={(val) => setPlayerName(val)}
-            />
-            <div className="create-page-main-table-name">
+            <Container isMaxHeight>
+                <h2>Skapa bord</h2>
                 <Input
-                    label="Bordets namn"
+                    label="Alias"
                     type="text"
-                    value={tableName}
-                    onDebouncedChange={(val) => setTableName(val)}
+                    value={playerName}
+                    onDebouncedChange={(val) => setPlayerName(val)}
                 />
-            </div>
-            <div>
-                <CopyLink invitationToken={tableState.invitationToken} />
-            </div>
-            <div className="create-page-main-available-seats">
-                <span>Platser vid bordet: 4 st</span>
-            </div>
-            <div className="create-page-done-btn">
-                <Button block onClick={handleDone}>
-                    Klar
-                </Button>
-            </div>
+                <div className="create-page-main-table-name">
+                    <Input
+                        label="Bordets namn"
+                        type="text"
+                        value={tableName}
+                        onDebouncedChange={(val) => setTableName(val)}
+                    />
+                </div>
+                <div>
+                    <CopyLink invitationToken={tableState.invitationToken} />
+                </div>
+                <div className="create-page-main-available-seats">
+                    <span>Platser vid bordet: 4 st</span>
+                </div>
+                <div className="create-page-done-btn">
+                    <Button block onClick={handleDone}>
+                        Klar
+                    </Button>
+                </div>
+            </Container>
         </main>
     );
 };
