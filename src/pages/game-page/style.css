@@ -47,10 +47,10 @@
   grid-column-end: 3;
   grid-row-start: 3;
   grid-row-end: 3;
-
-  height: 100%;
   display: flex;
   align-items: center;
+  overflow: visible;
+  margin-left: 1em;
 }
 
 .game-page-pot-container {

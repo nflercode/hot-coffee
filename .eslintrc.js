@@ -18,6 +18,7 @@ module.exports = {
                 endOfLine: "auto"
             }
         ],
+        "no-undef": "error",
         "no-empty-function": "error",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
