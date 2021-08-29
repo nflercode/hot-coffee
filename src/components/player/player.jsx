@@ -5,6 +5,7 @@ const imageHostBaseUrl = 'https://image.mychips.online/avatars';
 
 export const Player = ({ playerParticipant }) => {
   const [showCash, setShowCash] = useState(false);
+  const latestPlayerAction = playerParticipant.actions[0];
 
   const onClick = () => {
     if (showCash) {
@@ -56,7 +57,18 @@ export const Player = ({ playerParticipant }) => {
             `#${playerParticipant.turnOrder}`
           )}
         </b>
+        <br />
+        {latestPlayerAction && <PlayerAction latestPlayerAction={latestPlayerAction} />}
       </div>
     </div>
   );
 };
+
+const PlayerAction = ({ latestPlayerAction }) => {
+  const { actionType, totalValue } = latestPlayerAction;
+  return (
+    <b className="player-action">
+      {actionType} {totalValue}$
+    </b>
+  );
+}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client'
+import { ACTION_CREATED } from '../../store/reducers/actions-reducer';
 import { GAME_CREATED, GAME_UPDATED } from '../../store/reducers/game-reducer';
 import { POT_REQUEST_FETCHED } from '../../store/reducers/pot-request';
 
@@ -67,6 +68,7 @@ function handleEventsChippie(socket, dispatch) {
 
   socket.on('action-created', (action) => {
     console.log('Action created!', JSON.stringify(action, null, 2));
+    dispatch({ type: ACTION_CREATED, action });
   });
 
   socket.on('pot-request-created', (potRequest) => {

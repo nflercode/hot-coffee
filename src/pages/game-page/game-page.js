@@ -21,6 +21,7 @@ import { potSelector } from '../../selectors/pot-request-state';
 import { participantPlayerSelector } from '../../selectors/combined-states';
 import { GamePot } from './game-pot';
 import usePrevious from '../../helpers/use-previous';
+import { ACTION_FETCHED } from '../../store/reducers/actions-reducer';
 
 const GamePage = () => {
   const authState = useSelector(authSelector);
@@ -119,6 +120,13 @@ const GamePage = () => {
       const chipsResponse = await chipService.getChips(authState.authToken.token);
       dispatch({ type: CHIPS_FETCHED, chips: chipsResponse.data.chips });
 
+      const gameActionsResp =
+        await gameService.getGameActionsForRound(
+          authState.authToken.token,
+          ongoingGameResp.data.game.id,
+          ongoingGameResp.data.game.round);
+      dispatch({ type: ACTION_FETCHED, actions: gameActionsResp.data.actions || [] }); 
+
       const potRequestData = await gameService.getAwaitingPotRequest(authState.authToken.token, ongoingGameResp.data.game.id);
       if (potRequestData.data.potRequest)
         dispatch({ type: POT_REQUEST_FETCHED, potRequest: potRequestData.data.potRequest })
@@ -176,7 +184,7 @@ const GamePage = () => {
                 {playerParticipant.isMe && (
                   <div className="participant-section-button-group">
                     <Button disabled={!playerParticipant.isCurrentTurn} onClick={() => {
-                      gameService.raise(authState.authToken.token, gameState.id,
+                      gameService.call(authState.authToken.token, gameState.id,
                         Object.keys(currentBettingChips).map((id) => ({
                           chipId: id,
                           amount: currentBettingChips[id]
@@ -196,7 +204,7 @@ const GamePage = () => {
                       theme="neutral"
                       onClick={() => gameService.check(authState.authToken.token, gameState.id)}>
                       Check
-                      </Button>
+                    </Button>
                     <Button
                       theme="negative"
                       disabled={!playerParticipant.isCurrentTurn}
