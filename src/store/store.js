@@ -1,13 +1,20 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore } from "redux";
 import { table } from "./reducers/table-reducer";
-import { auth } from './reducers/auth-reducer';
-import { game } from './reducers/game-reducer';
-import { chips } from './reducers/chips-reducer';
-import { potRequest } from './reducers/pot-request';
-import { actions } from './reducers/actions-reducer';
-import refreshTokenStorage from '../storage/refresh-token-storage';
+import { auth } from "./reducers/auth-reducer";
+import { game } from "./reducers/game-reducer";
+import { chips } from "./reducers/chips-reducer";
+import { potRequest } from "./reducers/pot-request";
+import { actions } from "./reducers/actions-reducer";
+import refreshTokenStorage from "../storage/refresh-token-storage";
 
-const reducers = combineReducers({ table, auth, game, chips, potRequest, actions });
+const reducers = combineReducers({
+    table,
+    auth,
+    game,
+    chips,
+    potRequest,
+    actions
+});
 const initialAuthState = refreshTokenStorage.getRefreshToken();
 
 export const store = createStore(
@@ -17,7 +24,7 @@ export const store = createStore(
         auth: {
             authToken: {},
             refreshToken: initialAuthState || {}
-        }, 
+        },
         game: {}
     },
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

@@ -1,26 +1,30 @@
-import axios from 'axios'
+import axios from "axios";
 
 const { REACT_APP_MARKERWORLD_HOST } = process.env;
 
 async function deletePlayer(authToken) {
-  return await axios.delete(`${REACT_APP_MARKERWORLD_HOST}/poker/players`, {
-    headers: {
-      Authorization: `bearer ${authToken}`
-    }
-  });
+    return await axios.delete(`${REACT_APP_MARKERWORLD_HOST}/poker/players`, {
+        headers: {
+            Authorization: `bearer ${authToken}`
+        }
+    });
 }
 
 async function changePlayerName(authToken, name) {
-  return await axios.put(`${REACT_APP_MARKERWORLD_HOST}/poker/players`, {name}, {
-    headers: {
-      Authorization: `bearer ${authToken}`
-    }
-  });
+    return await axios.put(
+        `${REACT_APP_MARKERWORLD_HOST}/poker/players`,
+        { name },
+        {
+            headers: {
+                Authorization: `bearer ${authToken}`
+            }
+        }
+    );
 }
 
 const playerService = {
-  deletePlayer,
-  changePlayerName
+    deletePlayer,
+    changePlayerName
 };
 
 export default playerService;

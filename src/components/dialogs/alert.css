@@ -1,5 +1,6 @@
 .alert-container {
-  background: white;
+  background-color: #202020;
+  color: hsla(120, 100%, 100%, 0.726);
   padding: 4em;
   position: fixed;
   text-align: center;
@@ -74,7 +75,18 @@
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-height: 480px) {
+    .alert-container{
+      top: 17%;
+      min-width: 10em;
+      min-height: 5em;
+      max-width: 10em;
+      max-height: 5em;
+      padding: 4em;
+    }
+}
+
+@media only screen and (max-width: 480px) {
   .alert-container {
     padding: 1em;
   }

@@ -4,8 +4,8 @@ export const dialogConstants = {
         ALERT: "ALERT"
     },
     mode: {
-        INFO: 'INFO',
-        WARNING: 'WARNING',
-        ERROR: 'ERROR'
+        INFO: "INFO",
+        WARNING: "WARNING",
+        ERROR: "ERROR"
     }
 };

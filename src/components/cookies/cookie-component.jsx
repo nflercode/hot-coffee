@@ -1,25 +1,25 @@
 import React, { Suspense, lazy } from "react";
-import {  useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 
 export const CookieDialog = () => {
     const cookies = useSelector((state) => state.cookie);
 
-    if(cookies?.hasAccepted) {
+    if (cookies?.hasAccepted) {
         return;
-   // } else if(cookies?.shouldShow) {
-       // return<Snackbar>
-      //     <SnackBarTitle>
+        // } else if(cookies?.shouldShow) {
+        // return<Snackbar>
+        //     <SnackBarTitle>
 
-      //     </SnackBarTitle>
-      //     <SnackbarContent>
+        //     </SnackBarTitle>
+        //     <SnackbarContent>
 
-      //     </SnackbarContent>
-      //     <SnackbarPositiveButton>
+        //     </SnackbarContent>
+        //     <SnackbarPositiveButton>
 
-      //     </SnackbarPositiveButton>
-      // </Snackbar>
-   //}
+        //     </SnackbarPositiveButton>
+        // </Snackbar>
+        //}
     }
 
     return;
-}
+};

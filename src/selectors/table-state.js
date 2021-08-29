@@ -1,17 +1,13 @@
-const tableSelector = ({table}) => table;
+const tableSelector = ({ table }) => table;
 
 const playersSeletor = (state) => {
     const table = tableSelector(state);
-    return table.players;    
+    return table.players;
 };
 
 const playerMeSelector = (state) => {
     const players = playersSeletor(state);
-    return players?.find(p => p.isMe);
+    return players?.find((p) => p.isMe);
 };
 
-export {
-    tableSelector,
-    playerMeSelector, 
-    playersSeletor
-}
+export { tableSelector, playerMeSelector, playersSeletor };

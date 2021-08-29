@@ -1,21 +1,21 @@
 function setRefreshToken(refreshToken) {
-  const stringified = JSON.stringify(refreshToken);
-  localStorage.setItem('refreshToken', stringified);
+    const stringified = JSON.stringify(refreshToken);
+    localStorage.setItem("refreshToken", stringified);
 }
 
 function getRefreshToken() {
-  const stringifiedRefreshToken = localStorage.getItem('refreshToken');
-  return JSON.parse(stringifiedRefreshToken);
+    const stringifiedRefreshToken = localStorage.getItem("refreshToken");
+    return JSON.parse(stringifiedRefreshToken);
 }
 
 function deleteRefreshToken() {
-  localStorage.removeItem('refreshToken');
+    localStorage.removeItem("refreshToken");
 }
 
 const refreshTokenStorage = {
-  setRefreshToken,
-  getRefreshToken,
-  deleteRefreshToken
+    setRefreshToken,
+    getRefreshToken,
+    deleteRefreshToken
 };
 
 export default refreshTokenStorage;

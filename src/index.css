@@ -13,13 +13,24 @@ body,
   min-height: 100%;
   margin: 0;
   padding: 0;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(61deg, #106087, #24441f, #822b13);
+  background-size: 1000% 1000%;
+  -webkit-animation: bganim 30s cubic-bezier(0.25, 0.1, 0.86, 0.15) infinite;
+  -moz-animation: bganim 30s cubic-bezier(0.25, 0.1, 0.86, 0.15) infinite;
+  animation: bganim 30s cubic-bezier(0.25, 0.1, 0.86, 0.15) infinite;
+
   font-family: 'Cabin', sans-serif;
-  /* background-color: #272727; /*#f0faf1; #454745*/
 }
 
 .main-wrapper {
   height: 100%;
-  overflow: hidden;
+}
+
+h1,
+h2 {
+  margin-block-end: 0;
+  margin-block-start: 0;
 }
 
 #root::before {
@@ -32,6 +43,7 @@ body,
   overflow: hidden;
 }
 
+/**
 .main-wrapper::before {
   background: url('./splatter1.svg');
   content: ' ';
@@ -43,7 +55,7 @@ body,
   transform: rotate(90deg);
   overflow: hidden;
   right: 0;
-}
+} **/
 
 h2 {
   color: #14a76c;
@@ -64,4 +76,68 @@ p {
 
 .f-center {
   text-align: center;
+}
+
+.fc-white {
+  color: #f0faf1;
+}
+
+.f-size-2 {
+  font-size: 2em;
+}
+
+.padding-2 {
+  padding: 1em;
+}
+
+.padding-2-bottom {
+  padding: 1em;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.margin-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+@-webkit-keyframes bganim {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
+}
+@-moz-keyframes bganim {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
+}
+@keyframes bganim {
+  0% {
+    background-position: 29% 0%;
+  }
+  50% {
+    background-position: 72% 100%;
+  }
+  100% {
+    background-position: 29% 0%;
+  }
 }

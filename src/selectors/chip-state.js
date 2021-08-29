@@ -1,2 +1,2 @@
-const chipSelector = ({chips}) => chips;
-export {chipSelector};
+const chipSelector = ({ chips }) => chips;
+export { chipSelector };
