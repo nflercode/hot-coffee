@@ -51,12 +51,9 @@ const LobbyPage = () => {
         <div className="lobby-page-container">
             <header className="lobby-page-header">
                 <div className="lobby-page-header-upper-header">
-                    <button
-                        className="lobby-page-header-leave-table-button"
-                        onClick={handleLeaveTable}
-                    >
+                    <Button theme={"negative"} onClick={handleLeaveTable}>
                         Lämna bord
-                    </button>
+                    </Button>
                 </div>
                 <div>
                     <h2 className="lobby-page-header-table-name">

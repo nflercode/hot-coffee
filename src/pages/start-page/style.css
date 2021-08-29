@@ -31,14 +31,6 @@ body,
 .start-page-container {
   display: grid;
   grid-template-rows: 0.5fr 2fr 0.3fr;
-  background: rgb(2, 0, 36);
-  background: linear-gradient(246deg, #7acd5a, #2d5626, #071402);
-  background-size: 600% 600%;
-
-  -webkit-animation: AnimationName 30s ease infinite;
-  -moz-animation: AnimationName 30s ease infinite;
-  animation: AnimationName 30s ease infinite;
-
   justify-content: stretch;
   padding-left: 5%;
   padding-right: 8%;
@@ -132,6 +124,11 @@ body,
   flex-direction: column;
 }
 
+.new-player-section>.info-ball {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+
 @keyframes flicker1 {
   to {
     opacity: 0.4;
@@ -158,39 +155,6 @@ body,
   }
 }
 
-@-webkit-keyframes AnimationName {
-  0% {
-    background-position: 29% 0%;
-  }
-  50% {
-    background-position: 72% 100%;
-  }
-  100% {
-    background-position: 29% 0%;
-  }
-}
-@-moz-keyframes AnimationName {
-  0% {
-    background-position: 29% 0%;
-  }
-  50% {
-    background-position: 72% 100%;
-  }
-  100% {
-    background-position: 29% 0%;
-  }
-}
-@keyframes AnimationName {
-  0% {
-    background-position: 29% 0%;
-  }
-  50% {
-    background-position: 72% 100%;
-  }
-  100% {
-    background-position: 29% 0%;
-  }
-}
 
 @media only screen and (min-width: 1680px) {
   .start-page-container {
@@ -209,5 +173,14 @@ body,
 @media only screen and (max-width: 850px) {
   .start-page-new-player {
     width: 100%;
+  }
+  
+  .logotypes {
+    transform: scale(0.8);
+  }
+
+  .start-page-header>.container-component,
+  .start-page-main>.container-component {
+    padding: 0 0.5em;
   }
 }

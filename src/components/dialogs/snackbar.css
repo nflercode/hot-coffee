@@ -2,7 +2,7 @@
   bottom: 0px;
   position: fixed;
   min-width: 100%;
-  background-color: #fdfffd;
+  background-color: #202020;
   padding: 0.75em;
   max-height: 150px;
   height: 150px;
@@ -10,6 +10,7 @@
   border-radius: 4px;
   display: grid;
   grid-template-rows: 1fr 2fr auto;
+  color: hsla(120, 100%, 100%, 0.726);
 }
 
 .snackbar-btns-container {
