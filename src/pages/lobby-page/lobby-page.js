@@ -8,6 +8,7 @@ import refreshTokenStorage from "../../storage/refresh-token-storage";
 import { useHistory } from "react-router";
 import { Button } from "../../components/button/button";
 import { CopyLink } from "../../components/copy-link/copy-link";
+import { GAME_CREATED } from "../../store/reducers/game-reducer";
 import "./style.css";
 
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
@@ -25,6 +26,12 @@ const LobbyPage = () => {
                 authState.authToken.token
             );
             dispatch({ type: "CREATE_TABLE", table: tableResp.data });
+
+            const ongoingGameResp = await gameService.getGameOngoing(
+                authState.authToken.token
+            );
+
+            dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
         }
 
         if (authState.authToken.token) getTable();
