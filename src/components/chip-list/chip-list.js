@@ -13,36 +13,40 @@ const ChipList = ({
     larger
 }) => (
     <div className={`chip-list-container ${larger ? "larger" : ""}`}>
-        {chips.map((chip) => (
-            <div
-                key={`_${chip.type}_${chip.amount}`}
-                className="chip-list-container-chip-holder"
-            >
-                <Chip
-                    chip={chip}
-                    isEnabled={hasEnabledChips}
-                    larger={larger}
-                    onClick={(clickedChip) => onChipClick(clickedChip)}
-                />
-                <div className="chip-holder-betting-chips">
-                    {hasEnabledChips &&
-                        Object.keys(currentBettingChips).map(
-                            (id) =>
-                                chip.chipId === id && (
-                                    <div>
-                                        <b>{currentBettingChips[id]}</b>
-                                        <Button
-                                            onClick={() => onReduceClick(chip)}
-                                            theme="negative"
-                                        >
-                                            -
-                                        </Button>
-                                    </div>
-                                )
-                        )}
+        {chips.map((chip) =>
+            chip.type ? (
+                <div
+                    key={`_${chip.type}_${chip.amount}`}
+                    className="chip-list-container-chip-holder"
+                >
+                    <Chip
+                        chip={chip}
+                        isEnabled={hasEnabledChips}
+                        larger={larger}
+                        onClick={(clickedChip) => onChipClick(clickedChip)}
+                    />
+                    <div className="chip-holder-betting-chips">
+                        {hasEnabledChips &&
+                            Object.keys(currentBettingChips).map(
+                                (id) =>
+                                    chip.chipId === id && (
+                                        <div>
+                                            <b>{currentBettingChips[id]}</b>
+                                            <Button
+                                                onClick={() =>
+                                                    onReduceClick(chip)
+                                                }
+                                                theme="negative"
+                                            >
+                                                -
+                                            </Button>
+                                        </div>
+                                    )
+                            )}
+                    </div>
                 </div>
-            </div>
-        ))}
+            ) : null
+        )}
     </div>
 );
 

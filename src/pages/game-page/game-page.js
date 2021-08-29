@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useContext, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import tableService from "../../services/table-service";
-
+import { PlayerMe } from "./player-me";
 import { DialogsContext } from "../../components/dialogs/dialogs-context";
 
 import "./style.css";
@@ -25,7 +25,9 @@ import { potSelector } from "../../selectors/pot-request-state";
 import { participantPlayerSelector } from "../../selectors/combined-states";
 import { GamePot } from "./game-pot";
 import usePrevious from "../../helpers/use-previous";
-
+import useIsHorizontal from "../../components/hooks/is-horizontal";
+import { Container } from "../../components/container/container";
+import { Alert } from "../../components/dialogs/alert";
 const GamePage = () => {
     const authState = useSelector(authSelector);
     const gameState = useSelector(gameSelector);
@@ -46,6 +48,8 @@ const GamePage = () => {
 
     const meId = playerMe?.id;
 
+    const isHorizontal = useIsHorizontal();
+
     const memoizedOrderedPlayersClasses = useMemo(() => {
         if (!(players && participants)) return [];
 
@@ -62,7 +66,8 @@ const GamePage = () => {
     useEffect(() => {
         if (
             myParticipant?.isCurrentTurn &&
-            potRequestState.status !== "AWAITING"
+            potRequestState.status !== "AWAITING" &&
+            isHorizontal
         ) {
             dialogerinos.onShowDialog({
                 type: "ALERT",
@@ -185,6 +190,10 @@ const GamePage = () => {
         });
     }
 
+    if (!isHorizontal) {
+        return <Alert title="Rotate the screen" icon="fa-exclamation" />;
+    }
+
     return (
         <div className="game-page-container">
             <main className="game-page-main">
@@ -209,7 +218,18 @@ const GamePage = () => {
                         else
                             classes += ` participant-section-${classObj?.className}`;
 
-                        return (
+                        return playerParticipant.isMe ? (
+                            <PlayerMe
+                                classes={classes}
+                                playerParticipant={playerParticipant}
+                                authState={authState}
+                                gameState={gameState}
+                                currentBettingChips={currentBettingChips}
+                                gameService={gameService}
+                                setCurrentBettingChips={setCurrentBettingChips}
+                                handleChipClick={handleChipClick}
+                            />
+                        ) : (
                             <div
                                 className={classes}
                                 key={playerParticipant.playerId}
@@ -234,82 +254,6 @@ const GamePage = () => {
                                     }
                                     larger={playerParticipant.isMe}
                                 />
-                                {playerParticipant.isMe && (
-                                    <div className="participant-section-button-group">
-                                        <Button
-                                            disabled={
-                                                !playerParticipant.isCurrentTurn
-                                            }
-                                            onClick={() => {
-                                                gameService.raise(
-                                                    authState.authToken.token,
-                                                    gameState.id,
-                                                    Object.keys(
-                                                        currentBettingChips
-                                                    ).map((id) => ({
-                                                        chipId: id,
-                                                        amount: currentBettingChips[
-                                                            id
-                                                        ]
-                                                    }))
-                                                );
-                                                setCurrentBettingChips({});
-                                            }}
-                                        >
-                                            Call
-                                        </Button>
-                                        <Button
-                                            disabled={
-                                                !playerParticipant.isCurrentTurn
-                                            }
-                                            onClick={() => {
-                                                gameService.raise(
-                                                    authState.authToken.token,
-                                                    gameState.id,
-                                                    Object.keys(
-                                                        currentBettingChips
-                                                    ).map((id) => ({
-                                                        chipId: id,
-                                                        amount: currentBettingChips[
-                                                            id
-                                                        ]
-                                                    }))
-                                                );
-                                                setCurrentBettingChips({});
-                                            }}
-                                        >
-                                            Raise
-                                        </Button>
-                                        <Button
-                                            disabled={
-                                                !playerParticipant.isCurrentTurn
-                                            }
-                                            theme="neutral"
-                                            onClick={() =>
-                                                gameService.check(
-                                                    authState.authToken.token,
-                                                    gameState.id
-                                                )
-                                            }
-                                        >
-                                            Check
-                                        </Button>
-                                        <Button
-                                            theme="negative"
-                                            disabled={
-                                                !playerParticipant.isCurrentTurn
-                                            }
-                                            onClick={() =>
-                                                gameService.fold(
-                                                    authState.authToken.token,
-                                                    gameState.id
-                                                )
-                                            }
-                                        >
-                                            Fold
-                                        </Button>
-                                    </div>
-                                )}
                             </div>
                         );
                     })}
