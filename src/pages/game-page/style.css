@@ -76,3 +76,14 @@
   justify-content: space-between;
   grid-gap: 0.25em;
 }
+
+.player-me-avatar>.player {
+  position: absolute;
+  margin-top: -5em;
+  background-color: #2d2d2d;
+  margin-left: 0.5em;
+}
+
+.player-me-avatar {
+  width: 85px;
+}
