@@ -13,24 +13,27 @@
 }
 
 .chip-red {
-  background-color: rgba(220, 35, 0, 1);
+  background-color: #7A5151;
+  color: #2D2D2D;
 }
 
 .chip-white {
-  background-color: rgb(231 225 225);
+  background-color: #C4C4C4;
   border: 1px solid black;
+  color: #2D2D2D;
 }
 
 .chip-black {
   background-color: black;
+  color: #2D2D2D;
 }
 
 .chip-green {
-  background-color: rgb(0 139 72);
-  color: white;
+  background-color: #527A51;
+  color: #2D2D2D;
 }
 
 .chip-blue {
-  background-color: rgb(0 75 176);
-  color: white;
+  background-color: #51667A;
+  color: #2D2D2D;
 }

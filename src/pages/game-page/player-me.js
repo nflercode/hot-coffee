@@ -15,7 +15,7 @@ export const PlayerMe = ({
     handleChipClick
 }) => (
     <Container key={playerParticipant.playerId} className={classes}>
-        <div>
+        <div className="player-me-avatar">
             <Player playerParticipant={playerParticipant} />
         </div>
         <ChipList

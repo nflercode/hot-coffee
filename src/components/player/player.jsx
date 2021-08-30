@@ -4,20 +4,8 @@ import "./player.css";
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
 
 export const Player = ({ playerParticipant }) => {
-    const [showCash, setShowCash] = useState(false);
-
-    const onClick = () => {
-        if (showCash) {
-            setShowCash(false);
-            return;
-        }
-
-        setShowCash(true);
-    };
-
     return (
         <div
-            onClick={onClick}
             className={`player${
                 playerParticipant.isCurrentTurn ? " player-active" : ""
             }`}
@@ -45,17 +33,8 @@ export const Player = ({ playerParticipant }) => {
                 </LazyLoad>
             </div>
             <div className="player-name f-center">
-                {playerParticipant.name}{" "}
-                <b>
-                    {showCash ? (
-                        <>
-                            <br />
-                            {playerParticipant.totalValue}$
-                        </>
-                    ) : (
-                        `#${playerParticipant.turnOrder}`
-                    )}
-                </b>
+                {playerParticipant.name} <br />
+                <b>{playerParticipant.totalValue}$</b>
             </div>
         </div>
     );
