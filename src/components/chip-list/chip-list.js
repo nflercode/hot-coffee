@@ -27,11 +27,13 @@ const ChipList = ({
                     />
                     <div className="chip-holder-betting-chips">
                         {hasEnabledChips &&
-                            Object.keys(currentBettingChips).map(
+                            Object.keys(currentBettingChips?.chips || {}).map(
                                 (id) =>
                                     chip.chipId === id && (
                                         <div>
-                                            <b>{currentBettingChips[id]}</b>
+                                            <b>
+                                                {currentBettingChips.chips[id]}
+                                            </b>
                                             <Button
                                                 onClick={() =>
                                                     onReduceClick(chip)

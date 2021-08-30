@@ -6,7 +6,7 @@ export const actions = (state = [], action) => {
         case ACTION_CREATED:
             return [...state, action.action];
         case ACTION_FETCHED:
-            return [...state, ...action.actions];
+            return action.actions;
         default:
             return state;
     }

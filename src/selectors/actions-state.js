@@ -1,2 +1,8 @@
 const actionsSelector = ({ actions }) => actions;
-export { actionsSelector };
+
+const actionsForRound = (state, round) => {
+    const actionsState = actionsSelector(state);
+    return actionsState.filter((action) => action.gameRound === round);
+};
+
+export { actionsSelector, actionsForRound };
