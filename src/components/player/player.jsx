@@ -4,21 +4,9 @@ import "./player.css";
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
 
 export const Player = ({ playerParticipant }) => {
-    const [showCash, setShowCash] = useState(false);
     const latestPlayerAction = playerParticipant.actions[0];
-
-    const onClick = () => {
-        if (showCash) {
-            setShowCash(false);
-            return;
-        }
-
-        setShowCash(true);
-    };
-
     return (
         <div
-            onClick={onClick}
             className={`player${
                 playerParticipant.isCurrentTurn ? " player-active" : ""
             }`}
@@ -46,18 +34,8 @@ export const Player = ({ playerParticipant }) => {
                 </LazyLoad>
             </div>
             <div className="player-name f-center">
-                {playerParticipant.name}{" "}
-                <b>
-                    {showCash ? (
-                        <>
-                            <br />
-                            {playerParticipant.totalValue}$
-                        </>
-                    ) : (
-                        `#${playerParticipant.turnOrder}`
-                    )}
-                </b>
-                <br />
+                {playerParticipant.name} <br />
+                <b>{playerParticipant.totalValue}$</b>
                 {latestPlayerAction && (
                     <PlayerAction latestPlayerAction={latestPlayerAction} />
                 )}
@@ -70,7 +48,7 @@ const PlayerAction = ({ latestPlayerAction }) => {
     const { actionType, totalValue } = latestPlayerAction;
     return (
         <b className="player-action">
-            {actionType} {totalValue}$
+            {actionType} {totalValue > 0 && `${totalValue}$`}
         </b>
     );
 };

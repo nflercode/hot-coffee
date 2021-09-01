@@ -51,7 +51,7 @@ export const PlayerMe = ({
 
     return (
         <Container key={playerParticipant.playerId} className={classes}>
-            <div>
+            <div className="player-me-avatar">
                 <Player playerParticipant={playerParticipant} />
             </div>
             <ChipList

@@ -107,6 +107,9 @@ p {
   margin-right: auto;
 }
 
+.padding-bottom-half {
+  padding-bottom: 0.25em;
+}
 
 @-webkit-keyframes bganim {
   0% {
