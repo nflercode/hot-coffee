@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from "react";
-import { Button } from "../../components/button/button";
+import React, { useState } from "react";
 import { Container } from "../../components/container/container";
 import { Player } from "../../components/player/player";
 import { ChipList } from "../../components/chip-list/chip-list";
-import rules from "../../rules";
 import { useSelector } from "react-redux";
 import { actionsForRound } from "../../selectors/actions-state";
+import { CallButton } from "./bet-buttons/call-button";
+import { RaiseButton } from "./bet-buttons/raise-button";
+import { CheckButton } from "./bet-buttons/check-button";
+import { FoldButton } from "./bet-buttons/fold-button";
 
 export const PlayerMe = ({
     playerParticipant,
@@ -14,10 +16,10 @@ export const PlayerMe = ({
     gameService,
     classes
 }) => {
-    const [currentBettingChips, setCurrentBettingChips] = useState({
-        chips: {},
-        totalValue: 0
-    });
+    const currentBettingChipsDefaultState = { chips: {}, totalValue: 0 };
+    const [currentBettingChips, setCurrentBettingChips] = useState(
+        currentBettingChipsDefaultState
+    );
 
     function handleChipClick(chip, incDec) {
         const newAmount =
@@ -35,9 +37,17 @@ export const PlayerMe = ({
             totalValue: currentBettingChips.totalValue + incDec * chip.value
         });
     }
+
     const roundActions = useSelector((state) =>
         actionsForRound(state, gameState.round)
     );
+
+    function getCurrentBettingChipsAsPlayload() {
+        return Object.keys(currentBettingChips.chips).map((id) => ({
+            chipId: id,
+            amount: currentBettingChips.chips[id]
+        }));
+    }
 
     return (
         <Container key={playerParticipant.playerId} className={classes}>
@@ -57,93 +67,52 @@ export const PlayerMe = ({
                 larger={playerParticipant.isMe}
             />
             <div className="participant-section-button-group">
-                <Button
-                    disabled={
-                        !playerParticipant.isCurrentTurn ||
-                        (playerParticipant.isCurrentTurn &&
-                            !rules.canICall(
-                                roundActions,
-                                playerParticipant.playerId,
-                                currentBettingChips.totalValue
-                            ))
-                    }
+                <CallButton
+                    playerParticipant={playerParticipant}
+                    roundActions={roundActions}
+                    currentBettingChips={currentBettingChips}
                     onClick={() => {
                         gameService.call(
                             authState.authToken.token,
                             gameState.id,
-                            Object.keys(currentBettingChips.chips).map(
-                                (id) => ({
-                                    chipId: id,
-                                    amount: currentBettingChips.chips[id]
-                                })
-                            )
+                            getCurrentBettingChipsAsPlayload()
                         );
-                        setCurrentBettingChips({ chips: {}, totalValue: 0 });
+                        setCurrentBettingChips(currentBettingChipsDefaultState);
                     }}
-                >
-                    Call
-                </Button>
-                <Button
-                    disabled={
-                        !playerParticipant.isCurrentTurn ||
-                        (playerParticipant.isCurrentTurn &&
-                            !rules.canIRaise(
-                                roundActions,
-                                playerParticipant.playerId,
-                                currentBettingChips.totalValue
-                            ))
-                    }
+                />
+                <RaiseButton
+                    playerParticipant={playerParticipant}
+                    roundActions={roundActions}
+                    currentBettingChips={currentBettingChips}
                     onClick={() => {
                         gameService.raise(
                             authState.authToken.token,
                             gameState.id,
-                            Object.keys(currentBettingChips.chips).map(
-                                (id) => ({
-                                    chipId: id,
-                                    amount: currentBettingChips.chips[id]
-                                })
-                            )
+                            getCurrentBettingChipsAsPlayload()
                         );
-                        setCurrentBettingChips({});
+                        setCurrentBettingChips(currentBettingChipsDefaultState);
                     }}
-                >
-                    Raise
-                </Button>
-                <Button
-                    disabled={
-                        !playerParticipant.isCurrentTurn ||
-                        (playerParticipant.isCurrentTurn &&
-                            !rules.canICheck(
-                                roundActions,
-                                playerParticipant.playerId
-                            ))
-                    }
-                    theme="neutral"
+                />
+                <CheckButton
+                    playerParticipant={playerParticipant}
+                    roundActions={roundActions}
                     onClick={() =>
                         gameService.check(
                             authState.authToken.token,
                             gameState.id
                         )
                     }
-                >
-                    Check
-                </Button>
-                <Button
-                    theme="negative"
-                    disabled={
-                        !playerParticipant.isCurrentTurn ||
-                        (playerParticipant.isCurrentTurn &&
-                            !rules.canIFold(roundActions))
-                    }
+                />
+                <FoldButton
+                    playerParticipant={playerParticipant}
+                    roundActions={roundActions}
                     onClick={() =>
                         gameService.fold(
                             authState.authToken.token,
                             gameState.id
                         )
                     }
-                >
-                    Fold
-                </Button>
+                />
             </div>
         </Container>
     );

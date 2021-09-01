@@ -65,12 +65,8 @@ function usePotRequestDialog() {
             ),
             title: `${requestingPlayer.name} is requesting the pot.`
         });
-    }, [
-        participantPlayers,
-        potRequestState,
-        authState.authToken.token,
-        dialogContext
-    ]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [participantPlayers, potRequestState]);
 }
 
 export { usePotRequestDialog };

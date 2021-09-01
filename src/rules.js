@@ -142,5 +142,4 @@ function getActionsPerformedBetweenPlayerTurn(roundActions, playerId) {
     return [roundActions.slice(0, endIndex), playerIndex];
 }
 
-const rules = { canICheck, canICall, canIFold, canIRaise };
-export default rules;
+export { canICheck, canICall, canIFold, canIRaise };

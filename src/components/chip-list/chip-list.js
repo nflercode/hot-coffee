@@ -27,10 +27,11 @@ const ChipList = ({
                     />
                     <div className="chip-holder-betting-chips">
                         {hasEnabledChips &&
-                            Object.keys(currentBettingChips?.chips || {}).map(
-                                (id) =>
+                            currentBettingChips?.chips &&
+                            Object.keys(currentBettingChips.chips).map(
+                                (id, i) =>
                                     chip.chipId === id && (
-                                        <div>
+                                        <div key={`_currentBettingChip_${i}`}>
                                             <b>
                                                 {currentBettingChips.chips[id]}
                                             </b>

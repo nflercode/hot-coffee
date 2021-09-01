@@ -77,6 +77,12 @@ const GamePage = () => {
         }
     }, [myParticipant, dialogerinos, potRequestState.status]);
 
+    // Not 100% sure if happy with this solution.
+    // Kind of big risk that the round wont change if the
+    // requesting user is not having the page open when the
+    // request gets approved, hence the round wont change and
+    // the game will break. Maybe let backend take care of round
+    // change on approved request. (kind of ugly as well?)
     useEffect(() => {
         const requestingPlayer = participantPlayers.find(
             (p) => p.playerId === potRequestState.playerId
