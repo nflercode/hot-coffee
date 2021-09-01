@@ -2,6 +2,7 @@
  * Combined selectors for gamestate + tablestate
  */
 
+import { actionsSelector } from "./actions-state";
 import { chipSelector } from "./chip-state";
 import { gameSelector, participantsSelector } from "./game-state";
 import { playersSeletor } from "./table-state";
@@ -10,6 +11,7 @@ const participantPlayerSelector = (state) => {
     const players = playersSeletor(state);
     const participants = participantsSelector(state);
     const chipsState = chipSelector(state);
+    const actionsState = actionsSelector(state);
 
     if (!(players && participants && chipsState)) return [];
 
@@ -29,6 +31,9 @@ const participantPlayerSelector = (state) => {
             (participant) => participant.playerId === player.id
         );
         const mappedChips = participant.chips.map(mapChipWithActualChip);
+        const participantActions = actionsState
+            .filter((action) => action.playerId === player.id)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         let totalValue = 0;
         mappedChips.forEach((chip) => {
@@ -39,7 +44,8 @@ const participantPlayerSelector = (state) => {
             ...participant,
             ...player,
             chips: mappedChips,
-            totalValue
+            totalValue,
+            actions: participantActions
         };
     });
 

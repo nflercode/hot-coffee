@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useContext, useRef } from "react";
+import React, { useEffect, useMemo, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import tableService from "../../services/table-service";
 import { PlayerMe } from "./player-me";
@@ -11,7 +11,6 @@ import chipService from "../../services/chips-service";
 import { CHIPS_FETCHED } from "../../store/reducers/chips-reducer";
 import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
 
-import { Button } from "../../components/button/button";
 import { ChipList } from "../../components/chip-list/chip-list";
 import { Player } from "../../components/player/player";
 import { playerMeSelector, playersSeletor } from "../../selectors/table-state";
@@ -26,8 +25,10 @@ import { participantPlayerSelector } from "../../selectors/combined-states";
 import { GamePot } from "./game-pot";
 import usePrevious from "../../helpers/use-previous";
 import useIsHorizontal from "../../components/hooks/is-horizontal";
-import { Container } from "../../components/container/container";
 import { Alert } from "../../components/dialogs/alert";
+import { ACTION_FETCHED } from "../../store/reducers/actions-reducer";
+import { usePotRequestDialog } from "./dialogs/use-pot-request-dialog";
+
 const GamePage = () => {
     const authState = useSelector(authSelector);
     const gameState = useSelector(gameSelector);
@@ -40,7 +41,6 @@ const GamePage = () => {
     const players = useSelector(playersSeletor);
     const participantPlayers = useSelector(participantPlayerSelector);
     const dialogerinos = useContext(DialogsContext);
-    const [currentBettingChips, setCurrentBettingChips] = useState({});
 
     const prevPotRequestStatus = usePrevious(potRequestState.status);
 
@@ -77,6 +77,12 @@ const GamePage = () => {
         }
     }, [myParticipant, dialogerinos, potRequestState.status]);
 
+    // Not 100% sure if happy with this solution.
+    // Kind of big risk that the round wont change if the
+    // requesting user is not having the page open when the
+    // request gets approved, hence the round wont change and
+    // the game will break. Maybe let backend take care of round
+    // change on approved request. (kind of ugly as well?)
     useEffect(() => {
         const requestingPlayer = participantPlayers.find(
             (p) => p.playerId === potRequestState.playerId
@@ -90,60 +96,7 @@ const GamePage = () => {
         }
     }, [participantPlayers, potRequestState.status]);
 
-    useEffect(() => {
-        if (potRequestState.status !== "AWAITING") {
-            return;
-        }
-
-        const requestingPlayer = participantPlayers.find(
-            (p) => p.playerId === potRequestState.playerId
-        );
-        if (!requestingPlayer || requestingPlayer.isMe) {
-            return;
-        }
-
-        const isMePlayer = participantPlayers.find((p) => p.isMe);
-        const myAnswer = potRequestState.participantAnswers.find(
-            (p) => p.playerId === isMePlayer.playerId
-        );
-        if (myAnswer && myAnswer.answer !== "AWAITING") {
-            return;
-        }
-
-        dialogerinos.onShowDialog({
-            mode: "info",
-            positiveButtonProp: {
-                callback: () => {
-                    gameService.updatePotRequest(
-                        authState.authToken.token,
-                        potRequestState.id,
-                        "OK"
-                    );
-                },
-                content: "I accept"
-            },
-            negativeButtonProp: {
-                callback: () => {
-                    gameService.updatePotRequest(
-                        authState.authToken.token,
-                        potRequestState.id,
-                        "NO"
-                    );
-                },
-                content: "I deny"
-            },
-            message: (
-                <div>
-                    <b>{requestingPlayer.name}</b> is requesting to receive the
-                    pot.
-                    <br />
-                    <br />
-                    <i>If approved: this will also start a new round.</i>
-                </div>
-            ),
-            title: `${requestingPlayer.name} is requesting the pot.`
-        });
-    }, [participantPlayers, potRequestState]);
+    usePotRequestDialog();
 
     useEffect(() => {
         // TODO: move this function to a getTableService, this blob is not necessary in the component
@@ -158,6 +111,16 @@ const GamePage = () => {
                 authState.authToken.token
             );
             dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
+
+            const roundActions = await gameService.getGameActionsForRound(
+                authState.authToken.token,
+                ongoingGameResp.data.game.id,
+                ongoingGameResp.data.game.round
+            );
+            dispatch({
+                type: ACTION_FETCHED,
+                actions: roundActions.data.actions
+            });
 
             const chipsResponse = await chipService.getChips(
                 authState.authToken.token
@@ -177,18 +140,6 @@ const GamePage = () => {
 
         if (authState.authToken.token) getTable();
     }, [authState.authToken, dispatch]);
-
-    function handleChipClick(chip, incDec) {
-        const newAmount = (currentBettingChips[chip.chipId] || 0) + incDec;
-        if (newAmount < 0 || newAmount > chip.amount) {
-            return;
-        }
-
-        setCurrentBettingChips({
-            ...currentBettingChips,
-            [chip.chipId]: newAmount
-        });
-    }
 
     if (!isHorizontal) {
         return <Alert title="Rotate the screen" icon="fa-exclamation" />;
@@ -224,10 +175,7 @@ const GamePage = () => {
                                 playerParticipant={playerParticipant}
                                 authState={authState}
                                 gameState={gameState}
-                                currentBettingChips={currentBettingChips}
                                 gameService={gameService}
-                                setCurrentBettingChips={setCurrentBettingChips}
-                                handleChipClick={handleChipClick}
                             />
                         ) : (
                             <div
@@ -244,13 +192,6 @@ const GamePage = () => {
                                     hasEnabledChips={
                                         playerParticipant.isMe &&
                                         playerParticipant.isCurrentTurn
-                                    }
-                                    currentBettingChips={currentBettingChips}
-                                    onChipClick={(clickedChip) =>
-                                        handleChipClick(clickedChip, 1)
-                                    }
-                                    onReduceClick={(reducedChip) =>
-                                        handleChipClick(reducedChip, -1)
                                     }
                                     larger={playerParticipant.isMe}
                                 />

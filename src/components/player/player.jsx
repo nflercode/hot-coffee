@@ -4,6 +4,7 @@ import "./player.css";
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
 
 export const Player = ({ playerParticipant }) => {
+    const latestPlayerAction = playerParticipant.actions[0];
     return (
         <div
             className={`player${
@@ -35,7 +36,19 @@ export const Player = ({ playerParticipant }) => {
             <div className="player-name f-center">
                 {playerParticipant.name} <br />
                 <b>{playerParticipant.totalValue}$</b>
+                {latestPlayerAction && (
+                    <PlayerAction latestPlayerAction={latestPlayerAction} />
+                )}
             </div>
         </div>
+    );
+};
+
+const PlayerAction = ({ latestPlayerAction }) => {
+    const { actionType, totalValue } = latestPlayerAction;
+    return (
+        <b className="player-action">
+            {actionType} {totalValue > 0 && `${totalValue}$`}
+        </b>
     );
 };

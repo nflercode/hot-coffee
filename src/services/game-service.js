@@ -52,11 +52,38 @@ async function nextRound(authToken, gameId) {
     );
 }
 
+async function getGameActionsForRound(authToken, gameId, round) {
+    return await axios.get(
+        `${REACT_APP_CHIPPIE_HOST}/game/${gameId}/actions/${round}`,
+        {
+            headers: {
+                Authorization: `bearer ${authToken}`
+            }
+        }
+    );
+}
+
 async function raise(authToken, gameId, chips) {
     return await axios.post(
-        `${REACT_APP_CHIPPIE_HOST}/game/raise`,
+        `${REACT_APP_CHIPPIE_HOST}/game/${gameId}/raise`,
         {
-            gameId,
+            chips
+        },
+        {
+            headers: {
+                Authorization: `bearer ${authToken}`
+            }
+        },
+        (data) => {
+            console.log(data);
+        }
+    );
+}
+
+async function call(authToken, gameId, chips) {
+    return await axios.post(
+        `${REACT_APP_CHIPPIE_HOST}/game/${gameId}/call`,
+        {
             chips
         },
         {
@@ -150,7 +177,9 @@ const gameService = {
     createGame,
     closeGame,
     getGameOngoing,
+    getGameActionsForRound,
     raise,
+    call,
     check,
     fold,
     createPotRequest,

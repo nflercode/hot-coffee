@@ -4,9 +4,17 @@ import { auth } from "./reducers/auth-reducer";
 import { game } from "./reducers/game-reducer";
 import { chips } from "./reducers/chips-reducer";
 import { potRequest } from "./reducers/pot-request";
+import { actions } from "./reducers/actions-reducer";
 import refreshTokenStorage from "../storage/refresh-token-storage";
 
-const reducers = combineReducers({ table, auth, game, chips, potRequest });
+const reducers = combineReducers({
+    table,
+    auth,
+    game,
+    chips,
+    potRequest,
+    actions
+});
 const initialAuthState = refreshTokenStorage.getRefreshToken();
 
 export const store = createStore(
