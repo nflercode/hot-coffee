@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/button/button";
-import { canICheck } from "../../../rules";
+import { canICheck } from "../../../rules/rules";
 
 export const CheckButton = ({ playerParticipant, roundActions, onClick }) => {
     function isAllowedToCheck() {

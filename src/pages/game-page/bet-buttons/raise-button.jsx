@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/button/button";
-import { canIRaise } from "../../../rules";
+import { canIRaise } from "../../../rules/rules";
 
 export const RaiseButton = ({
     playerParticipant,

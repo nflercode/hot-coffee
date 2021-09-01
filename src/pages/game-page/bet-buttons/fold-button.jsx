@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/button/button";
-import { canIFold } from "../../../rules";
+import { canIFold } from "../../../rules/rules";
 
 export const FoldButton = ({ playerParticipant, roundActions, onClick }) => {
     function isAllowedToFold() {

@@ -1,4 +1,4 @@
-import { PLAYER_ACTIONS } from "./player-actions";
+import { PLAYER_ACTIONS } from "../constants/player-actions";
 
 function canICheck(roundActions, playerId) {
     // Assert that all participants has placed a bet

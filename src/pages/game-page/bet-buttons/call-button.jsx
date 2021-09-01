@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../../components/button/button";
-import { canICall } from "../../../rules";
+import { canICall } from "../../../rules/rules";
 
 export const CallButton = ({
     playerParticipant,
