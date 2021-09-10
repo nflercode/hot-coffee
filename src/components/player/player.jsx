@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import LazyLoad from "react-lazyload";
+import { SpeechBubble } from "../speech-bubble/speech-bubble";
 import "./player.css";
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
 
 export const Player = ({ playerParticipant }) => {
     const latestPlayerAction = playerParticipant.actions[0];
+    const [referenceElement, setReferenceElement] = useState(null);
+
     return (
         <>
+            {latestPlayerAction && !playerParticipant.isMe && (
+                <SpeechBubble referenceElement={referenceElement}>
+                    <PlayerAction latestPlayerAction={latestPlayerAction} />
+                </SpeechBubble>
+            )}
             {playerParticipant.isWorst ||
                 (playerParticipant.isBest && (
                     <div className="player-badge">
@@ -30,7 +38,7 @@ export const Player = ({ playerParticipant }) => {
                     playerParticipant.isCurrentTurn ? " player-active" : ""
                 }`}
             >
-                <div className="player-avatar">
+                <div ref={setReferenceElement} className="player-avatar">
                     <LazyLoad height={60}>
                         <img
                             width={50}
@@ -42,9 +50,6 @@ export const Player = ({ playerParticipant }) => {
                 <div className="player-name f-center">
                     {playerParticipant.name} <br />
                     <b>{playerParticipant.totalValue}$</b>
-                    {latestPlayerAction && (
-                        <PlayerAction latestPlayerAction={latestPlayerAction} />
-                    )}
                 </div>
             </div>
         </>
@@ -54,8 +59,8 @@ export const Player = ({ playerParticipant }) => {
 const PlayerAction = ({ latestPlayerAction }) => {
     const { actionType, totalValue } = latestPlayerAction;
     return (
-        <b className="player-action">
+        <>
             {actionType} {totalValue > 0 && `${totalValue}$`}
-        </b>
+        </>
     );
 };
