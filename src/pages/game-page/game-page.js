@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import tableService from "../../services/table-service";
-import { PlayerMe } from "./player-me";
 import { DialogsContext } from "../../components/dialogs/dialogs-context";
 
 import "./style.css";
@@ -28,6 +27,11 @@ import useIsHorizontal from "../../components/hooks/is-horizontal";
 import { Alert } from "../../components/dialogs/alert";
 import { ACTION_FETCHED } from "../../store/reducers/actions-reducer";
 import { usePotRequestDialog } from "./dialogs/use-pot-request-dialog";
+import { PlayerParticipantList } from "./player-participant-list";
+import {
+    useBreakpoint,
+    breakoointConstants
+} from "../../components/hooks/use-breakpoint";
 
 const GamePage = () => {
     const authState = useSelector(authSelector);
@@ -49,11 +53,14 @@ const GamePage = () => {
     const meId = playerMe?.id;
 
     const isHorizontal = useIsHorizontal();
+    const breakpoint = useBreakpoint();
+    const isSmall = breakpoint === breakoointConstants.XS;
 
     const memoizedOrderedPlayersClasses = useMemo(() => {
         if (!(players && participants)) return [];
 
         const leftTopRight = ["left", "top", "right"];
+
         return participants
             .filter((p) => p.playerId !== meId)
             .sort((a, b) => a.turnOrder - b.turnOrder)
@@ -151,53 +158,12 @@ const GamePage = () => {
                 <div className="game-page-pot-container">
                     <GamePot />
                 </div>
-                {participantPlayers &&
-                    participantPlayers.map((playerParticipant) => {
-                        if (!playerParticipant) return null;
-                        const classObj = memoizedOrderedPlayersClasses.find(
-                            (p) => p.playerId === playerParticipant.id
-                        );
-
-                        let classes = `game-page-participant-container ${
-                            !playerParticipant.isParticipating
-                                ? "participant-inactive"
-                                : ""
-                        }`;
-
-                        if (playerParticipant.isMe)
-                            classes += " current-participant";
-                        else
-                            classes += ` participant-section-${classObj?.className}`;
-
-                        return playerParticipant.isMe ? (
-                            <PlayerMe
-                                classes={classes}
-                                playerParticipant={playerParticipant}
-                                authState={authState}
-                                gameState={gameState}
-                                gameService={gameService}
-                            />
-                        ) : (
-                            <div
-                                className={classes}
-                                key={playerParticipant.playerId}
-                            >
-                                <div>
-                                    <Player
-                                        playerParticipant={playerParticipant}
-                                    />
-                                </div>
-                                <ChipList
-                                    chips={playerParticipant.chips}
-                                    hasEnabledChips={
-                                        playerParticipant.isMe &&
-                                        playerParticipant.isCurrentTurn
-                                    }
-                                    larger={playerParticipant.isMe}
-                                />
-                            </div>
-                        );
-                    })}
+                <PlayerParticipantList
+                    memoizedOrderedPlayersClasses={
+                        memoizedOrderedPlayersClasses
+                    }
+                    isSmall={isSmall}
+                />
             </main>
         </div>
     );
