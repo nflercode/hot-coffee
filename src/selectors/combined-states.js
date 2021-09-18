@@ -30,6 +30,7 @@ const participantPlayerSelector = (state) => {
         const participant = participants.find(
             (participant) => participant.playerId === player.id
         );
+        if (!participant) return;
         const mappedChips = participant.chips.map(mapChipWithActualChip);
         const participantActions = actionsState
             .filter((action) => action.playerId === player.id)
@@ -49,9 +50,9 @@ const participantPlayerSelector = (state) => {
         };
     });
 
+    if (!mappedPlayers || mappedPlayers.length < 1) return null;
     let highestValuePlayer = { value: null, player: null };
     let lowestValuePlayer = { value: null, player: null };
-
     mappedPlayers.forEach(({ totalValue, playerId }) => {
         if (
             highestValuePlayer.value === null ||
