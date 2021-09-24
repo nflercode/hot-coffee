@@ -2,6 +2,7 @@ import React from "react";
 export const Logo = ({ className }) => (
     <div className="logotypes">
         <svg
+            alt="My chips online"
             className={className}
             width="190"
             height="104"
