@@ -1,10 +1,9 @@
+import { createReducer } from "@reduxjs/toolkit";
+
 export const CHIPS_FETCHED = "CHIPS_FETCHED";
 
-export const chips = (state = [], action) => {
-    switch (action.type) {
-        case CHIPS_FETCHED:
-            return action.chips;
-        default:
-            return state;
-    }
-};
+export const chips = createReducer([], (builder) => {
+    builder.addCase(CHIPS_FETCHED, (state, action) => {
+        return action.chips;
+    });
+});
