@@ -1,3 +1,5 @@
+import { createReducer } from "@reduxjs/toolkit";
+
 export const CREATE_TABLE = "CREATE_TABLE";
 export const PLAYER_JOINED = "PLAYER_JOINED";
 export const TABLE_NAME_CHANGE = "TABLE_NAME_CHANGE";
@@ -5,29 +7,30 @@ export const PLAYER_LEFT_TABLE = "PLAYER_LEFT_TABLE";
 export const PLAYER_REMOVED = "PLAYER_REMOVED";
 export const PLAYER_NAME_CHANGE = "PLAYER_NAME_CHANGE";
 
-export const table = (state = 0, action) => {
-    switch (action.type) {
-        case CREATE_TABLE:
+export const table = createReducer([], (builder) => {
+    builder
+        .addCase(CREATE_TABLE, (state, action) => {
             return {
                 ...state,
                 ...action.table
             };
-        case PLAYER_JOINED: {
+        })
+        .addCase(PLAYER_JOINED, (state, action) => {
             return {
                 ...state,
                 players: [...state.players, action.player]
             };
-        }
-        case TABLE_NAME_CHANGE: {
+        })
+        .addCase(TABLE_NAME_CHANGE, (state, action) => {
             return {
                 ...state,
                 name: action.name
             };
-        }
-        case PLAYER_LEFT_TABLE: {
+        })
+        .addCase(PLAYER_LEFT_TABLE, (state, action) => {
             return {};
-        }
-        case PLAYER_NAME_CHANGE: {
+        })
+        .addCase(PLAYER_NAME_CHANGE, (state, action) => {
             return {
                 ...state,
                 players: state.players.map((player) =>
@@ -36,16 +39,13 @@ export const table = (state = 0, action) => {
                         : player
                 )
             };
-        }
-        case PLAYER_REMOVED: {
+        })
+        .addCase(PLAYER_REMOVED, (state, action) => {
             return {
                 ...state,
                 players: (state.players || []).filter(
                     (player) => player.id !== action.playerId
                 )
             };
-        }
-        default:
-            return state;
-    }
-};
+        });
+});
