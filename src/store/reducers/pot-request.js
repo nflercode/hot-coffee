@@ -7,12 +7,3 @@ export const potRequest = createReducer([], (builder) => {
         return action.potRequest;
     });
 });
-
-// (state = {}, action) => {
-//     switch (action.type) {
-//         case POT_REQUEST_FETCHED:
-//             return action.potRequest;
-//         default:
-//             return state;
-//     }
-// };
