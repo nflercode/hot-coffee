@@ -6,7 +6,6 @@ import { DialogsContext } from "../../components/dialogs/dialogs-context";
 import "./style.css";
 import gameService from "../../services/game-service";
 import { GAME_CREATED } from "../../store/reducers/game-reducer";
-import chipService from "../../services/chips-service";
 import { CHIPS_FETCHED } from "../../store/reducers/chips-reducer";
 import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
 
