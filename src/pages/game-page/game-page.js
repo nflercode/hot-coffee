@@ -32,6 +32,11 @@ import {
     useBreakpoint,
     breakoointConstants
 } from "../../components/hooks/use-breakpoint";
+import { fetchChips } from "../../store/actions/chips-action";
+import statusConstants from "../../store/constants/status-constants";
+//constants/status-constants.js";
+import { Spinner } from "../../components/spinner/spinner";
+const { error, loading, fulfilled } = statusConstants;
 
 const GamePage = () => {
     const authState = useSelector(authSelector);
@@ -43,7 +48,12 @@ const GamePage = () => {
     );
     const participants = useSelector(participantsSelector);
     const players = useSelector(playersSeletor);
-    const participantPlayers = useSelector(participantPlayerSelector);
+    const {
+        data: participantPlayers,
+        chipsError,
+        chipsStatus
+    } = useSelector(participantPlayerSelector);
+
     const dialogerinos = useContext(DialogsContext);
 
     const prevPotRequestStatus = usePrevious(potRequestState.status);
@@ -129,10 +139,7 @@ const GamePage = () => {
                 actions: roundActions.data.actions
             });
 
-            const chipsResponse = await chipService.getChips(
-                authState.authToken.token
-            );
-            dispatch({ type: CHIPS_FETCHED, chips: chipsResponse.data.chips });
+            dispatch(fetchChips(authState.authToken.token));
 
             const potRequestData = await gameService.getAwaitingPotRequest(
                 authState.authToken.token,
@@ -147,6 +154,15 @@ const GamePage = () => {
 
         if (authState.authToken.token) getTable();
     }, [authState.authToken, dispatch]);
+
+    if (chipsStatus === loading) {
+        return <Spinner />;
+    }
+
+    if (chipsStatus === error) {
+        console.log(chipsError);
+        return <Alert title="Error" icon="fa-exclamation" />;
+    }
 
     if (!isHorizontal) {
         return <Alert title="Rotate the screen" icon="fa-exclamation" />;

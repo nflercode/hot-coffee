@@ -9,7 +9,9 @@ export const PlayerParticipantList = ({
     memoizedOrderedPlayersClasses,
     isSmall
 }) => {
-    const participantPlayers = useSelector(participantPlayerSelector);
+    const { data: participantPlayers, chipsError } = useSelector(
+        participantPlayerSelector
+    );
     if (!participantPlayers || participantPlayers.length < 1) return null;
 
     return participantPlayers.map((playerParticipant) => {
