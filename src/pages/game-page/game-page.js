@@ -33,7 +33,6 @@ import {
 } from "../../components/hooks/use-breakpoint";
 import { fetchChips } from "../../store/actions/chips-action";
 import statusConstants from "../../store/constants/status-constants";
-//constants/status-constants.js";
 import { Spinner } from "../../components/spinner/spinner";
 const { error, loading, fulfilled } = statusConstants;
 
