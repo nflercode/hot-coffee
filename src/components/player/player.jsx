@@ -35,7 +35,7 @@ export const Player = ({ playerParticipant }) => {
             </div>
             <div className="player-name f-center">
                 {playerParticipant.name} <br />
-                <b>{playerParticipant.totalValue}$</b>
+                <b>{playerParticipant.totalValue}$</b> <br />
                 {latestPlayerAction && (
                     <PlayerAction latestPlayerAction={latestPlayerAction} />
                 )}

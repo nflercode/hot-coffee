@@ -6,7 +6,7 @@ import { DialogsContext } from "../../components/dialogs/dialogs-context";
 
 import "./style.css";
 import gameService from "../../services/game-service";
-import { GAME_CREATED } from "../../store/reducers/game-reducer";
+import { game, GAME_CREATED } from "../../store/reducers/game-reducer";
 import chipService from "../../services/chips-service";
 import { CHIPS_FETCHED } from "../../store/reducers/chips-reducer";
 import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
@@ -42,8 +42,6 @@ const GamePage = () => {
     const participantPlayers = useSelector(participantPlayerSelector);
     const dialogerinos = useContext(DialogsContext);
 
-    const prevPotRequestStatus = usePrevious(potRequestState.status);
-
     const dispatch = useDispatch();
 
     const meId = playerMe?.id;
@@ -77,24 +75,11 @@ const GamePage = () => {
         }
     }, [myParticipant, dialogerinos, potRequestState.status]);
 
-    // Not 100% sure if happy with this solution.
-    // Kind of big risk that the round wont change if the
-    // requesting user is not having the page open when the
-    // request gets approved, hence the round wont change and
-    // the game will break. Maybe let backend take care of round
-    // change on approved request. (kind of ugly as well?)
     useEffect(() => {
-        const requestingPlayer = participantPlayers.find(
-            (p) => p.playerId === potRequestState.playerId
-        );
-        if (
-            requestingPlayer?.isMe &&
-            potRequestState.status === "APPROVED" &&
-            prevPotRequestStatus === "AWAITING"
-        ) {
-            gameService.nextRound(authState.authToken.token, gameState.id);
+        if (gameState.status === "ENDED") {
+            history.push("/game-summary");
         }
-    }, [participantPlayers, potRequestState.status]);
+    }, [gameState.status]);
 
     usePotRequestDialog();
 
@@ -111,16 +96,6 @@ const GamePage = () => {
                 authState.authToken.token
             );
             dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
-
-            const roundActions = await gameService.getGameActionsForRound(
-                authState.authToken.token,
-                ongoingGameResp.data.game.id,
-                ongoingGameResp.data.game.round
-            );
-            dispatch({
-                type: ACTION_FETCHED,
-                actions: roundActions.data.actions
-            });
 
             const chipsResponse = await chipService.getChips(
                 authState.authToken.token
@@ -141,6 +116,22 @@ const GamePage = () => {
         if (authState.authToken.token) getTable();
     }, [authState.authToken, dispatch]);
 
+    useEffect(() => {
+        async function fetchGameActions() {
+            const roundActions = await gameService.getGameActionsForRound(
+                authState.authToken.token,
+                gameState.id,
+                gameState.round
+            );
+            dispatch({
+                type: ACTION_FETCHED,
+                actions: roundActions.data.actions
+            });
+        }
+
+        if (authState.authToken.token) fetchGameActions();
+    }, [authState.authToken.token, gameState.id, gameState.round, dispatch]);
+
     if (!isHorizontal) {
         return <Alert title="Rotate the screen" icon="fa-exclamation" />;
     }
@@ -154,12 +145,14 @@ const GamePage = () => {
                 {participantPlayers &&
                     participantPlayers.map((playerParticipant) => {
                         if (!playerParticipant) return null;
+
                         const classObj = memoizedOrderedPlayersClasses.find(
                             (p) => p.playerId === playerParticipant.id
                         );
 
+                        const { participationStatus } = playerParticipant;
                         let classes = `game-page-participant-container ${
-                            !playerParticipant.isParticipating
+                            participationStatus !== "PARTICIPATING"
                                 ? "participant-inactive"
                                 : ""
                         }`;
