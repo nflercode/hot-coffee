@@ -1,13 +1,14 @@
+import { createReducer } from "@reduxjs/toolkit";
+
 export const ACTION_CREATED = "ACTION_CREATED";
 export const ACTION_FETCHED = "ACTION_FETCHED";
 
-export const actions = (state = [], action) => {
-    switch (action.type) {
-        case ACTION_CREATED:
+export const actions = createReducer([], (builder) => {
+    builder
+        .addCase(ACTION_CREATED, (state, action) => {
             return [...state, action.action];
-        case ACTION_FETCHED:
+        })
+        .addCase(ACTION_FETCHED, (state, action) => {
             return action.actions;
-        default:
-            return state;
-    }
-};
+        });
+});

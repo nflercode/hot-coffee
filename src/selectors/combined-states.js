@@ -10,26 +10,30 @@ import { playersSeletor } from "./table-state";
 const participantPlayerSelector = (state) => {
     const players = playersSeletor(state);
     const participants = participantsSelector(state);
-    const chipsState = chipSelector(state);
+    const {
+        data: chipsState,
+        status: chipsStatus,
+        error: chipsError
+    } = chipSelector(state);
     const actionsState = actionsSelector(state);
 
-    if (!(players && participants && chipsState)) return [];
+    if (!(players && participants && chipsState))
+        return { data: [], chipsError: chipsError, status: status };
 
     const mapChipWithActualChip = (chip) => {
+        if (!chipsState || chipsState < 1) return { ...chip };
         const actualChip = chipsState.find(
             (actualChip) => actualChip.id === chip.chipId
         );
 
-        return {
-            ...actualChip,
-            ...chip
-        };
+        return { ...actualChip, ...chip };
     };
 
     const mappedPlayers = players.map((player) => {
         const participant = participants.find(
             (participant) => participant.playerId === player.id
         );
+        if (!participant) return;
         const mappedChips = participant.chips.map(mapChipWithActualChip);
         const participantActions = actionsState
             .filter((action) => action.playerId === player.id)
@@ -49,9 +53,9 @@ const participantPlayerSelector = (state) => {
         };
     });
 
+    if (!mappedPlayers || mappedPlayers.length < 1) return null;
     let highestValuePlayer = { value: null, player: null };
     let lowestValuePlayer = { value: null, player: null };
-
     mappedPlayers.forEach(({ totalValue, playerId }) => {
         if (
             highestValuePlayer.value === null ||
@@ -68,13 +72,16 @@ const participantPlayerSelector = (state) => {
         }
     });
 
-    return mappedPlayers.map((player) => {
-        return {
-            ...player,
-            isBest: highestValuePlayer.player === player.playerId,
-            isWorst: lowestValuePlayer.player === player.playerId
-        };
-    });
+    return {
+        data: mappedPlayers.map((player) => {
+            return {
+                ...player,
+                isBest: highestValuePlayer.player === player.playerId,
+                isWorst: lowestValuePlayer.player === player.playerId
+            };
+        }),
+        status: chipsStatus
+    };
 };
 
 const mapChipWithActualChip = (state, chip) => {

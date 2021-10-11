@@ -8,34 +8,46 @@ import { CallButton } from "./bet-buttons/call-button";
 import { RaiseButton } from "./bet-buttons/raise-button";
 import { CheckButton } from "./bet-buttons/check-button";
 import { FoldButton } from "./bet-buttons/fold-button";
+import { authSelector } from "../../selectors/authState";
+import { gameSelector } from "../../selectors/game-state";
+import gameService from "../../services/game-service";
 
-export const PlayerMe = ({
-    playerParticipant,
-    authState,
-    gameState,
-    gameService,
-    classes
-}) => {
+export const PlayerMe = ({ playerParticipant, classes }) => {
     const currentBettingChipsDefaultState = { chips: {}, totalValue: 0 };
     const [currentBettingChips, setCurrentBettingChips] = useState(
         currentBettingChipsDefaultState
     );
+    const authState = useSelector(authSelector);
+    const gameState = useSelector(gameSelector);
 
     function handleChipClick(chip, incDec) {
         const newAmount =
             (currentBettingChips.chips[chip.chipId] || 0) + incDec;
+
         if (newAmount < 0 || newAmount > chip.amount) {
             return;
         }
 
-        setCurrentBettingChips({
-            ...currentBettingChips,
-            chips: {
-                ...currentBettingChips.chips,
-                [chip.chipId]: newAmount
-            },
-            totalValue: currentBettingChips.totalValue + incDec * chip.value
-        });
+        if (newAmount === 0) {
+            const { [chip.chipId]: chipToRemove, ...chipsRest } =
+                currentBettingChips.chips;
+            setCurrentBettingChips({
+                ...currentBettingChips,
+                chips: {
+                    ...chipsRest
+                },
+                totalValue: currentBettingChips.totalValue + incDec * chip.value
+            });
+        } else {
+            setCurrentBettingChips({
+                ...currentBettingChips,
+                chips: {
+                    ...currentBettingChips.chips,
+                    [chip.chipId]: newAmount
+                },
+                totalValue: currentBettingChips.totalValue + incDec * chip.value
+            });
+        }
     }
 
     const roundActions = useSelector((state) =>

@@ -1,18 +1,13 @@
 import React, { useEffect, useMemo, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import tableService from "../../services/table-service";
-import { PlayerMe } from "./player-me";
 import { DialogsContext } from "../../components/dialogs/dialogs-context";
 
 import "./style.css";
 import gameService from "../../services/game-service";
-import { game, GAME_CREATED } from "../../store/reducers/game-reducer";
-import chipService from "../../services/chips-service";
-import { CHIPS_FETCHED } from "../../store/reducers/chips-reducer";
+import { GAME_CREATED } from "../../store/reducers/game-reducer";
 import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
 
-import { ChipList } from "../../components/chip-list/chip-list";
-import { Player } from "../../components/player/player";
 import { playerMeSelector, playersSeletor } from "../../selectors/table-state";
 import { authSelector } from "../../selectors/authState";
 import {
@@ -23,11 +18,19 @@ import {
 import { potSelector } from "../../selectors/pot-request-state";
 import { participantPlayerSelector } from "../../selectors/combined-states";
 import { GamePot } from "./game-pot";
-import usePrevious from "../../helpers/use-previous";
 import useIsHorizontal from "../../components/hooks/is-horizontal";
 import { Alert } from "../../components/dialogs/alert";
 import { ACTION_FETCHED } from "../../store/reducers/actions-reducer";
 import { usePotRequestDialog } from "./dialogs/use-pot-request-dialog";
+import { PlayerParticipantList } from "./player-participant-list";
+import {
+    useBreakpoint,
+    breakoointConstants
+} from "../../components/hooks/use-breakpoint";
+import { fetchChips } from "../../store/actions/chips-action";
+import statusConstants from "../../store/constants/status-constants";
+import { Spinner } from "../../components/spinner/spinner";
+const { error, loading, fulfilled } = statusConstants;
 
 const GamePage = () => {
     const authState = useSelector(authSelector);
@@ -39,7 +42,12 @@ const GamePage = () => {
     );
     const participants = useSelector(participantsSelector);
     const players = useSelector(playersSeletor);
-    const participantPlayers = useSelector(participantPlayerSelector);
+    const {
+        data: participantPlayers,
+        chipsError,
+        chipsStatus
+    } = useSelector(participantPlayerSelector);
+
     const dialogerinos = useContext(DialogsContext);
 
     const dispatch = useDispatch();
@@ -47,11 +55,14 @@ const GamePage = () => {
     const meId = playerMe?.id;
 
     const isHorizontal = useIsHorizontal();
+    const breakpoint = useBreakpoint();
+    const isSmall = breakpoint === breakoointConstants.XS;
 
     const memoizedOrderedPlayersClasses = useMemo(() => {
         if (!(players && participants)) return [];
 
         const leftTopRight = ["left", "top", "right"];
+
         return participants
             .filter((p) => p.playerId !== meId)
             .sort((a, b) => a.turnOrder - b.turnOrder)
@@ -97,10 +108,17 @@ const GamePage = () => {
             );
             dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
 
-            const chipsResponse = await chipService.getChips(
-                authState.authToken.token
+            const roundActions = await gameService.getGameActionsForRound(
+                authState.authToken.token,
+                ongoingGameResp.data.game.id,
+                ongoingGameResp.data.game.round
             );
-            dispatch({ type: CHIPS_FETCHED, chips: chipsResponse.data.chips });
+            dispatch({
+                type: ACTION_FETCHED,
+                actions: roundActions.data.actions
+            });
+
+            dispatch(fetchChips(authState.authToken.token));
 
             const potRequestData = await gameService.getAwaitingPotRequest(
                 authState.authToken.token,
@@ -116,21 +134,14 @@ const GamePage = () => {
         if (authState.authToken.token) getTable();
     }, [authState.authToken, dispatch]);
 
-    useEffect(() => {
-        async function fetchGameActions() {
-            const roundActions = await gameService.getGameActionsForRound(
-                authState.authToken.token,
-                gameState.id,
-                gameState.round
-            );
-            dispatch({
-                type: ACTION_FETCHED,
-                actions: roundActions.data.actions
-            });
-        }
+    if (chipsStatus === loading) {
+        return <Spinner />;
+    }
 
-        if (authState.authToken.token) fetchGameActions();
-    }, [authState.authToken.token, gameState.id, gameState.round, dispatch]);
+    if (chipsStatus === error) {
+        console.log(chipsError);
+        return <Alert title="Error" icon="fa-exclamation" />;
+    }
 
     if (!isHorizontal) {
         return <Alert title="Rotate the screen" icon="fa-exclamation" />;
@@ -142,55 +153,12 @@ const GamePage = () => {
                 <div className="game-page-pot-container">
                     <GamePot />
                 </div>
-                {participantPlayers &&
-                    participantPlayers.map((playerParticipant) => {
-                        if (!playerParticipant) return null;
-
-                        const classObj = memoizedOrderedPlayersClasses.find(
-                            (p) => p.playerId === playerParticipant.id
-                        );
-
-                        const { participationStatus } = playerParticipant;
-                        let classes = `game-page-participant-container ${
-                            participationStatus !== "PARTICIPATING"
-                                ? "participant-inactive"
-                                : ""
-                        }`;
-
-                        if (playerParticipant.isMe)
-                            classes += " current-participant";
-                        else
-                            classes += ` participant-section-${classObj?.className}`;
-
-                        return playerParticipant.isMe ? (
-                            <PlayerMe
-                                classes={classes}
-                                playerParticipant={playerParticipant}
-                                authState={authState}
-                                gameState={gameState}
-                                gameService={gameService}
-                            />
-                        ) : (
-                            <div
-                                className={classes}
-                                key={playerParticipant.playerId}
-                            >
-                                <div>
-                                    <Player
-                                        playerParticipant={playerParticipant}
-                                    />
-                                </div>
-                                <ChipList
-                                    chips={playerParticipant.chips}
-                                    hasEnabledChips={
-                                        playerParticipant.isMe &&
-                                        playerParticipant.isCurrentTurn
-                                    }
-                                    larger={playerParticipant.isMe}
-                                />
-                            </div>
-                        );
-                    })}
+                <PlayerParticipantList
+                    memoizedOrderedPlayersClasses={
+                        memoizedOrderedPlayersClasses
+                    }
+                    isSmall={isSmall}
+                />
             </main>
         </div>
     );

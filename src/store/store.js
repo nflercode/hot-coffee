@@ -1,4 +1,6 @@
 import { combineReducers, createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+
 import { table } from "./reducers/table-reducer";
 import { auth } from "./reducers/auth-reducer";
 import { game } from "./reducers/game-reducer";
@@ -15,17 +17,25 @@ const reducers = combineReducers({
     potRequest,
     actions
 });
+
 const initialAuthState = refreshTokenStorage.getRefreshToken();
 
-export const store = createStore(
-    reducers,
-    {
+export const store = configureStore({
+    reducer: {
+        table,
+        auth,
+        game,
+        chips,
+        potRequest,
+        actions
+    },
+    preloadedState: {
+        // TODO: maybe this part is unnecessary.. I dunno
         table: {},
         auth: {
             authToken: {},
             refreshToken: initialAuthState || {}
         },
         game: {}
-    },
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+    }
+});

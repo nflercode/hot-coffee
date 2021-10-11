@@ -6,6 +6,9 @@
   border-radius: 4px;
   border: 3px solid #1f2605;
   transform: scale(1);
+  max-height: 125px;
+  max-width: 65px;
+  overflow: hidden;
 }
 
 .player-active {
@@ -19,17 +22,13 @@
   padding-top: 0.25em;
 }
 
-.player-action {
-  color: #b34ca9;
-}
-
 .player-badge {
-  right: -0.6em;
-  top: -0.8em;
-  position: absolute;
   background-color: #111;
-  padding: 0.4em;
+  padding: .5em;
   border-radius: 50%;
+  position: absolute;
+  z-index: 10;
+  margin-top: -10px;
 }
 
 .player-active > .player-badge {
