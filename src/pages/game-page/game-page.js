@@ -6,11 +6,8 @@ import { DialogsContext } from "../../components/dialogs/dialogs-context";
 import "./style.css";
 import gameService from "../../services/game-service";
 import { GAME_CREATED } from "../../store/reducers/game-reducer";
-import { CHIPS_FETCHED } from "../../store/reducers/chips-reducer";
 import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
 
-import { ChipList } from "../../components/chip-list/chip-list";
-import { Player } from "../../components/player/player";
 import { playerMeSelector, playersSeletor } from "../../selectors/table-state";
 import { authSelector } from "../../selectors/authState";
 import {
@@ -21,7 +18,6 @@ import {
 import { potSelector } from "../../selectors/pot-request-state";
 import { participantPlayerSelector } from "../../selectors/combined-states";
 import { GamePot } from "./game-pot";
-import usePrevious from "../../helpers/use-previous";
 import useIsHorizontal from "../../components/hooks/is-horizontal";
 import { Alert } from "../../components/dialogs/alert";
 import { ACTION_FETCHED } from "../../store/reducers/actions-reducer";
@@ -53,8 +49,6 @@ const GamePage = () => {
     } = useSelector(participantPlayerSelector);
 
     const dialogerinos = useContext(DialogsContext);
-
-    const prevPotRequestStatus = usePrevious(potRequestState.status);
 
     const dispatch = useDispatch();
 
@@ -92,24 +86,11 @@ const GamePage = () => {
         }
     }, [myParticipant, dialogerinos, potRequestState.status]);
 
-    // Not 100% sure if happy with this solution.
-    // Kind of big risk that the round wont change if the
-    // requesting user is not having the page open when the
-    // request gets approved, hence the round wont change and
-    // the game will break. Maybe let backend take care of round
-    // change on approved request. (kind of ugly as well?)
     useEffect(() => {
-        const requestingPlayer = participantPlayers.find(
-            (p) => p.playerId === potRequestState.playerId
-        );
-        if (
-            requestingPlayer?.isMe &&
-            potRequestState.status === "APPROVED" &&
-            prevPotRequestStatus === "AWAITING"
-        ) {
-            gameService.nextRound(authState.authToken.token, gameState.id);
+        if (gameState.status === "ENDED") {
+            history.push("/game-summary");
         }
-    }, [participantPlayers, potRequestState.status]);
+    }, [gameState.status]);
 
     usePotRequestDialog();
 

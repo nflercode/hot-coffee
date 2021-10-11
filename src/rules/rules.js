@@ -6,25 +6,17 @@ function canICheck(roundActions, playerId) {
         return false;
     }
 
-    const [previousActions, myActionIndex] =
-        getActionsPerformedBetweenPlayerTurn(roundActions, playerId);
-    const myPreviousAction =
-        myActionIndex > -1 ? previousActions.splice(myActionIndex, 1)[0] : null;
+    const [previousActions, _] = getActionsPerformedBetweenPlayerTurn(
+        roundActions,
+        playerId
+    );
 
     const raises = previousActions.filter(
-        (action) => action.actionType === PLAYER_ACTIONS.RAISE
+        (action) =>
+            action.actionType === PLAYER_ACTIONS.RAISE &&
+            action.playerId !== playerId
     );
     if (raises.length > 0) {
-        return false;
-    }
-
-    const hasAllChecked = previousActions.every(
-        (action) => action.actionType === PLAYER_ACTIONS.CHECK
-    );
-    if (
-        hasAllChecked &&
-        myPreviousAction?.actionType === PLAYER_ACTIONS.CHECK
-    ) {
         return false;
     }
 
@@ -32,6 +24,8 @@ function canICheck(roundActions, playerId) {
 }
 
 function canICall(roundActions, playerId, bettingValue) {
+    if (bettingValue === 0) return false;
+
     // Assert that you are not the first to bet
     if (roundActions.length === 0) {
         return false;
@@ -70,8 +64,10 @@ function canICall(roundActions, playerId, bettingValue) {
 }
 
 function canIRaise(roundActions, playerId, bettingValue) {
+    if (bettingValue === 0) return false;
+
     // If no round actions: it is the start of the round, it is ok to raise
-    if (roundActions.length === 0 && bettingValue > 0) {
+    if (roundActions.length === 0) {
         return true;
     }
 
