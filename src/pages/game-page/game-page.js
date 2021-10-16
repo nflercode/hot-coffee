@@ -30,7 +30,7 @@ import {
 import { fetchChips } from "../../store/actions/chips-action";
 import statusConstants from "../../store/constants/status-constants";
 import { Spinner } from "../../components/spinner/spinner";
-const { error, loading, fulfilled } = statusConstants;
+const { error, loading } = statusConstants;
 
 const GamePage = () => {
     const authState = useSelector(authSelector);
@@ -42,11 +42,7 @@ const GamePage = () => {
     );
     const participants = useSelector(participantsSelector);
     const players = useSelector(playersSeletor);
-    const {
-        data: participantPlayers,
-        chipsError,
-        chipsStatus
-    } = useSelector(participantPlayerSelector);
+    const { chipsError, chipsStatus } = useSelector(participantPlayerSelector);
 
     const dialogerinos = useContext(DialogsContext);
 
@@ -92,12 +88,30 @@ const GamePage = () => {
         }
     }, [gameState.status]);
 
+    useEffect(() => {
+        async function fetchGameRounds() {
+            const roundActions = await gameService.getGameActionsForRound(
+                authState.authToken.token,
+                gameState.id,
+                gameState.round
+            );
+            dispatch({
+                type: ACTION_FETCHED,
+                actions: roundActions.data.actions
+            });
+        }
+
+        if (gameState.id) fetchGameRounds();
+    }, [gameState.round, authState.authToken]);
+
     usePotRequestDialog();
 
     useEffect(() => {
         // TODO: move this function to a getTableService, this blob is not necessary in the component
         // Also make requests run parlell
         async function getTable() {
+            dispatch(fetchChips(authState.authToken.token));
+
             const tableResp = await tableService.getTable(
                 authState.authToken.token
             );
@@ -117,8 +131,6 @@ const GamePage = () => {
                 type: ACTION_FETCHED,
                 actions: roundActions.data.actions
             });
-
-            dispatch(fetchChips(authState.authToken.token));
 
             const potRequestData = await gameService.getAwaitingPotRequest(
                 authState.authToken.token,

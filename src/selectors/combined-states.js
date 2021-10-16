@@ -20,21 +20,14 @@ const participantPlayerSelector = (state) => {
     if (!(players && participants && chipsState))
         return { data: [], chipsError: chipsError, status: status };
 
-    const mapChipWithActualChip = (chip) => {
-        if (!chipsState || chipsState < 1) return { ...chip };
-        const actualChip = chipsState.find(
-            (actualChip) => actualChip.id === chip.chipId
-        );
-
-        return { ...actualChip, ...chip };
-    };
-
     const mappedPlayers = players.map((player) => {
         const participant = participants.find(
             (participant) => participant.playerId === player.id
         );
         if (!participant) return;
-        const mappedChips = participant.chips.map(mapChipWithActualChip);
+        const mappedChips = participant.chips.map((chip) =>
+            mapChipWithActualChip(chipsState, chip)
+        );
         const participantActions = actionsState
             .filter((action) => action.playerId === player.id)
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -84,19 +77,18 @@ const participantPlayerSelector = (state) => {
     };
 };
 
-const mapChipWithActualChip = (state, chip) => {
-    const actualChip = chipSelector(state).find(
+const mapChipWithActualChip = (chipsState, chip) => {
+    if (!chipsState || chipsState.length < 1) return { ...chip };
+    const actualChip = chipsState.find(
         (actualChip) => actualChip.id === chip.chipId
     );
 
-    return {
-        ...actualChip,
-        ...chip
-    };
+    return { ...actualChip, ...chip };
 };
 
 const potChipsSelector = (state) => {
     const game = gameSelector(state);
-    return game?.pot?.map((chip) => mapChipWithActualChip(state, chip));
+    const { data: chipsState } = chipSelector(state);
+    return game?.pot?.map((chip) => mapChipWithActualChip(chipsState, chip));
 };
 export { participantPlayerSelector, potChipsSelector };

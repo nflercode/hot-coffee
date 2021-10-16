@@ -6,7 +6,7 @@ export const CheckButton = ({ playerParticipant, roundActions, onClick }) => {
     function isAllowedToCheck() {
         if (!playerParticipant.isCurrentTurn) return false;
 
-        return canICheck(roundActions, playerParticipant.playerId);
+        return canICheck(roundActions, playerParticipant.playerId)[0];
     }
 
     return (

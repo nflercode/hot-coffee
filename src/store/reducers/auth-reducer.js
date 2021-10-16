@@ -10,7 +10,7 @@ export const auth = createReducer({}, (builder) => {
             return { ...state, authToken: action.authToken };
         })
         .addCase(CREATE_REFRESH_TOKEN, (state, action) => {
-            return { ...state, authToken: action.refreshToken };
+            return { ...state, refreshToken: action.refreshToken };
         })
         .addCase(PLAYER_LEFT_TABLE, (state, action) => {
             return { authToken: {}, refreshToken: {} };

@@ -10,7 +10,7 @@ function usePotRequestDialog() {
     const dialogContext = useContext(DialogsContext);
     const authState = useSelector(authSelector);
     const potRequestState = useSelector(potSelector);
-    const participantPlayers = useSelector(participantPlayerSelector);
+    const { data: participantPlayers } = useSelector(participantPlayerSelector);
 
     useEffect(() => {
         if (potRequestState.status !== "AWAITING") {

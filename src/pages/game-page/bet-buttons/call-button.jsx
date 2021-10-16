@@ -15,7 +15,7 @@ export const CallButton = ({
             roundActions,
             playerParticipant.playerId,
             currentBettingChips.totalValue
-        );
+        )[0];
     }
 
     return (
