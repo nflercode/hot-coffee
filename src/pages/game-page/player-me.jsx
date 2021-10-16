@@ -12,7 +12,7 @@ import { authSelector } from "../../selectors/authState";
 import { gameSelector } from "../../selectors/game-state";
 import gameService from "../../services/game-service";
 
-export const PlayerMe = ({ playerParticipant, classes }) => {
+export const PlayerMe = ({ playerParticipant, classes, key }) => {
     const currentBettingChipsDefaultState = { chips: {}, totalValue: 0 };
     const [currentBettingChips, setCurrentBettingChips] = useState(
         currentBettingChipsDefaultState

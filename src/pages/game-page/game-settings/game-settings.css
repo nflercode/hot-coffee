@@ -1,0 +1,28 @@
+.gamepage-game-settings-list {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+
+.game-settings-item {
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-top: 1px solid #0f8657;
+    text-align: center;
+}
+
+.game-settings-item-disabled {
+    color: #14a76c7a;
+}
+
+.game-settings-item:nth-child(1) {
+    border-top: none;
+}
+
+.gamepage-game-settings > .speech-bubble {
+    padding: 0;
+}

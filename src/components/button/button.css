@@ -39,6 +39,12 @@
   color: #f0faf1;
 }
 
+.button-nostyle {
+  background-color: none;
+  color: #f0faf1;
+  box-shadow: none;
+}
+
 .button-positive {
   background-color: #517a55;
   color: #767a76;

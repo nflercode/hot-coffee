@@ -30,6 +30,7 @@ import {
 import { fetchChips } from "../../store/actions/chips-action";
 import statusConstants from "../../store/constants/status-constants";
 import { Spinner } from "../../components/spinner/spinner";
+import { GameSettings } from "./game-settings/game-settings";
 const { error, loading, fulfilled } = statusConstants;
 
 const GamePage = () => {
@@ -42,11 +43,7 @@ const GamePage = () => {
     );
     const participants = useSelector(participantsSelector);
     const players = useSelector(playersSeletor);
-    const {
-        data: participantPlayers,
-        chipsError,
-        chipsStatus
-    } = useSelector(participantPlayerSelector);
+    const { chipsError, chipsStatus } = useSelector(participantPlayerSelector);
 
     const dialogerinos = useContext(DialogsContext);
 
@@ -84,6 +81,7 @@ const GamePage = () => {
                 icon: "fa-dice"
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [myParticipant, dialogerinos, potRequestState.status]);
 
     useEffect(() => {
@@ -149,6 +147,7 @@ const GamePage = () => {
 
     return (
         <div className="game-page-container">
+            <GameSettings />
             <main className="game-page-main">
                 <div className="game-page-pot-container">
                     <GamePot />
