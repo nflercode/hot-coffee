@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./speech-bubble.css";
 
 import { usePopper } from "react-popper";
 
-export const SpeechBubble = ({ children, referenceElement }) => {
+export const SpeechBubble = ({
+    children,
+    referenceElement,
+    offsetData = [50, -50],
+    arrowAlignment
+}) => {
     const [popperElement, setPopperElement] = useState(null);
     const [arrowElement, setArrowElement] = useState(null);
+
     const { styles, attributes } = usePopper(referenceElement, popperElement, {
         modifiers: [
             {
                 name: "arrow",
                 options: { element: arrowElement }
             },
-            { name: "offset", options: { offset: [50, -55] } },
+            { name: "offset", options: { offset: offsetData } },
             { name: "preventOverflow", enabled: false }
         ]
     });
@@ -26,7 +32,11 @@ export const SpeechBubble = ({ children, referenceElement }) => {
         >
             {children}
             <div
-                className="speech-bubble-arrow"
+                className={`speech-bubble-arrow${
+                    arrowAlignment
+                        ? ` speech-bubble-arrow-${arrowAlignment}`
+                        : ""
+                }`}
                 ref={setArrowElement}
                 style={styles.arrow}
             />

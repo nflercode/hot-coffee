@@ -35,6 +35,7 @@ const CreatePage = () => {
                 "Vår site funkar tyvärr inte utan kakor. Genom att fortsätta så godkänner du kakor.",
             title: "Vi använder kakor för att levera denna tjänst"
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {

@@ -1,14 +1,15 @@
 import React from "react";
 import "./button.css";
 
-//Button theme can only be one of default, positive or negative
+//Button theme can only be one of default, positive, negative or nostyle
 export const Button = ({
     // eslint-disable-next-line no-empty-function
     onClick = () => {},
     block,
     children,
     theme = "default",
-    disabled
+    disabled,
+    referenceElement
 }) => {
     return (
         <button
@@ -18,6 +19,7 @@ export const Button = ({
             onClick={() => {
                 !disabled && onClick();
             }}
+            ref={referenceElement}
         >
             {children}
         </button>

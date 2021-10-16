@@ -17,7 +17,7 @@ const participantPlayerSelector = (state) => {
     } = chipSelector(state);
     const actionsState = actionsSelector(state);
 
-    if (!(players && participants && chipsState))
+    if (!players || !participants || !chipsState)
         return { data: [], chipsError: chipsError, status: status };
 
     const mappedPlayers = players.map((player) => {
@@ -46,7 +46,7 @@ const participantPlayerSelector = (state) => {
         };
     });
 
-    if (!mappedPlayers || mappedPlayers.length < 1) return null;
+    if (!mappedPlayers || mappedPlayers.length < 1) return {};
     let highestValuePlayer = { value: null, player: null };
     let lowestValuePlayer = { value: null, player: null };
     mappedPlayers.forEach(({ totalValue, playerId }) => {
