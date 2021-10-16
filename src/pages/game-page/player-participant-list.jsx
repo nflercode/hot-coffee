@@ -30,9 +30,15 @@ export const PlayerParticipantList = ({
                 isSmall ? "top" : classObj?.className
             }${isSmall ? " small-device" : ""}`;
 
-        return playerParticipant.isMe ? (
-            <PlayerMe classes={classes} playerParticipant={playerParticipant} />
-        ) : (
+        if (playerParticipant.isMe)
+            return (
+                <PlayerMe
+                    key={playerParticipant.playerId}
+                    classes={classes}
+                    playerParticipant={playerParticipant}
+                />
+            );
+        return (
             <div className={classes} key={playerParticipant.playerId}>
                 <div>
                     <Player playerParticipant={playerParticipant} />

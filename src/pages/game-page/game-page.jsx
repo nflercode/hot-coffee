@@ -43,11 +43,7 @@ const GamePage = () => {
     );
     const participants = useSelector(participantsSelector);
     const players = useSelector(playersSeletor);
-    const {
-        data: participantPlayers,
-        chipsError,
-        chipsStatus
-    } = useSelector(participantPlayerSelector);
+    const { chipsError, chipsStatus } = useSelector(participantPlayerSelector);
 
     const dialogerinos = useContext(DialogsContext);
 
@@ -85,6 +81,7 @@ const GamePage = () => {
                 icon: "fa-dice"
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [myParticipant, dialogerinos, potRequestState.status]);
 
     useEffect(() => {

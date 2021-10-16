@@ -2,14 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../../components/button/button";
 import { SpeechBubble } from "../../../components/speech-bubble/speech-bubble";
+import { useHistory } from "react-router";
 import playerService from "../../../services/player-service";
 import refreshTokenStorage from "../../../storage/refresh-token-storage";
 
 import "./game-settings.css";
 
-export const GameSettings = ({ isAdmin = false, history }) => {
+export const GameSettings = ({ isAdmin = false }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [referenceElement, setReferenceValue] = useState(null);
+    const history = useHistory();
 
     const hasClickedRecently = useRef(false);
 
@@ -34,7 +36,9 @@ export const GameSettings = ({ isAdmin = false, history }) => {
         return () => {
             window.removeEventListener("click", handleClickEvent);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
+
     const onLeaveTable = () => {
         async function leave() {
             await playerService.deletePlayer(authState.authToken.token);
