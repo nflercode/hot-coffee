@@ -3,7 +3,7 @@ import { Container } from "../../components/container/container";
 import { Player } from "../../components/player/player";
 import { ChipList } from "../../components/chip-list/chip-list";
 import { useSelector } from "react-redux";
-import { actionsForRound } from "../../selectors/actions-state";
+import { gameActionsForRound } from "../../selectors/actions-state";
 import { CallButton } from "./bet-buttons/call-button";
 import { RaiseButton } from "./bet-buttons/raise-button";
 import { CheckButton } from "./bet-buttons/check-button";
@@ -12,7 +12,7 @@ import { authSelector } from "../../selectors/authState";
 import { gameSelector } from "../../selectors/game-state";
 import gameService from "../../services/game-service";
 
-export const PlayerMe = ({ playerParticipant, classes, key }) => {
+export const PlayerMe = ({ playerParticipant, classes }) => {
     const currentBettingChipsDefaultState = { chips: {}, totalValue: 0 };
     const [currentBettingChips, setCurrentBettingChips] = useState(
         currentBettingChipsDefaultState
@@ -50,8 +50,8 @@ export const PlayerMe = ({ playerParticipant, classes, key }) => {
         }
     }
 
-    const roundActions = useSelector((state) =>
-        actionsForRound(state, gameState.round)
+    const gameActions = useSelector((state) =>
+        gameActionsForRound(state, gameState.round)
     );
 
     function getCurrentBettingChipsAsPlayload() {
@@ -62,7 +62,7 @@ export const PlayerMe = ({ playerParticipant, classes, key }) => {
     }
 
     return (
-        <Container key={playerParticipant.playerId} className={classes}>
+        <Container className={classes}>
             <div className="player-me-avatar">
                 <Player playerParticipant={playerParticipant} />
             </div>
@@ -81,7 +81,7 @@ export const PlayerMe = ({ playerParticipant, classes, key }) => {
             <div className="participant-section-button-group">
                 <CallButton
                     playerParticipant={playerParticipant}
-                    roundActions={roundActions}
+                    roundActions={gameActions}
                     currentBettingChips={currentBettingChips}
                     onClick={() => {
                         gameService.call(
@@ -94,7 +94,7 @@ export const PlayerMe = ({ playerParticipant, classes, key }) => {
                 />
                 <RaiseButton
                     playerParticipant={playerParticipant}
-                    roundActions={roundActions}
+                    roundActions={gameActions}
                     currentBettingChips={currentBettingChips}
                     onClick={() => {
                         gameService.raise(
@@ -107,7 +107,7 @@ export const PlayerMe = ({ playerParticipant, classes, key }) => {
                 />
                 <CheckButton
                     playerParticipant={playerParticipant}
-                    roundActions={roundActions}
+                    roundActions={gameActions}
                     onClick={() =>
                         gameService.check(
                             authState.authToken.token,
@@ -117,7 +117,7 @@ export const PlayerMe = ({ playerParticipant, classes, key }) => {
                 />
                 <FoldButton
                     playerParticipant={playerParticipant}
-                    roundActions={roundActions}
+                    roundActions={gameActions}
                     onClick={() =>
                         gameService.fold(
                             authState.authToken.token,

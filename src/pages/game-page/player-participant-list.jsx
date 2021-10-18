@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useContext } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { participantPlayerSelector } from "../../selectors/combined-states";
-
 import { PlayerMe } from "./player-me";
 import { Player } from "../../components/player/player";
 
@@ -32,11 +31,12 @@ export const PlayerParticipantList = ({
 
         if (playerParticipant.isMe)
             return (
-                <PlayerMe
-                    key={playerParticipant.playerId}
-                    classes={classes}
-                    playerParticipant={playerParticipant}
-                />
+                <React.Fragment key={playerParticipant.playerId}>
+                    <PlayerMe
+                        classes={classes}
+                        playerParticipant={playerParticipant}
+                    />
+                </React.Fragment>
             );
         return (
             <div className={classes} key={playerParticipant.playerId}>

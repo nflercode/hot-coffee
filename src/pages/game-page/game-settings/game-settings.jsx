@@ -64,7 +64,7 @@ export const GameSettings = ({ isAdmin = false }) => {
             {isVisible && (
                 <SpeechBubble
                     referenceElement={referenceElement}
-                    offsetData={[50, -5]}
+                    offsetData={[50, 0]}
                     arrowAlignment="top-left"
                 >
                     <div className="gamepage-game-settings-list">
@@ -75,7 +75,7 @@ export const GameSettings = ({ isAdmin = false }) => {
                             <div className="game-settings-item">Settings</div>
                         )}
                         <div
-                            className="game-settings-item"
+                            className="game-settings-item game-settings-item-negative"
                             onClick={onLeaveTable}
                         >
                             Leave

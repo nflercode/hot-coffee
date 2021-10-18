@@ -6,16 +6,16 @@ import { auth } from "./reducers/auth-reducer";
 import { game } from "./reducers/game-reducer";
 import { chips } from "./reducers/chips-reducer";
 import { potRequest } from "./reducers/pot-request";
-import { actions } from "./reducers/actions-reducer";
+import { gameActions } from "./reducers/game-actions-reducer";
 import refreshTokenStorage from "../storage/refresh-token-storage";
 
-const reducers = combineReducers({
+combineReducers({
     table,
     auth,
     game,
     chips,
     potRequest,
-    actions
+    gameActions
 });
 
 const initialAuthState = refreshTokenStorage.getRefreshToken();
@@ -27,15 +27,12 @@ export const store = configureStore({
         game,
         chips,
         potRequest,
-        actions
+        gameActions
     },
     preloadedState: {
-        // TODO: maybe this part is unnecessary.. I dunno
-        table: {},
         auth: {
             authToken: {},
             refreshToken: initialAuthState || {}
-        },
-        game: {}
+        }
     }
 });

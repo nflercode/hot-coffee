@@ -20,7 +20,6 @@ import { participantPlayerSelector } from "../../selectors/combined-states";
 import { GamePot } from "./game-pot";
 import useIsHorizontal from "../../components/hooks/is-horizontal";
 import { Alert } from "../../components/dialogs/alert";
-import { ACTION_FETCHED } from "../../store/reducers/actions-reducer";
 import { usePotRequestDialog } from "./dialogs/use-pot-request-dialog";
 import { PlayerParticipantList } from "./player-participant-list";
 import {
@@ -28,6 +27,7 @@ import {
     breakoointConstants
 } from "../../components/hooks/use-breakpoint";
 import { fetchChips } from "../../store/actions/chips-action";
+import { fetchGameActions } from "../../store/actions/game-actions-actions";
 import statusConstants from "../../store/constants/status-constants";
 import { Spinner } from "../../components/spinner/spinner";
 import { GameSettings } from "./game-settings/game-settings";
@@ -43,7 +43,8 @@ const GamePage = () => {
     );
     const participants = useSelector(participantsSelector);
     const players = useSelector(playersSeletor);
-    const { chipsError, chipsStatus } = useSelector(participantPlayerSelector);
+    const { chipsError, chipsStatus, gameActionsStatus, gameActionsError } =
+        useSelector(participantPlayerSelector);
 
     const dialogerinos = useContext(DialogsContext);
 
@@ -92,19 +93,17 @@ const GamePage = () => {
 
     useEffect(() => {
         async function fetchGameRounds() {
-            const roundActions = await gameService.getGameActionsForRound(
-                authState.authToken.token,
-                gameState.id,
-                gameState.round
+            dispatch(
+                fetchGameActions({
+                    authToken: authState.authToken.token,
+                    gameId: gameState.id,
+                    round: gameState.round
+                })
             );
-            dispatch({
-                type: ACTION_FETCHED,
-                actions: roundActions.data.actions
-            });
         }
 
         if (gameState.id) fetchGameRounds();
-    }, [gameState.round, authState.authToken]);
+    }, [gameState.id, gameState.round, authState.authToken, dispatch]);
 
     usePotRequestDialog();
 
@@ -124,16 +123,6 @@ const GamePage = () => {
             );
             dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
 
-            const roundActions = await gameService.getGameActionsForRound(
-                authState.authToken.token,
-                ongoingGameResp.data.game.id,
-                ongoingGameResp.data.game.round
-            );
-            dispatch({
-                type: ACTION_FETCHED,
-                actions: roundActions.data.actions
-            });
-
             const potRequestData = await gameService.getAwaitingPotRequest(
                 authState.authToken.token,
                 ongoingGameResp.data.game.id
@@ -148,12 +137,12 @@ const GamePage = () => {
         if (authState.authToken.token) getTable();
     }, [authState.authToken, dispatch]);
 
-    if (chipsStatus === loading) {
+    if (chipsStatus === loading || gameActionsStatus === loading) {
         return <Spinner />;
     }
 
-    if (chipsStatus === error) {
-        console.log(chipsError);
+    if (chipsStatus === error || gameActionsStatus === error) {
+        console.log(chipsError || gameActionsError);
         return <Alert title="Error" icon="fa-exclamation" />;
     }
 
