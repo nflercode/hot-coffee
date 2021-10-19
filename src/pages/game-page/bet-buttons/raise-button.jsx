@@ -15,7 +15,7 @@ export const RaiseButton = ({
             roundActions,
             playerParticipant.playerId,
             currentBettingChips.totalValue
-        );
+        )[0];
     }
     return (
         <Button disabled={!isAllowedToRaise()} onClick={onClick}>

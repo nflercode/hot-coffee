@@ -1,8 +1,10 @@
-const actionsSelector = ({ actions }) => actions;
+const gameActionsSelector = ({ gameActions }) => gameActions;
 
-const actionsForRound = (state, round) => {
-    const actionsState = actionsSelector(state);
-    return actionsState.filter((action) => action.gameRound === round);
+const gameActionsForRound = (state, round) => {
+    const gameActionsState = gameActionsSelector(state);
+    return gameActionsState.data.filter(
+        (gameAction) => gameAction.gameRound === round
+    );
 };
 
-export { actionsSelector, actionsForRound };
+export { gameActionsSelector, gameActionsForRound };

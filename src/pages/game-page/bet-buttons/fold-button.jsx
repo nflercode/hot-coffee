@@ -6,7 +6,7 @@ export const FoldButton = ({ playerParticipant, roundActions, onClick }) => {
     function isAllowedToFold() {
         if (!playerParticipant.isCurrentTurn) return false;
 
-        return canIFold(roundActions, playerParticipant.playerId);
+        return canIFold(roundActions, playerParticipant.playerId)[0];
     }
 
     return (

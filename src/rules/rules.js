@@ -1,128 +1,85 @@
-import { PLAYER_ACTIONS } from "../constants/player-actions";
+import { PLAYER_ACTIONS } from "../constants/player-actions.js";
 
 function canICheck(roundActions, playerId) {
-    // Assert that all participants has placed a bet
     if (roundActions.length < 1) {
-        return false;
+        return [false, undefined];
     }
 
-    const [previousActions, _] = getActionsPerformedBetweenPlayerTurn(
-        roundActions,
-        playerId
-    );
+    const [myLastAction, previousBettorAction] =
+        getMyLastActionAndPreviousBettorAction(roundActions, playerId);
 
-    const raises = previousActions.filter(
-        (action) =>
-            action.actionType === PLAYER_ACTIONS.RAISE &&
-            action.playerId !== playerId
-    );
-    if (raises.length > 0) {
-        return false;
+    if (!previousBettorAction) {
+        return [false, undefined];
     }
 
-    return true;
+    if (
+        (myLastAction?.totalBettedValue || 0) ===
+        previousBettorAction.totalBettedValue
+    ) {
+        return [true, myLastAction?.totalBettedValue || 0];
+    }
+
+    return false;
 }
 
 function canICall(roundActions, playerId, bettingValue) {
-    if (bettingValue === 0) return false;
-
     // Assert that you are not the first to bet
-    if (roundActions.length === 0) {
-        return false;
+    if (roundActions.length === 0 || bettingValue === 0) {
+        return [false, undefined];
     }
 
-    const [previousActions, myActionIndex] =
-        getActionsPerformedBetweenPlayerTurn(roundActions, playerId);
-    const myPreviousAction =
-        myActionIndex > -1 ? previousActions.splice(myActionIndex, 1)[0] : null;
+    const [myLastAction, previousBettorAction] =
+        getMyLastActionAndPreviousBettorAction(roundActions, playerId);
 
-    const hasAllCalled = previousActions.every(
-        (action) => action.actionType === PLAYER_ACTIONS.CALL
-    );
-    if (hasAllCalled) {
+    if (!previousBettorAction) {
         return false;
     }
-
-    const previousRaise = previousActions.find(
-        (roundAction) => roundAction.actionType === PLAYER_ACTIONS.RAISE
-    );
-    if (!previousRaise) {
-        return false;
-    }
-
-    let myPreviousRaisevalue =
-        myPreviousAction?.actionType === PLAYER_ACTIONS.RAISE
-            ? myPreviousAction.totalValue
-            : 0;
     const subTotalBettingValue =
-        bettingValue + myPreviousRaisevalue - previousRaise.totalValue;
-    if (subTotalBettingValue !== 0) {
-        return false;
+        (myLastAction?.totalBettedValue || 0) + bettingValue;
+
+    if (subTotalBettingValue === previousBettorAction.totalBettedValue) {
+        return [true, subTotalBettingValue];
     }
 
-    return true;
+    return [false, undefined];
 }
 
 function canIRaise(roundActions, playerId, bettingValue) {
-    if (bettingValue === 0) return false;
+    if (bettingValue === 0) return [false, undefined];
+    if (roundActions.length === 0) return [true, bettingValue];
 
-    // If no round actions: it is the start of the round, it is ok to raise
-    if (roundActions.length === 0) {
-        return true;
+    const [myLastAction, previousBettorAction] =
+        getMyLastActionAndPreviousBettorAction(roundActions, playerId);
+
+    if (!previousBettorAction) {
+        return [false, undefined];
     }
-
-    const [previousActions, myActionIndex] =
-        getActionsPerformedBetweenPlayerTurn(roundActions, playerId);
-    const myPreviousAction =
-        myActionIndex > -1 ? previousActions.splice(myActionIndex, 1)[0] : null;
-
-    const hasAllFolded = previousActions.every(
-        (action) => action.actionType === PLAYER_ACTIONS.FOLD
-    );
-    if (hasAllFolded) {
-        return false;
-    }
-
-    const previousRaise = previousActions.find(
-        (roundAction) => roundAction.actionType === PLAYER_ACTIONS.RAISE
-    );
-    const hasAllChecked = previousActions.every(
-        (action) => action.actionType === PLAYER_ACTIONS.CHECK
-    );
-    if (hasAllChecked || !previousRaise) {
-        return true;
-    }
-
-    let myPreviousRaisevalue =
-        myPreviousAction?.actionType === PLAYER_ACTIONS.RAISE
-            ? myPreviousAction.totalValue
-            : 0;
     const subTotalBettingValue =
-        bettingValue + myPreviousRaisevalue - previousRaise.totalValue;
-    if (subTotalBettingValue <= 0) {
-        return false;
+        (myLastAction?.totalBettedValue || 0) + bettingValue;
+
+    if (subTotalBettingValue > previousBettorAction.totalBettedValue) {
+        return [true, subTotalBettingValue];
     }
 
-    return true;
+    return [false, undefined];
 }
 
-function canIFold(roundActions) {
+function canIFold(roundActions, playerId) {
     if (roundActions.length === 0) {
-        return false;
+        return [false, undefined];
     }
 
-    const hasAllFolded = roundActions.every(
-        (action) => action.actionType === PLAYER_ACTIONS.FOLD
-    );
-    if (hasAllFolded) {
-        return false;
+    const [myLastAction, previousBettorAction] =
+        getMyLastActionAndPreviousBettorAction(roundActions, playerId);
+
+    if (!previousBettorAction) {
+        return [false, undefined];
     }
 
-    return true;
+    return [true, myLastAction?.totalBettedValue || 0];
 }
 
-function getActionsPerformedBetweenPlayerTurn(roundActions, playerId) {
-    // Sort the actions from newest to oldest
+function getMyLastActionAndPreviousBettorAction(roundActions, playerId) {
     roundActions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     const playerIndex = roundActions.findIndex(
@@ -131,11 +88,16 @@ function getActionsPerformedBetweenPlayerTurn(roundActions, playerId) {
     let endIndex = playerIndex;
     if (endIndex === -1) {
         endIndex = roundActions.length;
-    } else {
-        endIndex++;
     }
 
-    return [roundActions.slice(0, endIndex), playerIndex];
+    const validRoundActionsFromPlayerLastTurn = roundActions
+        .slice(0, endIndex)
+        .filter((x) => x.actionType !== PLAYER_ACTIONS.FOLD);
+
+    return [
+        roundActions[playerIndex],
+        validRoundActionsFromPlayerLastTurn.at(-1)
+    ];
 }
 
 export { canICheck, canICall, canIFold, canIRaise };

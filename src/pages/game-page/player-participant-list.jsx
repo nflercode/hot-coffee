@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useContext } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { participantPlayerSelector } from "../../selectors/combined-states";
-
 import { PlayerMe } from "./player-me";
 import { Player } from "../../components/player/player";
 
@@ -9,9 +8,7 @@ export const PlayerParticipantList = ({
     memoizedOrderedPlayersClasses,
     isSmall
 }) => {
-    const { data: participantPlayers, chipsError } = useSelector(
-        participantPlayerSelector
-    );
+    const { data: participantPlayers } = useSelector(participantPlayerSelector);
     if (!participantPlayers || participantPlayers.length < 1) return null;
 
     return participantPlayers.map((playerParticipant) => {
@@ -20,8 +17,10 @@ export const PlayerParticipantList = ({
             (p) => p.playerId === playerParticipant.id
         );
 
+        const isParticipating =
+            playerParticipant.participationStatus === "PARTICIPATING";
         let classes = `game-page-participant-container ${
-            !playerParticipant.isParticipating ? "participant-inactive" : ""
+            !isParticipating ? "participant-inactive" : ""
         }`;
 
         if (playerParticipant.isMe) classes += " current-participant";
@@ -32,11 +31,12 @@ export const PlayerParticipantList = ({
 
         if (playerParticipant.isMe)
             return (
-                <PlayerMe
-                    key={playerParticipant.playerId}
-                    classes={classes}
-                    playerParticipant={playerParticipant}
-                />
+                <React.Fragment key={playerParticipant.playerId}>
+                    <PlayerMe
+                        classes={classes}
+                        playerParticipant={playerParticipant}
+                    />
+                </React.Fragment>
             );
         return (
             <div className={classes} key={playerParticipant.playerId}>
