@@ -137,7 +137,11 @@ const GamePage = () => {
         if (authState.authToken.token) getTable();
     }, [authState.authToken, dispatch]);
 
-    if (chipsStatus === loading || gameActionsStatus === loading) {
+    if (
+        !gameState.id ||
+        chipsStatus === loading ||
+        gameActionsStatus === loading
+    ) {
         return <Spinner />;
     }
 
