@@ -38,21 +38,12 @@ export const PlayerParticipantList = ({
                     />
                 </React.Fragment>
             );
+
         return (
             <div className={classes} key={playerParticipant.playerId}>
                 <div>
                     <Player playerParticipant={playerParticipant} />
                 </div>
-                {/** The chip-list is not intresting to see of other players.
-                 *  The only thing relevant is total sum IMHO
-                 * <ChipList
-                    chips={playerParticipant.chips}
-                    hasEnabledChips={
-                        playerParticipant.isMe &&
-                        playerParticipant.isCurrentTurn
-                    }
-                    larger={playerParticipant.isMe}
-                /> */}
             </div>
         );
     });

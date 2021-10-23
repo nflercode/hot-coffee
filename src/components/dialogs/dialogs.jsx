@@ -1,9 +1,9 @@
-import React, { Suspense, lazy, useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import { dialogConstants } from "./dialog-constants";
 import { Snackbar } from "./snackbar";
 import { Alert } from "./alert";
 import "./dialogs.css";
+
 export const Dialogs = ({
     type,
     title,

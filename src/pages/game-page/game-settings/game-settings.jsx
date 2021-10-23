@@ -5,26 +5,17 @@ import { SpeechBubble } from "../../../components/speech-bubble/speech-bubble";
 import { useHistory } from "react-router";
 import playerService from "../../../services/player-service";
 import refreshTokenStorage from "../../../storage/refresh-token-storage";
-
 import "./game-settings.css";
+import { useExchangeChipsDialog } from "../dialogs/use-exchange-chips-dialog";
 
 export const GameSettings = ({ isAdmin = false }) => {
     const [isVisible, setIsVisible] = useState(false);
+    const [isExchangeChipsVisible, setIsExchangeChipsVisible] = useState(false);
     const [referenceElement, setReferenceValue] = useState(null);
     const history = useHistory();
-
-    const hasClickedRecently = useRef(false);
-
-    const dispatch = useDispatch();
-
     const authState = useSelector((state) => state.auth);
-
-    const handleClickEvent = (e) => {
-        if (!e.target.className.includes("game-settings-item")) {
-            setIsVisible(false);
-            window.removeEventListener("click", handleClickEvent);
-        }
-    };
+    const hasClickedRecently = useRef(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // Timeout to make doubleclick to work
@@ -39,6 +30,13 @@ export const GameSettings = ({ isAdmin = false }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
 
+    const handleClickEvent = (e) => {
+        if (!e.target.className.includes("game-settings-item")) {
+            setIsVisible(false);
+            window.removeEventListener("click", handleClickEvent);
+        }
+    };
+
     const onLeaveTable = () => {
         async function leave() {
             await playerService.deletePlayer(authState.authToken.token);
@@ -49,6 +47,14 @@ export const GameSettings = ({ isAdmin = false }) => {
 
         leave();
     };
+
+    const onExchangeClick = () => {
+        setIsVisible(false);
+        setIsExchangeChipsVisible(true);
+    };
+
+    useExchangeChipsDialog(isExchangeChipsVisible, setIsExchangeChipsVisible);
+
     return (
         <div className="gamepage-game-settings">
             <Button
@@ -68,7 +74,10 @@ export const GameSettings = ({ isAdmin = false }) => {
                     arrowAlignment="top-left"
                 >
                     <div className="gamepage-game-settings-list">
-                        <div className="game-settings-item game-settings-item-disabled">
+                        <div
+                            className="game-settings-item"
+                            onClick={onExchangeClick}
+                        >
                             Exchange
                         </div>
                         {isAdmin && (

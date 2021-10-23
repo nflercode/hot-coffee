@@ -1,0 +1,17 @@
+.exchanging-chips-dialog-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 0.2em;
+}
+
+.exchanging-chips-dialog-tv-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.4em;
+  justify-content: center;
+}
+
+.exchanging-chips-value-diff-ok {
+  color: #527A51;
+}
