@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
+import { authSelector } from "../../selectors/authState";
 import { gameActionCreated } from "../../store/reducers/game-actions-reducer";
 import { GAME_CREATED, GAME_UPDATED } from "../../store/reducers/game-reducer";
 import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
@@ -81,7 +82,7 @@ function handleEventsChippie(socket, dispatch) {
 
 const Socket = () => {
     const dispatch = useDispatch();
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
 
     useEffect(() => {
         if (!authState.authToken.token) return;

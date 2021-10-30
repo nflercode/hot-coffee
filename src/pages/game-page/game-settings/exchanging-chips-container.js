@@ -12,7 +12,7 @@ export const ExchangingChipsContainer = ({
     <div className="exchanging-chips-dialog-container">
         <ChipList
             chips={chips}
-            larger
+            isLarger
             hasEnabledChips
             onChipClick={(chip) => onChipClick(chip, 1)}
             onReduceClick={(chip) => onChipClick(chip, -1)}

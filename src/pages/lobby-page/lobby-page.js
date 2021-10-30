@@ -10,12 +10,13 @@ import { Button } from "../../components/button/button";
 import { CopyLink } from "../../components/copy-link/copy-link";
 import { GAME_CREATED } from "../../store/reducers/game-reducer";
 import "./style.css";
+import { authSelector } from "../../selectors/authState";
 
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
 
 const LobbyPage = () => {
     const tableState = useSelector((state) => state.table);
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
     const gameState = useSelector((state) => state.game);
     const history = useHistory();
     const dispatch = useDispatch();

@@ -73,7 +73,7 @@ export const PlayerMe = ({ playerParticipant, classes }) => {
                 onReduceClick={(reducedChip) =>
                     handleChipClick(reducedChip, -1)
                 }
-                larger={playerParticipant.isMe}
+                isLarger={playerParticipant.isMe}
             />
             <div className="participant-section-button-group">
                 <CallButton

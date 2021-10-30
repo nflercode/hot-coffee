@@ -7,13 +7,14 @@ import playerService from "../../../services/player-service";
 import refreshTokenStorage from "../../../storage/refresh-token-storage";
 import "./game-settings.css";
 import { useExchangeChipsDialog } from "../dialogs/use-exchange-chips-dialog";
+import { authSelector } from "../../../selectors/authState";
 
 export const GameSettings = ({ isAdmin = false }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isExchangeChipsVisible, setIsExchangeChipsVisible] = useState(false);
     const [referenceElement, setReferenceValue] = useState(null);
     const history = useHistory();
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
     const hasClickedRecently = useRef(false);
     const dispatch = useDispatch();
 

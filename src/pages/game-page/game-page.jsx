@@ -29,6 +29,12 @@ import { useMyTurnDialog } from "./dialogs/use-my-turn-alert";
 const { error, loading } = statusConstants;
 
 const GamePage = () => {
+    const dispatch = useDispatch();
+    const isHorizontal = useIsHorizontal();
+    const breakpoint = useBreakpoint();
+    useMyTurnDialog();
+    usePotRequestDialog();
+
     const authState = useSelector(authSelector);
     const gameState = useSelector(gameSelector);
     const playerMe = useSelector(playerMeSelector);
@@ -37,14 +43,7 @@ const GamePage = () => {
     const { chipsError, chipsStatus, gameActionsStatus, gameActionsError } =
         useSelector(participantPlayerSelector);
 
-    const dispatch = useDispatch();
-
     const meId = playerMe?.id;
-
-    const isHorizontal = useIsHorizontal();
-    const breakpoint = useBreakpoint();
-    const isSmall = breakpoint === breakoointConstants.XS;
-
     const memoizedOrderedPlayersClasses = useMemo(() => {
         if (!(players && participants)) return [];
 
@@ -78,9 +77,6 @@ const GamePage = () => {
 
         if (gameState.id) fetchGameRounds();
     }, [gameState.id, gameState.round, authState.authToken, dispatch]);
-
-    useMyTurnDialog();
-    usePotRequestDialog();
 
     useEffect(() => {
         // TODO: move this function to a getTableService, this blob is not necessary in the component
@@ -129,6 +125,7 @@ const GamePage = () => {
         return <Alert title="Rotate the screen" icon="fa-exclamation" />;
     }
 
+    const isSmall = breakpoint === breakoointConstants.XS;
     return (
         <div className="game-page-container">
             <GameSettings />

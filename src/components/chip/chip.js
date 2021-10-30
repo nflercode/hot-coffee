@@ -9,13 +9,13 @@ const chipClasses = {
     BLACK: "black"
 };
 
-const Chip = ({ chip, isEnabled, larger, onClick }) => {
+const Chip = ({ chip, isEnabled, isLarger, onClick }) => {
     return (
         <div className="fc-white f-center">
             <div className="padding-bottom-half">{chip.value}$</div>
             <div
                 className={`chip chip-${chipClasses[chip.type]} ${
-                    larger ? "chip-larger" : ""
+                    isLarger ? "chip-larger" : ""
                 }`}
                 onClick={() => isEnabled && onClick(chip)}
             >

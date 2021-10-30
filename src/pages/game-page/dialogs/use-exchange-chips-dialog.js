@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DialogsContext } from "../../../components/dialogs/dialogs-context";
+import { authSelector } from "../../../selectors/authState";
 import { chipSelector } from "../../../selectors/chip-state";
 import { participantPlayerSelector } from "../../../selectors/combined-states";
 import { playerMeSelector } from "../../../selectors/table-state";
@@ -16,10 +17,10 @@ export const useExchangeChipsDialog = (
         totalValue: 0
     });
 
-    const { data: allChips } = useSelector(chipSelector);
+    const { data: chips } = useSelector(chipSelector);
     const playerMe = useSelector(playerMeSelector);
     const { data: participantPlayers } = useSelector(participantPlayerSelector);
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
 
     const dialogContext = useContext(DialogsContext);
     const dispatch = useDispatch();
@@ -29,8 +30,8 @@ export const useExchangeChipsDialog = (
     );
 
     useEffect(() => {
-        if (allChips?.length > 0 && exchangingChipsState.chips.length === 0) {
-            const initializedExchangingChips = allChips.map((chip) => ({
+        if (chips?.length > 0 && exchangingChipsState.chips.length === 0) {
+            const initializedExchangingChips = chips.map((chip) => ({
                 ...chip,
                 amount: 0
             }));
@@ -40,7 +41,7 @@ export const useExchangeChipsDialog = (
                 totalValue: 0
             });
         }
-    }, [allChips, exchangingChipsState]);
+    }, [chips, exchangingChipsState]);
 
     useEffect(
         () => {
@@ -48,14 +49,17 @@ export const useExchangeChipsDialog = (
 
             const { chips: exchangingChips } = exchangingChipsState;
 
-            const onChipClick = ({ id: ecId, value: ecValue }, incDec) => {
-                const i = exchangingChips.findIndex(({ id }) => id === ecId);
+            const onChipClick = (clickedChip, incDec) => {
+                const i = exchangingChips.findIndex(
+                    ({ id }) => id === clickedChip.id
+                );
 
                 let chipOnIndex = exchangingChips[i];
                 chipOnIndex.amount = chipOnIndex.amount + incDec;
 
                 const newTotalValue =
-                    exchangingChipsState.totalValue + incDec * ecValue;
+                    exchangingChipsState.totalValue +
+                    incDec * clickedChip.value;
 
                 setExchangingChipsState({
                     chips: exchangingChips,

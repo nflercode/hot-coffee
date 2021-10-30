@@ -11,10 +11,11 @@ import tableService from "../../services/table-service";
 import { Container } from "../../components/container/container";
 
 import "./style.css";
+import { authSelector } from "../../selectors/authState";
 
 const CreatePage = () => {
     const tableState = useSelector((state) => state.table);
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
     const [tableName, setTableName] = useState("");
     const [playerName, setPlayerName] = useState("");
 
