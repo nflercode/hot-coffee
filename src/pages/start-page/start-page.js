@@ -10,12 +10,13 @@ import playerService from "../../services/player-service";
 import { LogoType } from "./logotype";
 import { InfoBall } from "../../components/info-ball/info-ball";
 import { Container } from "../../components/container/container";
+import { authSelector } from "../../selectors/authState";
 
 export const StartPage = () => {
     const [isCreatingTable, setIsCreatingTable] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
 
     function handleLeaveTable() {
         async function leave() {

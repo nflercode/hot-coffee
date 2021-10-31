@@ -10,9 +10,10 @@ const ChipList = ({
     currentBettingChips = {},
     onChipClick,
     onReduceClick,
-    larger
+    isLarger,
+    isExchangingChips
 }) => (
-    <div className={`chip-list-container ${larger ? "larger" : ""}`}>
+    <div className={`chip-list-container ${isLarger ? "larger" : ""}`}>
         {chips.map((chip) =>
             chip.type ? (
                 <div
@@ -22,9 +23,17 @@ const ChipList = ({
                     <Chip
                         chip={chip}
                         isEnabled={hasEnabledChips}
-                        larger={larger}
+                        isLarger={isLarger}
                         onClick={(clickedChip) => onChipClick(clickedChip)}
                     />
+                    {isExchangingChips && chip.amount > 0 && (
+                        <Button
+                            onClick={() => onReduceClick(chip)}
+                            theme="negative"
+                        >
+                            -
+                        </Button>
+                    )}
                     <div className="chip-holder-betting-chips">
                         {hasEnabledChips &&
                             currentBettingChips?.chips &&

@@ -27,7 +27,7 @@ export const DialogsContextProvider = ({ children }) => {
     }) => {
         setType(typeProp);
         clearTimeout(timer.current);
-        if (titleProp) setTitle(titleProp);
+        setTitle(titleProp);
         if (messageProp) setMessage(messageProp);
         if (iconProp) setIcon(iconProp);
         if (positiveButtonProp)
@@ -37,7 +37,8 @@ export const DialogsContextProvider = ({ children }) => {
                         dialogElement.current.className = "dialog-invisible";
                     if (positiveButtonProp) positiveButtonProp.callback();
                 },
-                content: positiveButtonProp.content
+                content: positiveButtonProp.content,
+                isDisabled: positiveButtonProp.isDisabled
             });
         if (negativeButtonProp)
             setNegativeButton({

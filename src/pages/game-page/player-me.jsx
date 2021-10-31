@@ -19,6 +19,9 @@ export const PlayerMe = ({ playerParticipant, classes }) => {
     );
     const authState = useSelector(authSelector);
     const gameState = useSelector(gameSelector);
+    const gameActions = useSelector((state) =>
+        gameActionsForRound(state, gameState.round)
+    );
 
     function handleChipClick(chip, incDec) {
         const newAmount =
@@ -50,10 +53,6 @@ export const PlayerMe = ({ playerParticipant, classes }) => {
         }
     }
 
-    const gameActions = useSelector((state) =>
-        gameActionsForRound(state, gameState.round)
-    );
-
     function getCurrentBettingChipsAsPlayload() {
         return Object.keys(currentBettingChips.chips).map((id) => ({
             chipId: id,
@@ -68,15 +67,13 @@ export const PlayerMe = ({ playerParticipant, classes }) => {
             </div>
             <ChipList
                 chips={playerParticipant.chips}
-                hasEnabledChips={
-                    playerParticipant.isMe && playerParticipant.isCurrentTurn
-                }
+                hasEnabledChips={playerParticipant.isCurrentTurn}
                 currentBettingChips={currentBettingChips}
                 onChipClick={(clickedChip) => handleChipClick(clickedChip, 1)}
                 onReduceClick={(reducedChip) =>
                     handleChipClick(reducedChip, -1)
                 }
-                larger={playerParticipant.isMe}
+                isLarger={playerParticipant.isMe}
             />
             <div className="participant-section-button-group">
                 <CallButton

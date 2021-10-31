@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from "redux";
+import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import { table } from "./reducers/table-reducer";
@@ -7,6 +7,7 @@ import { game } from "./reducers/game-reducer";
 import { chips } from "./reducers/chips-reducer";
 import { potRequest } from "./reducers/pot-request";
 import { gameActions } from "./reducers/game-actions-reducer";
+import { exchangingChips } from "./reducers/exchanging-chips";
 import refreshTokenStorage from "../storage/refresh-token-storage";
 
 combineReducers({
@@ -15,7 +16,8 @@ combineReducers({
     game,
     chips,
     potRequest,
-    gameActions
+    gameActions,
+    exchangingChips
 });
 
 const initialAuthState = refreshTokenStorage.getRefreshToken();
@@ -27,7 +29,8 @@ export const store = configureStore({
         game,
         chips,
         potRequest,
-        gameActions
+        gameActions,
+        exchangingChips
     },
     preloadedState: {
         auth: {

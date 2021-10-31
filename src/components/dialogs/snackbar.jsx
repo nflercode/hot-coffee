@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useContext } from "react";
+import React from "react";
 import { Button } from "../button/button";
 import "./snackbar.css";
 export const Snackbar = ({
@@ -22,6 +22,7 @@ export const Snackbar = ({
                     block
                     onClick={positiveButton.callback}
                     className="snackbar-positive-button"
+                    disabled={positiveButton.isDisabled}
                 >
                     {positiveButton.content}
                 </Button>

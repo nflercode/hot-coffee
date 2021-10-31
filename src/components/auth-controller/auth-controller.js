@@ -2,6 +2,7 @@ import tokenService from "../../services/token-service";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import Worker from "../../worker/auth.worker.js";
+import { authSelector } from "../../selectors/authState";
 
 const hasTokenExpired = (token) => {
     const expiresAtAsDate = new Date(token.expiresAt);
@@ -17,7 +18,7 @@ const isValidToken = (token) => token.token && !hasTokenExpired(token);
 
 const AuthController = () => {
     const dispatch = useDispatch();
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
 
     useEffect(() => {
         let worker;

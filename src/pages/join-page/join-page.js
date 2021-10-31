@@ -9,11 +9,12 @@ import playerService from "../../services/player-service";
 import { CopyLink } from "../../components/copy-link/copy-link";
 import { DialogsContext } from "../../components/dialogs/dialogs-context";
 import "./join-page.css";
+import { authSelector } from "../../selectors/authState";
 
 const JoinPage = () => {
     const dispatch = useDispatch();
     const tableState = useSelector((state) => state.table);
-    const authState = useSelector((state) => state.auth);
+    const authState = useSelector(authSelector);
     const [playerName, setPlayerName] = useState("");
     const { invitationToken } = useParams();
     const history = useHistory();
