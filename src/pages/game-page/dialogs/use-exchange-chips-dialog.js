@@ -83,7 +83,6 @@ export const useExchangeChipsDialog = (
                 title: null,
                 positiveButtonProp: {
                     callback: () => {
-                        console.log(exchangingChips);
                         dispatch(
                             exchangeChips({
                                 authToken: authState.authToken.token,

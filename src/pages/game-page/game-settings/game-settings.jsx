@@ -25,17 +25,13 @@ export const GameSettings = ({ isAdmin = false }) => {
             hasClickedRecently.current = false;
         }, 50);
 
-        return () => {
-            window.removeEventListener("click", handleClickEvent);
-        };
+        return () => window.removeEventListener("click", handleClickEvent);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
 
-    const handleClickEvent = (e) => {
-        if (!e.target.className.includes("game-settings-item")) {
-            setIsVisible(false);
-            window.removeEventListener("click", handleClickEvent);
-        }
+    const handleClickEvent = () => {
+        setIsVisible(false);
+        window.removeEventListener("click", handleClickEvent);
     };
 
     const onLeaveTable = () => {
