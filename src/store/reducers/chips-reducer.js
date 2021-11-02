@@ -5,13 +5,13 @@ import statusConstants from "../constants/status-constants.js";
 const { error, loading, fulfilled } = statusConstants;
 export const chips = createReducer({}, (builder) => {
     builder
-        .addCase(fetchChips.fulfilled, (state, action) => {
+        .addCase(fetchChips.fulfilled, (_, action) => {
             return {
                 data: [...action.payload.chips],
                 status: fulfilled
             };
         })
-        .addCase(fetchChips.pending, (state, action) => {
+        .addCase(fetchChips.pending, (state, _) => {
             return { ...state, status: loading };
         })
         .addCase(fetchChips.rejected, (state, action) => {
