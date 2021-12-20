@@ -5,7 +5,6 @@ import tableService from "../../services/table-service";
 import "./style.css";
 import gameService from "../../services/game-service";
 import { GAME_CREATED } from "../../store/reducers/game-reducer";
-import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
 
 import { authSelector } from "../../selectors/authState";
 import { gameSelector } from "../../selectors/game-state";
@@ -26,18 +25,23 @@ import { Spinner } from "../../components/spinner/spinner";
 import { GameSettings } from "./game-settings/game-settings";
 import { useMyTurnDialog } from "./dialogs/use-my-turn-alert";
 import { fetchPotRequest } from "../../store/actions/pot-request-action";
+import { tableSelector } from "../../selectors/table-state";
+import { CREATE_TABLE } from "../../store/reducers/table-reducer";
+import { useHistory } from "react-router";
 const { error, loading } = statusConstants;
 
 const GamePage = () => {
     const dispatch = useDispatch();
     const isHorizontal = useIsHorizontal();
     const breakpoint = useBreakpoint();
+    const history = useHistory();
 
     useMyTurnDialog();
     usePotRequestDialog();
 
     const authState = useSelector(authSelector);
     const gameState = useSelector(gameSelector);
+    const tableState = useSelector(tableSelector);
     const { chipsError, chipsStatus, gameActionsStatus, gameActionsError } =
         useSelector(participantPlayerSelector);
 
@@ -45,7 +49,7 @@ const GamePage = () => {
         if (gameState.status === "ENDED") {
             history.push("/game-summary");
         }
-    }, [gameState.status]);
+    }, [gameState.status, history]);
 
     useEffect(() => {
         if (gameState.id) {
@@ -61,7 +65,6 @@ const GamePage = () => {
 
     useEffect(() => {
         if (gameState.id) {
-            console.log("Fetching potreqeust");
             dispatch(
                 fetchPotRequest({
                     gameId: gameState.id,
@@ -77,18 +80,26 @@ const GamePage = () => {
         async function getTable() {
             dispatch(fetchChips(authState.authToken.token));
 
-            const tableResp = await tableService.getTable(
-                authState.authToken.token
-            );
-            dispatch({ type: "CREATE_TABLE", table: tableResp.data });
+            if (!tableState.id) {
+                const tableResp = await tableService.getTable(
+                    authState.authToken.token
+                );
+                dispatch({ type: CREATE_TABLE, table: tableResp.data });
+            }
 
-            const ongoingGameResp = await gameService.getGameOngoing(
-                authState.authToken.token
-            );
-            dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
+            if (!gameState.id) {
+                const ongoingGameResp = await gameService.getGameOngoing(
+                    authState.authToken.token
+                );
+                dispatch({
+                    type: GAME_CREATED,
+                    game: ongoingGameResp.data.game
+                });
+            }
         }
 
         if (authState.authToken.token) getTable();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authState.authToken, dispatch]);
 
     if (

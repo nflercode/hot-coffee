@@ -7,11 +7,9 @@ import "./style.css";
 const ChipList = ({
     chips,
     hasEnabledChips,
-    currentBettingChips = {},
     onChipClick,
     onReduceClick,
-    isLarger,
-    isExchangingChips
+    isLarger
 }) => (
     <div className={`chip-list-container ${isLarger ? "larger" : ""}`}>
         {chips.map((chip) =>
@@ -26,36 +24,15 @@ const ChipList = ({
                         isLarger={isLarger}
                         onClick={(clickedChip) => onChipClick(clickedChip)}
                     />
-                    {isExchangingChips && chip.amount > 0 && (
+                    {hasEnabledChips && (
                         <Button
                             onClick={() => onReduceClick(chip)}
                             theme="negative"
+                            className="reduce-chip-button"
                         >
                             -
                         </Button>
                     )}
-                    <div className="chip-holder-betting-chips">
-                        {hasEnabledChips &&
-                            currentBettingChips?.chips &&
-                            Object.keys(currentBettingChips.chips).map(
-                                (id, i) =>
-                                    chip.chipId === id && (
-                                        <div key={`_currentBettingChip_${i}`}>
-                                            <b>
-                                                {currentBettingChips.chips[id]}
-                                            </b>
-                                            <Button
-                                                onClick={() =>
-                                                    onReduceClick(chip)
-                                                }
-                                                theme="negative"
-                                            >
-                                                -
-                                            </Button>
-                                        </div>
-                                    )
-                            )}
-                    </div>
                 </div>
             ) : null
         )}

@@ -42,11 +42,10 @@ const participantPlayerSelector = (state) => {
             .filter((action) => action.playerId === player.id)
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-        let totalValue = 0;
-        mappedChips.forEach((chip) => {
-            totalValue = totalValue + chip.amount * chip.value;
-        });
-
+        let totalValue = mappedChips.reduce(
+            (acc, curr) => acc + curr.value * curr.amount,
+            0
+        );
         return {
             ...participant,
             ...player,
@@ -57,32 +56,13 @@ const participantPlayerSelector = (state) => {
     });
 
     if (!mappedPlayers || mappedPlayers.length < 1) return {};
-    let highestValuePlayer = { value: null, player: null };
-    let lowestValuePlayer = { value: null, player: null };
-    mappedPlayers.forEach(({ totalValue, playerId }) => {
-        if (
-            highestValuePlayer.value === null ||
-            totalValue > highestValuePlayer.value
-        ) {
-            highestValuePlayer.value = totalValue;
-            highestValuePlayer.player = playerId;
-        } else if (
-            lowestValuePlayer.value === null ||
-            totalValue < lowestValuePlayer.value
-        ) {
-            lowestValuePlayer.value = totalValue;
-            lowestValuePlayer.player = playerId;
-        }
-    });
+
+    mappedPlayers.sort((a, b) => b.totalValue - a.totalValue);
+    mappedPlayers.at(0).isBest = true;
+    mappedPlayers.at(-1).isWorst = true;
 
     return {
-        data: mappedPlayers.map((player) => {
-            return {
-                ...player,
-                isBest: highestValuePlayer.player === player.playerId,
-                isWorst: lowestValuePlayer.player === player.playerId
-            };
-        }),
+        data: mappedPlayers,
         chipsStatus,
         gameActionsStatus
     };

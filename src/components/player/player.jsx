@@ -15,6 +15,11 @@ export const Player = ({ playerParticipant }) => {
                     <PlayerAction latestPlayerAction={latestPlayerAction} />
                 </SpeechBubble>
             )}
+            {playerParticipant.seat && !latestPlayerAction && (
+                <SpeechBubble referenceElement={referenceElement}>
+                    <ParticipantSeat seat={playerParticipant.seat} />
+                </SpeechBubble>
+            )}
             {playerParticipant.isWorst ||
                 (playerParticipant.isBest && (
                     <div className="player-badge">
@@ -49,7 +54,7 @@ export const Player = ({ playerParticipant }) => {
                 </div>
                 <div className="player-name f-center">
                     {playerParticipant.name} <br />
-                    <b>{playerParticipant.totalValue}$</b>
+                    <b>{playerParticipant.totalValue}$</b> <br />
                 </div>
             </div>
         </>
@@ -57,10 +62,23 @@ export const Player = ({ playerParticipant }) => {
 };
 
 const PlayerAction = ({ latestPlayerAction }) => {
-    const { actionType, totalValue } = latestPlayerAction;
+    const { actionType, bettedValue } = latestPlayerAction;
     return (
         <>
-            {actionType} {totalValue > 0 && `${totalValue}$`}
+            {prettifyActionTypeName(actionType)}{" "}
+            {bettedValue > 0 && `${bettedValue}$`}
+        </>
+    );
+};
+
+const prettifyActionTypeName = (actionType) => actionType.replace("_", " ");
+
+const ParticipantSeat = ({ seat }) => {
+    return (
+        <>
+            {seat === "BIG_BLIND" && "BB"}
+            {seat === "SMALL_BLIND" && "SB"}
+            {seat === "DEALER" && "Dealer"}
         </>
     );
 };

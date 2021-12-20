@@ -6,6 +6,7 @@ import "./exchanging-chips-container.css";
 export const ExchangingChipsContainer = ({
     chips,
     onChipClick,
+    onReduceClick,
     onFillWithCurrentChipsClick,
     totalValueDiff
 }) => (
@@ -14,8 +15,8 @@ export const ExchangingChipsContainer = ({
             chips={chips}
             isLarger
             hasEnabledChips
-            onChipClick={(chip) => onChipClick(chip, 1)}
-            onReduceClick={(chip) => onChipClick(chip, -1)}
+            onChipClick={(c) => onChipClick(c)}
+            onReduceClick={onReduceClick}
             isExchangingChips
         />
         <div className="exchanging-chips-dialog-tv-container">
