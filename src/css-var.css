@@ -1,0 +1,26 @@
+body {
+    /** 
+      Colors
+    **/
+    --white: #F0FAF1;
+    --black: #131313;
+    --light-green: #517a55;
+    --green: #517a55;
+    --dark-green: #517a557e;
+    --light-gray: #767a76;
+    --gray: #2d2d2d;
+    /*--dark-gray: TBD */
+    --light-red: #ff7a76;
+    --red: #ff7a76;
+    --dark-red: #ff7a767e;
+    --light-blue: #76b1ff;
+    --blue: #76b1ff;
+    --dark-blue: #76b1ff7e;
+
+    /** 
+      Spacing
+    **/
+    --margin-base: 0.5em;
+    --margin-half: calc(--margin-base / 2);
+    --margin-double: calc(--margin-base * 2);
+}

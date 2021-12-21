@@ -3,6 +3,7 @@
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import "../../css-var.css";
 
 html,
 body,
@@ -12,7 +13,7 @@ body,
 }
 
 .start-page-header {
-  margin-top: 1em;
+  margin-top: var(--margin-double);
 }
 
 .start-page-header > h1 {
@@ -34,7 +35,7 @@ body,
   justify-content: stretch;
   padding-left: 5%;
   padding-right: 8%;
-  row-gap: 1em;
+  row-gap: var(--margin-double);
 }
 
 .start-page-footer {
@@ -42,7 +43,7 @@ body,
 }
 
 .start-page-main {
-  padding-bottom: 1em;
+  padding-bottom: var(--margin-double);
 }
 
 .start-page-main-content {
@@ -78,7 +79,7 @@ body,
 }
 
 .start-page-leave-or-join {
-  margin-top: 1em;
+  margin-top: var(--margin-double);
   display: inline-flex;
   justify-content: space-between;
   min-width: 100%;
@@ -125,8 +126,8 @@ body,
 }
 
 .new-player-section>.info-ball {
-  margin-right: 0.5em;
-  margin-left: 0.5em;
+  margin-right: var(--margin-base);
+  margin-left: var(--margin-base);
 }
 
 @keyframes flicker1 {
@@ -181,6 +182,6 @@ body,
 
   .start-page-header>.container-component,
   .start-page-main>.container-component {
-    padding: 0 0.5em;
+    padding: 0 var(--margin-base);
   }
 }

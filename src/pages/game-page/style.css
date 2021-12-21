@@ -1,3 +1,5 @@
+@import "../../css-var.css";
+
 .game-page-container {
   height: 100%;
   overflow: hidden;
@@ -91,7 +93,7 @@
   position: absolute;
   margin-top: -5em;
   background-color: #2d2d2d;
-  margin-left: 0.5em;
+  margin-left: var(--margin-base);
 }
 
 .player-me-avatar {
