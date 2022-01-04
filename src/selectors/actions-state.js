@@ -1,10 +1,15 @@
+import { gameSelector } from "./game-state";
+
 const gameActionsSelector = ({ gameActions }) => gameActions;
 
-const gameActionsForRound = (state, round) => {
+const gameActionsForCurrentGameRound = (state) => {
     const gameActionsState = gameActionsSelector(state);
+    const gameState = gameSelector(state);
+    if (!gameState) return [];
+
     return gameActionsState.data.filter(
-        (gameAction) => gameAction.gameRound === round
+        (gameAction) => gameAction.gameRound === gameState.round
     );
 };
 
-export { gameActionsSelector, gameActionsForRound };
+export { gameActionsSelector, gameActionsForCurrentGameRound };

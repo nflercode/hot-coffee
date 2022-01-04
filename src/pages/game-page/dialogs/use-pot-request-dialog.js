@@ -9,23 +9,23 @@ import gameService from "../../../services/game-service";
 function usePotRequestDialog() {
     const dialogContext = useContext(DialogsContext);
     const authState = useSelector(authSelector);
-    const potRequestState = useSelector(potSelector);
+    const { data: potRequest } = useSelector(potSelector);
     const { data: participantPlayers } = useSelector(participantPlayerSelector);
 
     useEffect(() => {
-        if (potRequestState.status !== "AWAITING") {
+        if (potRequest?.status !== "AWAITING") {
             return;
         }
 
         const requestingPlayer = participantPlayers.find(
-            (p) => p.playerId === potRequestState.playerId
+            (p) => p.playerId === potRequest.playerId
         );
         if (!requestingPlayer || requestingPlayer.isMe) {
             return;
         }
 
         const isMePlayer = participantPlayers.find((p) => p.isMe);
-        const myAnswer = potRequestState.participantAnswers.find(
+        const myAnswer = potRequest.participantAnswers.find(
             (p) => p.playerId === isMePlayer.playerId
         );
         if (myAnswer && myAnswer.answer !== "AWAITING") {
@@ -38,7 +38,7 @@ function usePotRequestDialog() {
                 callback: () => {
                     gameService.updatePotRequest(
                         authState.authToken.token,
-                        potRequestState.id,
+                        potRequest.id,
                         "OK"
                     );
                 },
@@ -48,7 +48,7 @@ function usePotRequestDialog() {
                 callback: () => {
                     gameService.updatePotRequest(
                         authState.authToken.token,
-                        potRequestState.id,
+                        potRequest.id,
                         "NO"
                     );
                 },
@@ -66,7 +66,7 @@ function usePotRequestDialog() {
             title: `${requestingPlayer.name} is requesting the pot.`
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [participantPlayers, potRequestState]);
+    }, [participantPlayers, potRequest]);
 }
 
 export { usePotRequestDialog };

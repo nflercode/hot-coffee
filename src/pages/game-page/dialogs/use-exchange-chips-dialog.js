@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DialogsContext } from "../../../components/dialogs/dialogs-context";
+import { useBettingChipsState } from "../../../components/hooks/use-betting-chips-state";
 import { authSelector } from "../../../selectors/authState";
 import { chipSelector } from "../../../selectors/chip-state";
 import { participantPlayerSelector } from "../../../selectors/combined-states";
@@ -12,10 +13,13 @@ export const useExchangeChipsDialog = (
     isExchangeChipsVisible,
     setIsExchangeChipsVisible
 ) => {
-    const [exchangingChipsState, setExchangingChipsState] = useState({
-        chips: [],
-        totalValue: 0
-    });
+    const [
+        exchangingChipsState,
+        increaseExchangingChips,
+        decreaseExchangingChips,
+        _,
+        setExchangingChips
+    ] = useBettingChipsState();
 
     const { data: chips } = useSelector(chipSelector);
     const playerMe = useSelector(playerMeSelector);
@@ -31,17 +35,14 @@ export const useExchangeChipsDialog = (
 
     useEffect(() => {
         if (chips?.length > 0 && exchangingChipsState.chips.length === 0) {
-            const initializedExchangingChips = chips.map((chip) => ({
+            const initState = chips.map((chip) => ({
                 ...chip,
                 amount: 0
             }));
 
-            setExchangingChipsState({
-                chips: initializedExchangingChips,
-                totalValue: 0
-            });
+            setExchangingChips(initState, 0);
         }
-    }, [chips, exchangingChipsState]);
+    }, [chips, exchangingChipsState, setExchangingChips]);
 
     useEffect(
         () => {
@@ -49,29 +50,11 @@ export const useExchangeChipsDialog = (
 
             const { chips: exchangingChips } = exchangingChipsState;
 
-            const onChipClick = (clickedChip, incDec) => {
-                const i = exchangingChips.findIndex(
-                    ({ id }) => id === clickedChip.id
-                );
-
-                let chipOnIndex = exchangingChips[i];
-                chipOnIndex.amount = chipOnIndex.amount + incDec;
-
-                const newTotalValue =
-                    exchangingChipsState.totalValue +
-                    incDec * clickedChip.value;
-
-                setExchangingChipsState({
-                    chips: exchangingChips,
-                    totalValue: newTotalValue
-                });
-            };
-
             const onFillWithCurrentChips = () => {
-                setExchangingChipsState({
-                    chips: participantPlayerMe.chips,
-                    totalValue: participantPlayerMe.totalValue
-                });
+                setExchangingChips(
+                    participantPlayerMe.chips,
+                    participantPlayerMe.totalValue
+                );
             };
 
             const totalValueDiff =
@@ -103,7 +86,8 @@ export const useExchangeChipsDialog = (
                 message: (
                     <ExchangingChipsContainer
                         chips={exchangingChips}
-                        onChipClick={onChipClick}
+                        onChipClick={increaseExchangingChips}
+                        onReduceClick={decreaseExchangingChips}
                         totalValueDiff={totalValueDiff}
                         onFillWithCurrentChipsClick={onFillWithCurrentChips}
                     />

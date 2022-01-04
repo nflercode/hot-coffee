@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LazyLoad from "react-lazyload";
+import { SEATS } from "../../constants/seats";
 import { SpeechBubble } from "../speech-bubble/speech-bubble";
 import "./player.css";
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
@@ -13,6 +14,11 @@ export const Player = ({ playerParticipant }) => {
             {latestPlayerAction && !playerParticipant.isMe && (
                 <SpeechBubble referenceElement={referenceElement}>
                     <PlayerAction latestPlayerAction={latestPlayerAction} />
+                </SpeechBubble>
+            )}
+            {playerParticipant.seat && !latestPlayerAction && (
+                <SpeechBubble referenceElement={referenceElement}>
+                    {participantSeatName(playerParticipant.seat)}
                 </SpeechBubble>
             )}
             {playerParticipant.isWorst ||
@@ -49,7 +55,7 @@ export const Player = ({ playerParticipant }) => {
                 </div>
                 <div className="player-name f-center">
                     {playerParticipant.name} <br />
-                    <b>{playerParticipant.totalValue}$</b>
+                    <b>{playerParticipant.totalValue}$</b> <br />
                 </div>
             </div>
         </>
@@ -57,10 +63,26 @@ export const Player = ({ playerParticipant }) => {
 };
 
 const PlayerAction = ({ latestPlayerAction }) => {
-    const { actionType, totalValue } = latestPlayerAction;
+    const { actionType, bettedValue } = latestPlayerAction;
     return (
         <>
-            {actionType} {totalValue > 0 && `${totalValue}$`}
+            {prettifyActionTypeName(actionType)}{" "}
+            {bettedValue > 0 && `${bettedValue}$`}
         </>
     );
+};
+
+const prettifyActionTypeName = (actionType) => actionType.replace("_", " ");
+
+const participantSeatName = (seat) => {
+    switch (seat) {
+        case SEATS.BIG_BLIND:
+            return "BB";
+        case SEATS.SMALL_BLIND:
+            return "SB";
+        case SEATS.DEALER:
+            return "DEALER";
+    }
+
+    return "?";
 };

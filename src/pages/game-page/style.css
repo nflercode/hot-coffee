@@ -97,3 +97,30 @@
 .player-me-avatar {
   width: 85px;
 }
+
+/*
+ minimum-bet
+*/
+.minimum-bet {
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 0.5em;
+}
+
+.minimum-bet-betting-section {
+  font-size: 1.3em;
+}
+
+.minimum-bet-label {
+  color: #fff;
+  margin-right: 0.5em;
+}
+
+.minimum-bet-output {
+  color: #527A51;
+}
+
+.minimum-bet-output--satisfied {
+  color: #14a76c;
+}
