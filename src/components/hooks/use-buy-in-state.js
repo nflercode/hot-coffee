@@ -1,13 +1,11 @@
 import { useSelector } from "react-redux";
 import { SEATS } from "../../constants/seats";
-import { gameActionsForRound } from "../../selectors/actions-state";
+import { gameActionsForCurrentGameRound } from "../../selectors/actions-state";
 import { gameSelector } from "../../selectors/game-state";
 
 export const useBuyInState = (playerParticipant) => {
     const game = useSelector(gameSelector);
-    const actions = useSelector((state) =>
-        gameActionsForRound(state, game.round)
-    );
+    const actions = useSelector(gameActionsForCurrentGameRound);
 
     const { seat } = playerParticipant;
     const { BIG_BLIND, SMALL_BLIND } = SEATS;

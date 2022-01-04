@@ -2,14 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useBuyInState } from "../../components/hooks/use-buy-in-state";
 import { PLAYER_ACTIONS } from "../../constants/player-actions";
-import { gameActionsForRound } from "../../selectors/actions-state";
-import { gameSelector } from "../../selectors/game-state";
+import { gameActionsForCurrentGameRound } from "../../selectors/actions-state";
 
 export const MinimumBet = ({ playerParticipant, bettingChips }) => {
-    const gameState = useSelector(gameSelector);
-    const gameActions = useSelector((state) =>
-        gameActionsForRound(state, gameState.round)
-    );
+    const gameActions = useSelector(gameActionsForCurrentGameRound);
 
     const sortedActions = gameActions
         .filter((action) => action.actionType !== PLAYER_ACTIONS.FOLD)

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LazyLoad from "react-lazyload";
+import { SEATS } from "../../constants/seats";
 import { SpeechBubble } from "../speech-bubble/speech-bubble";
 import "./player.css";
 const imageHostBaseUrl = "https://image.mychips.online/avatars";
@@ -17,7 +18,7 @@ export const Player = ({ playerParticipant }) => {
             )}
             {playerParticipant.seat && !latestPlayerAction && (
                 <SpeechBubble referenceElement={referenceElement}>
-                    <ParticipantSeat seat={playerParticipant.seat} />
+                    {participantSeatName(playerParticipant.seat)}
                 </SpeechBubble>
             )}
             {playerParticipant.isWorst ||
@@ -73,12 +74,15 @@ const PlayerAction = ({ latestPlayerAction }) => {
 
 const prettifyActionTypeName = (actionType) => actionType.replace("_", " ");
 
-const ParticipantSeat = ({ seat }) => {
-    return (
-        <>
-            {seat === "BIG_BLIND" && "BB"}
-            {seat === "SMALL_BLIND" && "SB"}
-            {seat === "DEALER" && "Dealer"}
-        </>
-    );
+const participantSeatName = (seat) => {
+    switch (seat) {
+        case SEATS.BIG_BLIND:
+            return "BB";
+        case SEATS.SMALL_BLIND:
+            return "SB";
+        case SEATS.DEALER:
+            return "DEALER";
+    }
+
+    return "?";
 };

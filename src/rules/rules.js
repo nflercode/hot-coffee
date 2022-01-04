@@ -10,8 +10,6 @@ function canICheck(roundActions, playerId) {
     const [myLastAction, previousBettorAction] =
         getMyLastActionAndPreviousBettorAction(roundActions, playerId);
 
-    console.log(myLastAction, previousBettorAction);
-
     if (!previousBettorAction) {
         return [false, undefined];
     }
