@@ -1,3 +1,5 @@
+@import "./css-var.css";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu',
@@ -79,7 +81,7 @@ p {
 }
 
 .fc-white {
-  color: #f0faf1;
+  color: var(--white);
 }
 
 .f-size-2 {
@@ -87,11 +89,11 @@ p {
 }
 
 .padding-2 {
-  padding: 1em;
+  padding: var(--margin-double);
 }
 
 .padding-2-bottom {
-  padding: 1em;
+  padding: var(--margin-double);
 }
 
 .justify-center {

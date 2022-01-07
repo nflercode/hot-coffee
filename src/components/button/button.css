@@ -1,5 +1,7 @@
+@import "../../css-var.css";
+
 .button {
-  padding: 0.5em;
+  padding: var(--margin-base);
   font-size: 18px;
   border-radius: 4px;
   border: none;
@@ -35,53 +37,52 @@
 }
 
 .button-default {
-  background-color: #517a55;
-  color: #f0faf1;
+  background-color: var(--green);
+  color: var(--white);
 }
 
 .button-nostyle {
   background-color: none;
-  color: #f0faf1;
+  color: var(--white);
   box-shadow: none;
 }
 
 .button-positive {
-  background-color: #517a55;
-  color: #767a76;
-  /*Cool blue color #A1FAF1*/
+  background-color: var(--green);
+  color: var(--light-grey);
 }
 
 .button-neutral {
-  background-color: #76b1ff;
+  background-color: var(--blue);
 }
 
 .button-negative {
-  background-color: #ff7a76;
-  color: #f0faf1;
+  background-color: var(--red);
+  color: var(--white);
 }
 
 .button-disabled.button-positive {
-  background-color: #517a557e;
+  background-color: var(--dark-green);
   box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
-  color: #767a76;
+  color: var(--light-gray);
 }
 
 .button-disabled.button-negative {
-  background-color: #ff7a767e;
+  background-color: var(--dark-red);
   box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
-  color: #f0faf1;
+  color: var(--white);
 }
 
 .button-disabled.button-default {
-  background-color: #517a557e;
+  background-color: var(--dark-green);
   box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
-  color: #f0faf1;
+  color: var(--white);
 }
 
 .button-disabled.button-neutral {
-  background-color: #76b1ff7e;
+  background-color: var(--dark-blue);
   box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
-  color: #f0faf1;
+  color: var(--white);
 }
 
 @media only screen and (max-width: 480px) {
