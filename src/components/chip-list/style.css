@@ -27,3 +27,8 @@
   flex-direction: column;
   align-items: center;
 }
+
+.reduce-chip-button {
+  padding: 0 0.6em;
+  margin-top: 0.2em;
+}

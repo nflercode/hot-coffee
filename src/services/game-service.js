@@ -136,20 +136,6 @@ async function updatePotRequest(authToken, potRequestId, answer) {
     );
 }
 
-async function getAwaitingPotRequest(authToken, gameId) {
-    return await axios.get(
-        `${REACT_APP_CHIPPIE_HOST}/game/${gameId}/pot-requests/ongoing`,
-        {
-            headers: {
-                Authorization: `bearer ${authToken}`
-            }
-        },
-        (data) => {
-            console.log(data);
-        }
-    );
-}
-
 const gameService = {
     createGame,
     closeGame,
@@ -159,8 +145,7 @@ const gameService = {
     check,
     fold,
     createPotRequest,
-    updatePotRequest,
-    getAwaitingPotRequest
+    updatePotRequest
 };
 
 export default gameService;

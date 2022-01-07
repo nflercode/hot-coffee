@@ -3,6 +3,5 @@ export const PLAYER_ACTIONS = {
     FOLD: "FOLD",
     CHECK: "CHECK",
     CALL: "CALL",
-    RAISE: "RAISE",
-    RERAISE: "RERAISE"
+    RAISE: "RAISE"
 };

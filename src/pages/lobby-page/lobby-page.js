@@ -23,16 +23,18 @@ const LobbyPage = () => {
 
     useEffect(() => {
         async function getTable() {
-            const tableResp = await tableService.getTable(
-                authState.authToken.token
-            );
+            const [{ value: tableResp }, { value: ongoingGameResp }] =
+                await Promise.allSettled([
+                    tableService.getTable(authState.authToken.token),
+                    gameService.getGameOngoing(authState.authToken.token)
+                ]);
+
             dispatch({ type: "CREATE_TABLE", table: tableResp.data });
-
-            const ongoingGameResp = await gameService.getGameOngoing(
-                authState.authToken.token
-            );
-
-            dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
+            if (ongoingGameResp)
+                dispatch({
+                    type: GAME_CREATED,
+                    game: ongoingGameResp.data.game
+                });
         }
 
         if (authState.authToken.token) getTable();

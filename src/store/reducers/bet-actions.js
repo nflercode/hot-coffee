@@ -1,22 +1,20 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { fetchChips } from "../actions/chips-action";
+import { buyIn } from "../actions/bet-actions";
 import statusConstants from "../constants/status-constants.js";
 
 const { error, loading, fulfilled } = statusConstants;
-export const chips = createReducer({}, (builder) => {
+export const betActions = createReducer({}, (builder) => {
     builder
-        .addCase(fetchChips.fulfilled, (_, action) => {
+        .addCase(buyIn.fulfilled, (_, __) => {
             return {
-                data: [...action.payload.chips],
                 status: fulfilled
             };
         })
-        .addCase(fetchChips.pending, (state, _) => {
-            return { ...state, status: loading };
+        .addCase(buyIn.pending, (_, __) => {
+            return { status: loading };
         })
-        .addCase(fetchChips.rejected, (state, action) => {
+        .addCase(buyIn.rejected, (_, action) => {
             return {
-                ...state,
                 status: error,
                 error: action.error.message
             };

@@ -4,7 +4,10 @@ import { io } from "socket.io-client";
 import { authSelector } from "../../selectors/authState";
 import { gameActionCreated } from "../../store/reducers/game-actions-reducer";
 import { GAME_CREATED, GAME_UPDATED } from "../../store/reducers/game-reducer";
-import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
+import {
+    potRequestCreated,
+    potRequestUpdated
+} from "../../store/reducers/pot-request";
 
 function setUpMarkerWorld(authToken) {
     const socket = io(process.env.REACT_APP_MARKERWORLD_SOCKET_HOST, {
@@ -72,11 +75,11 @@ function handleEventsChippie(socket, dispatch) {
     });
 
     socket.on("pot-request-created", (potRequest) => {
-        dispatch({ type: POT_REQUEST_FETCHED, potRequest });
+        dispatch(potRequestCreated(potRequest));
     });
 
     socket.on("pot-request-updated", (potRequest) => {
-        dispatch({ type: POT_REQUEST_FETCHED, potRequest });
+        dispatch(potRequestUpdated(potRequest));
     });
 }
 

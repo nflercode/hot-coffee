@@ -1,6 +1,6 @@
 import tokenService from "../../services/token-service";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Worker from "../../worker/auth.worker.js";
 import { authSelector } from "../../selectors/authState";
 

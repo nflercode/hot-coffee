@@ -9,13 +9,14 @@ export const Button = ({
     children,
     theme = "default",
     disabled,
-    referenceElement
+    referenceElement,
+    className = ""
 }) => {
     return (
         <button
             className={`button${block ? " button-block" : ""} button-${theme}${
                 disabled ? " button-disabled" : ""
-            }`}
+            } ${className}`}
             onClick={() => {
                 !disabled && onClick();
             }}

@@ -1,15 +1,13 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import tableService from "../../services/table-service";
 
 import "./style.css";
 import gameService from "../../services/game-service";
 import { GAME_CREATED } from "../../store/reducers/game-reducer";
-import { POT_REQUEST_FETCHED } from "../../store/reducers/pot-request";
 
-import { playerMeSelector, playersSeletor } from "../../selectors/table-state";
 import { authSelector } from "../../selectors/authState";
-import { gameSelector, participantsSelector } from "../../selectors/game-state";
+import { gameSelector } from "../../selectors/game-state";
 import { participantPlayerSelector } from "../../selectors/combined-states";
 import { GamePot } from "./game-pot";
 import useIsHorizontal from "../../components/hooks/is-horizontal";
@@ -26,46 +24,35 @@ import statusConstants from "../../store/constants/status-constants";
 import { Spinner } from "../../components/spinner/spinner";
 import { GameSettings } from "./game-settings/game-settings";
 import { useMyTurnDialog } from "./dialogs/use-my-turn-alert";
+import { fetchPotRequest } from "../../store/actions/pot-request-action";
+import { tableSelector } from "../../selectors/table-state";
+import { CREATE_TABLE } from "../../store/reducers/table-reducer";
+import { useHistory } from "react-router";
 const { error, loading } = statusConstants;
 
 const GamePage = () => {
     const dispatch = useDispatch();
     const isHorizontal = useIsHorizontal();
     const breakpoint = useBreakpoint();
+    const history = useHistory();
+
     useMyTurnDialog();
     usePotRequestDialog();
 
     const authState = useSelector(authSelector);
     const gameState = useSelector(gameSelector);
-    const playerMe = useSelector(playerMeSelector);
-    const participants = useSelector(participantsSelector);
-    const players = useSelector(playersSeletor);
+    const tableState = useSelector(tableSelector);
     const { chipsError, chipsStatus, gameActionsStatus, gameActionsError } =
         useSelector(participantPlayerSelector);
-
-    const meId = playerMe?.id;
-    const memoizedOrderedPlayersClasses = useMemo(() => {
-        if (!(players && participants)) return [];
-
-        const leftTopRight = ["left", "top", "right"];
-
-        return participants
-            .filter((p) => p.playerId !== meId)
-            .sort((a, b) => a.turnOrder - b.turnOrder)
-            .map((p, i) => ({
-                playerId: p.playerId,
-                className: leftTopRight[i]
-            }));
-    }, [meId, participants, players]);
 
     useEffect(() => {
         if (gameState.status === "ENDED") {
             history.push("/game-summary");
         }
-    }, [gameState.status]);
+    }, [gameState.status, history]);
 
     useEffect(() => {
-        async function fetchGameRounds() {
+        if (gameState.id) {
             dispatch(
                 fetchGameActions({
                     authToken: authState.authToken.token,
@@ -74,9 +61,18 @@ const GamePage = () => {
                 })
             );
         }
-
-        if (gameState.id) fetchGameRounds();
     }, [gameState.id, gameState.round, authState.authToken, dispatch]);
+
+    useEffect(() => {
+        if (gameState.id) {
+            dispatch(
+                fetchPotRequest({
+                    gameId: gameState.id,
+                    authToken: authState.authToken.token
+                })
+            );
+        }
+    }, [gameState.id, authState.authToken.token, dispatch]);
 
     useEffect(() => {
         // TODO: move this function to a getTableService, this blob is not necessary in the component
@@ -84,28 +80,26 @@ const GamePage = () => {
         async function getTable() {
             dispatch(fetchChips(authState.authToken.token));
 
-            const tableResp = await tableService.getTable(
-                authState.authToken.token
-            );
-            dispatch({ type: "CREATE_TABLE", table: tableResp.data });
+            if (!tableState.id) {
+                const tableResp = await tableService.getTable(
+                    authState.authToken.token
+                );
+                dispatch({ type: CREATE_TABLE, table: tableResp.data });
+            }
 
-            const ongoingGameResp = await gameService.getGameOngoing(
-                authState.authToken.token
-            );
-            dispatch({ type: GAME_CREATED, game: ongoingGameResp.data.game });
-
-            const potRequestData = await gameService.getAwaitingPotRequest(
-                authState.authToken.token,
-                ongoingGameResp.data.game.id
-            );
-            if (potRequestData.data.potRequest)
+            if (!gameState.id) {
+                const ongoingGameResp = await gameService.getGameOngoing(
+                    authState.authToken.token
+                );
                 dispatch({
-                    type: POT_REQUEST_FETCHED,
-                    potRequest: potRequestData.data.potRequest
+                    type: GAME_CREATED,
+                    game: ongoingGameResp.data.game
                 });
+            }
         }
 
         if (authState.authToken.token) getTable();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authState.authToken, dispatch]);
 
     if (
@@ -133,12 +127,7 @@ const GamePage = () => {
                 <div className="game-page-pot-container">
                     <GamePot />
                 </div>
-                <PlayerParticipantList
-                    memoizedOrderedPlayersClasses={
-                        memoizedOrderedPlayersClasses
-                    }
-                    isSmall={isSmall}
-                />
+                <PlayerParticipantList isSmall={isSmall} />
             </main>
         </div>
     );
