@@ -1,3 +1,5 @@
+@import "../../../css-var.css";
+
 .gamepage-game-settings-list {
     display: inline-flex;
     flex-direction: column;
@@ -24,8 +26,8 @@
 }
 
 .game-settings-item-negative {
-    background-color: #ff7a76;
-    color: #f0faf1;
+    background-color: var(--red);
+    color: var(--white);
 }
 
 .game-settings-item:nth-child(1) {
