@@ -21,6 +21,6 @@ body {
       Spacing
     **/
     --margin-base: 0.5em;
-    --margin-half: calc(--margin-base / 2);
-    --margin-double: calc(--margin-base * 2);
+    --margin-half: calc(var(--margin-base) / 2);
+    --margin-double: calc(var(--margin-base) * 2);
 }
