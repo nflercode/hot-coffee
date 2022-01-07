@@ -51,6 +51,10 @@ const LobbyPage = () => {
             await playerService.deletePlayer(authState.authToken.token);
             refreshTokenStorage.deleteRefreshToken();
             dispatch({ type: "PLAYER_LEFT_TABLE" });
+            window.gtag("event", "click", {
+                event_category: "button",
+                event_label: "action_leave_table"
+            });
             history.push("/");
         }
 
@@ -104,9 +108,13 @@ const LobbyPage = () => {
                 </div>
 
                 <Button
-                    onClick={() =>
-                        gameService.createGame(authState.authToken.token)
-                    }
+                    onClick={() => {
+                        window.gtag("event", "click", {
+                            event_category: "button",
+                            event_label: "action_start_table"
+                        });
+                        gameService.createGame(authState.authToken.token);
+                    }}
                 >
                     Starta spel
                 </Button>

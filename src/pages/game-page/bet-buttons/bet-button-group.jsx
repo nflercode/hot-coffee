@@ -42,6 +42,11 @@ export const BetButtonGroup = ({
                                 chips: bettingChips.chips
                             })
                         );
+                        window.gtag("event", "click", {
+                            event_category: "button",
+                            event_label: "action_buy_in",
+                            value: bettingChips.totalBettingValue
+                        });
                         resetBettingChips();
                     }}
                 />
@@ -57,6 +62,11 @@ export const BetButtonGroup = ({
                                 gameState.id,
                                 bettingChips.chips
                             );
+                            window.gtag("event", "click", {
+                                event_category: "button",
+                                event_label: "call",
+                                value: bettingChips.totalBettingValue
+                            });
                             resetBettingChips();
                         }}
                     />
@@ -70,6 +80,12 @@ export const BetButtonGroup = ({
                                 gameState.id,
                                 bettingChips.chips
                             );
+
+                            window.gtag("event", "click", {
+                                event_category: "button",
+                                event_label: "raise",
+                                value: bettingChips.totalBettingValue
+                            });
                             resetBettingChips();
                         }}
                     />
@@ -81,6 +97,10 @@ export const BetButtonGroup = ({
                                 authState.authToken.token,
                                 gameState.id
                             );
+                            window.gtag("event", "click", {
+                                event_category: "button",
+                                event_label: "check"
+                            });
                             resetBettingChips();
                         }}
                     />

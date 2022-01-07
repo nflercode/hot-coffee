@@ -22,6 +22,10 @@ export const CopyLink = ({ invitationToken }) => {
             title: "Kopierat",
             icon: "fa-copy"
         });
+        window.gtag("event", "click", {
+            event_category: "button",
+            event_label: "action_copy"
+        });
     };
 
     return (

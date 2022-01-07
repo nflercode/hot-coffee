@@ -41,6 +41,10 @@ export const GameSettings = ({ isAdmin = false }) => {
             dispatch({ type: "PLAYER_LEFT_TABLE" });
             history.push("/");
         }
+        window.gtag("event", "click", {
+            event_category: "button",
+            event_label: "action_leave_table"
+        });
 
         leave();
     };
@@ -48,6 +52,10 @@ export const GameSettings = ({ isAdmin = false }) => {
     const onExchangeClick = () => {
         setIsVisible(false);
         setIsExchangeChipsVisible(true);
+        window.gtag("event", "click", {
+            event_category: "button",
+            event_label: "action_exchange"
+        });
     };
 
     useExchangeChipsDialog(isExchangeChipsVisible, setIsExchangeChipsVisible);
@@ -59,6 +67,10 @@ export const GameSettings = ({ isAdmin = false }) => {
                 onClick={() => {
                     setIsVisible(!isVisible);
                     hasClickedRecently.current = true;
+                    window.gtag("event", "click", {
+                        event_category: "button",
+                        event_label: "action_settings"
+                    });
                 }}
                 disabled={hasClickedRecently.current === true}
             >

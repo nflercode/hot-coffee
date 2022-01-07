@@ -55,6 +55,10 @@ export const useExchangeChipsDialog = (
                     participantPlayerMe.chips,
                     participantPlayerMe.totalValue
                 );
+                window.gtag("event", "click", {
+                    event_category: "button",
+                    event_label: "action_autofill_chips"
+                });
             };
 
             const totalValueDiff =
@@ -73,6 +77,11 @@ export const useExchangeChipsDialog = (
                             })
                         );
                         setIsExchangeChipsVisible(false);
+
+                        window.gtag("event", "click", {
+                            event_category: "button",
+                            event_label: "action_exchanged"
+                        });
                     },
                     content: "Exchange",
                     isDisabled: totalValueDiff !== 0
@@ -80,6 +89,10 @@ export const useExchangeChipsDialog = (
                 negativeButtonProp: {
                     callback: () => {
                         setIsExchangeChipsVisible(false);
+                        window.gtag("event", "click", {
+                            event_category: "button",
+                            event_label: "action_exchange_cancel"
+                        });
                     },
                     content: "Cancel"
                 },
