@@ -18,7 +18,7 @@ const GaWrapper = ({ children }) => {
                 page_location:
                     history.location.pathname + history.location.search,
                 page_path: history.location.pathname,
-                send_to: "<GA_MEASUREMENT_ID>"
+                send_to: "G-CB0MNTR2X8"
             });
         });
     }, []);
