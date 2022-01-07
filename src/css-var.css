@@ -4,18 +4,20 @@ body {
     **/
     --white: #F0FAF1;
     --black: #131313;
-    --light-green: #517a55;
+    --light-green: #9be7a3;
     --green: #517a55;
     --dark-green: #517a557e;
     --light-gray: #767a76;
     --gray: #2d2d2d;
-    /*--dark-gray: TBD */
+    --dark-gray: #2d2d2d;
     --light-red: #ff7a76;
     --red: #ff7a76;
     --dark-red: #ff7a767e;
     --light-blue: #76b1ff;
     --blue: #76b1ff;
     --dark-blue: #76b1ff7e;
+    --yellow: #ffd476;
+
 
     /** 
       Spacing
@@ -23,4 +25,5 @@ body {
     --margin-base: 0.5em;
     --margin-half: calc(var(--margin-base) / 2);
     --margin-double: calc(var(--margin-base) * 2);
+    --margin-fourth: calc(var(--margin-base) * 4);
 }

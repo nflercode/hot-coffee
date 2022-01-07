@@ -1,16 +1,27 @@
+@import "../../css-var.css";
+
+
 .snackbar-container {
   bottom: 0px;
   position: fixed;
   min-width: 100%;
-  background-color: #202020;
+  background-color: var(--black);
   padding: 0.75em;
   max-height: 150px;
   height: 150px;
-  box-shadow: 0 0 10px 0 rgb(0 1 0 / 15%);
+  box-shadow: 0 0 10px 0 var(--dark-grey);
   border-radius: 4px;
   display: grid;
   grid-template-rows: 1fr 2fr auto;
-  color: hsla(120, 100%, 100%, 0.726);
+  color: var(--white);
+}
+
+.snackbar-container-info>.snackbar-title {
+  color: var(--light-green)
+}
+
+.snackbar-container-warning>.snackbar-title {
+  color: var(--yellow)
 }
 
 .snackbar-btns-container {

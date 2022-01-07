@@ -3,6 +3,11 @@
 .game-page-container {
   height: 100%;
   overflow: hidden;
+  background: url("./Pokertable.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 95%;
+  background-position-y: var(--margin-fourth);
 }
 
 .participant-inactive {

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -11,12 +11,35 @@ import { LogoType } from "./logotype";
 import { InfoBall } from "../../components/info-ball/info-ball";
 import { Container } from "../../components/container/container";
 import { authSelector } from "../../selectors/authState";
+import { DialogsContext } from "../../components/dialogs/dialogs-context";
+import { dialogConstants } from "../../components/dialogs/dialog-constants";
 
 export const StartPage = () => {
     const [isCreatingTable, setIsCreatingTable] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const authState = useSelector(authSelector);
+    const dialogerinos = useContext(DialogsContext);
+
+    useEffect(() => {
+        dialogerinos.onShowDialog({
+            type: dialogConstants.type.SNACKBAR,
+            mode: dialogConstants.mode.WARNING,
+            positiveButtonProp: {
+                // eslint-disable-next-line no-empty-function
+                callback: () => {
+                    window.gtag("event", "click", {
+                        event_category: "button",
+                        event_label: "action_alpha_warning"
+                    });
+                },
+                content: "Sure!"
+            },
+            message:
+                "The web app is still under development, but you are of cource welcome to test it out!",
+            title: "Mychips.online[alpha]"
+        });
+    }, []);
 
     function handleLeaveTable() {
         async function leave() {
@@ -94,10 +117,9 @@ export const StartPage = () => {
                                         <div className="new-player-text">
                                             <h2 className="fc-white">Play</h2>
                                             <p>
-                                                Shuffle your card deck and
-                                                you're ready to go! We'll keep
-                                                track of the chips and who's
-                                                turn it is!
+                                                Shuffle your own physical card
+                                                deck, We'll keep track of the
+                                                chips and who's turn it is!
                                             </p>
                                         </div>
                                     </div>

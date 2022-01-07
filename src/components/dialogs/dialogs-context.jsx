@@ -15,10 +15,11 @@ export const DialogsContextProvider = ({ children }) => {
     const [positiveButton, setPositiveButton] = useState(null);
     const [negativeButton, setNegativeButton] = useState(null);
     const [icon, setIcon] = useState(null);
+    const [mode, setMode] = useState(dialogConstants.mode.info);
 
     const onShowDialog = ({
         type: typeProp = dialogConstants.type.SNACKBAR,
-        mode = dialogConstants.mode.info,
+        mode: propMode,
         icon: iconProp,
         positiveButtonProp,
         negativeButtonProp,
@@ -28,6 +29,7 @@ export const DialogsContextProvider = ({ children }) => {
         setType(typeProp);
         clearTimeout(timer.current);
         setTitle(titleProp);
+        setMode(propMode);
         if (messageProp) setMessage(messageProp);
         if (iconProp) setIcon(iconProp);
         if (positiveButtonProp)
@@ -77,6 +79,7 @@ export const DialogsContextProvider = ({ children }) => {
                     positiveButton={positiveButton}
                     negativeButton={negativeButton}
                     icon={icon}
+                    mode={mode}
                 />
             </div>
         </DialogsContext.Provider>
