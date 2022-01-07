@@ -14,9 +14,8 @@ const GaWrapper = ({ children }) => {
     useEffect(() => {
         history.listen(() => {
             window.gtag("event", "page_view", {
-                page_title: `${history.location.pathname}?${history.location.search}`,
-                page_location:
-                    history.location.pathname + history.location.search,
+                page_title: `${history.location.pathname}`,
+                page_location: `${history.location.pathname}?${history.location.search}`,
                 page_path: history.location.pathname,
                 send_to: "G-CB0MNTR2X8"
             });
