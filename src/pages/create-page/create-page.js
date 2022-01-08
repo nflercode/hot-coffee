@@ -28,13 +28,16 @@ const CreatePage = () => {
             mode: "info",
             positiveButtonProp: {
                 callback: () => {
-                    console.log("accepterat");
+                    window.gtag("event", "click", {
+                        event_category: "button",
+                        event_label: "action_cookie_accept"
+                    });
                 },
-                content: "Okej"
+                content: "Continue"
             },
             message:
-                "Vår site funkar tyvärr inte utan kakor. Genom att fortsätta så godkänner du kakor.",
-            title: "Vi använder kakor för att levera denna tjänst"
+                "Cookies are necessary for our website to work. By continueing you give your concent of useage of cookies",
+            title: "Cookies"
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
