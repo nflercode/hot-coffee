@@ -1,13 +1,17 @@
 import React from "react";
 import { Button } from "../button/button";
+import { Container } from "../container/container";
 import "./snackbar.css";
 export const Snackbar = ({
     title,
     message,
     positiveButton,
-    negativeButton
+    negativeButton,
+    mode
 }) => (
-    <div className="snackbar-container">
+    <div
+        className={`snackbar-container snackbar-container-${mode?.toLowerCase()}`}
+    >
         <div className="snackbar-title">{title}</div>
         <div className="snackbar-message">{message}</div>
         <div

@@ -10,11 +10,13 @@ export const Dialogs = ({
     message,
     positiveButton,
     negativeButton,
-    icon
+    icon,
+    mode
 }) => {
     if (type === dialogConstants.type.SNACKBAR) {
         return (
             <Snackbar
+                mode={mode}
                 title={title}
                 message={message}
                 positiveButton={positiveButton}
