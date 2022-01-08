@@ -49,6 +49,10 @@ export const StartPage = () => {
             history.push("/");
         }
 
+        window.gtag("event", "click", {
+            event_category: "button",
+            event_label: "action_leave_table"
+        });
         leave();
     }
 
@@ -69,6 +73,10 @@ export const StartPage = () => {
 
             refreshTokenStorage.setRefreshToken(data.refreshToken);
 
+            window.gtag("event", "click", {
+                event_category: "button",
+                event_label: "action_create_table"
+            });
             history.push("/create");
         }
 
