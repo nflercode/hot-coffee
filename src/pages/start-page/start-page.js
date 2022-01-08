@@ -36,7 +36,7 @@ export const StartPage = () => {
                 content: "Sure!"
             },
             message:
-                "The web app is still under development, but you are of cource welcome to test it out!",
+                "The web app is still under development, but you are of course welcome to test it out!",
             title: "Mychips.online[alpha]"
         });
     }, []);
