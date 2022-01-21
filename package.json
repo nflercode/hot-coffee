@@ -7,7 +7,7 @@
     "@popperjs/core": "^2.10.1",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "env-cmd": "^10.1.0",
@@ -15,13 +15,14 @@
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-lazyload": "^3.2.0",
     "react-popper": "^2.2.5",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
+    "react-test-renderer": "^17.0.2",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^4.0.1"
@@ -29,7 +30,8 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build:dev": "env-cmd -f .env.dev react-app-rewired build",
-    "build:prod": "env-cmd -f .env.prod react-app-rewired build"
+    "build:prod": "env-cmd -f .env.prod react-app-rewired build",
+    "test": "jest --watch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,6 +50,7 @@
   },
   "devDependencies": {
     "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^24.7.0",
     "eslint-plugin-react": "^7.24.0",
     "prettier": "^2.3.2",
     "pretty-quick": "^3.1.1",
@@ -55,5 +58,11 @@
     "redux-devtools": "^3.7.0",
     "redux-devtools-extension": "^2.13.8",
     "worker-loader": "^3.0.8"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   }
 }
