@@ -32,8 +32,8 @@
     "start": "react-app-rewired start",
     "build:dev": "env-cmd -f .env.dev react-app-rewired build",
     "build:prod": "env-cmd -f .env.prod react-app-rewired build",
-    "test": "jest",
-    "test:dev": "jest --watch"
+    "test": "jest --silent",
+    "test:dev": "jest --watch --silent"
   },
   "eslintConfig": {
     "extends": "react-app"

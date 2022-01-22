@@ -22,6 +22,7 @@ describe("Button", () => {
     it("should run onClick function when clicked", () => {
         const div = document.createElement("div");
         let timesPressed = 0;
+
         const onButtonClick = () => {
             timesPressed = timesPressed + 1;
         };
@@ -61,6 +62,7 @@ describe("Button", () => {
         );
 
         const theButton = screen.getByText("Knappisen");
+
         fireEvent(
             theButton,
             new MouseEvent("click", {
