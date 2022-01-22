@@ -9,9 +9,13 @@ const chipClasses = {
     BLACK: "black"
 };
 
+// TODO: should be "isDisabled" instead, it's more commonly used
 const Chip = ({ chip, isEnabled, isLarger, onClick }) => {
+    if (!chip || Object.keys(chip).length <= 0)
+        throw new Error("Chip has no value");
+
     return (
-        <div className="fc-white f-center">
+        <div className="fc-white f-center" data-testid="qa-chip">
             <div className="padding-bottom-half">{chip.value}$</div>
             <div
                 className={`chip chip-${chipClasses[chip.type]} ${
