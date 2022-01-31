@@ -16,7 +16,7 @@ export const Button = ({
         <button
             className={`button${block ? " button-block" : ""} button-${theme}${
                 disabled ? " button-disabled" : ""
-            } ${className}`}
+            }${className ? ` ${className}` : ""}`}
             onClick={() => {
                 !disabled && onClick();
             }}
