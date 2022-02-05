@@ -63,25 +63,25 @@
 
 .button-disabled.button-positive {
   background-color: var(--dark-green);
-  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
+  box-shadow:var(--main-box-shadow);
   color: var(--light-gray);
 }
 
 .button-disabled.button-negative {
   background-color: var(--dark-red);
-  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
+  box-shadow:var(--main-box-shadow);
   color: var(--white);
 }
 
 .button-disabled.button-default {
   background-color: var(--dark-green);
-  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
+  box-shadow:var(--main-box-shadow);
   color: var(--white);
 }
 
 .button-disabled.button-neutral {
   background-color: var(--dark-blue);
-  box-shadow: 0 0 3px 2px rgb(0 1 0 / 5%);
+  box-shadow:var(--main-box-shadow);
   color: var(--white);
 }
 
