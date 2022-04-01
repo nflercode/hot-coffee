@@ -31,8 +31,8 @@ describe("Chip", () => {
     it("renders with correct className", () => {
         const div = document.createElement("div");
 
-        // eslint-disable-next-line no-empty-function
         const { rerender } = render(
+            // eslint-disable-next-line no-empty-function
             <Chip chip={defaultChipData} onClick={() => {}} />,
             div
         );

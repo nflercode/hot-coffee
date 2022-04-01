@@ -86,90 +86,60 @@ export const StartPage = () => {
     return (
         <div className="start-page-container">
             <header className="start-page-header">
-                <Container>
+                <h1>
                     <LogoType />
-                </Container>
+                </h1>
             </header>
             <main className="start-page-main">
-                <Container isMaxHeight>
-                    <div className="start-page-main-content">
-                        {!authState.authToken.token ? (
-                            <>
-                                <div className="start-page-new-player">
-                                    <div className="new-player-section">
-                                        <InfoBall icon="fa-edit" />
-                                        <div className="new-player-text">
-                                            <h2 className="fc-white">
-                                                Create table
-                                            </h2>
-                                            <p>
-                                                Customize the table to your
-                                                liking. No login required!
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="new-player-section">
-                                        <InfoBall icon="fa-user-plus" />
-                                        <div className="new-player-text">
-                                            <h2 className="fc-white">
-                                                Invite friends
-                                            </h2>
-                                            <p>
-                                                Just send your friends a link
-                                                and you're good to go!
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="new-player-section">
-                                        <InfoBall icon="fa-dice" />
-                                        <div className="new-player-text">
-                                            <h2 className="fc-white">Play</h2>
-                                            <p>
-                                                Shuffle your own physical card
-                                                deck, We'll keep track of the
-                                                chips and who's turn it is!
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <p>
-                                    It seems like you are in a lobby alread, do
-                                    you want to join it again?
-                                </p>
-                                <div className="start-page-leave-or-join">
-                                    <Button
-                                        onClick={() => history.push("/lobby")}
-                                    >
-                                        To lobby
-                                    </Button>
-                                    Eller
-                                    <Button
-                                        theme="negative"
-                                        onClick={handleLeaveTable}
-                                    >
-                                        Leave lobby
-                                    </Button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </Container>
+                <div className="start-page-main-content">
+                    {!authState.authToken.token ? (
+                        <div className="start-page-new-player">
+                            <Container
+                                disabled={isCreatingTable}
+                                className="new-player-container"
+                                onClick={handleCreateTableButtonClick}
+                            >
+                                <InfoBall icon="fa-edit" isTransparent />
+                                <h2 className="fc-white">Create a table</h2>
+                                <span className="fc-white new-player-create-icon">
+                                    <i className="fas fa-angle-right"></i>
+                                </span>
+                            </Container>
+                            <Container className="new-player-container">
+                                <InfoBall icon="fa-user-plus" isTransparent />
+                                <h2 className="fc-white">Invite friends</h2>
+                                <span />
+                            </Container>
+                            <Container className="new-player-container">
+                                <InfoBall icon="fa-dice" isTransparent />
+                                <h2 className="fc-white">
+                                    Play and we’ll keep count of chips
+                                </h2>
+                                <span />
+                            </Container>
+                        </div>
+                    ) : (
+                        <>
+                            <p>
+                                It seems like you are in a lobby alread, do you
+                                want to join it again?
+                            </p>
+                            <div className="start-page-leave-or-join">
+                                <Button onClick={() => history.push("/lobby")}>
+                                    To lobby
+                                </Button>
+                                Eller
+                                <Button
+                                    theme="negative"
+                                    onClick={handleLeaveTable}
+                                >
+                                    Leave lobby
+                                </Button>
+                            </div>
+                        </>
+                    )}
+                </div>
             </main>
-            <footer className="start-page-footer">
-                <Container>
-                    <div className="f-center">
-                        <Button
-                            disabled={isCreatingTable}
-                            onClick={handleCreateTableButtonClick}
-                        >
-                            Create table
-                        </Button>
-                    </div>
-                </Container>
-            </footer>
         </div>
     );
 };

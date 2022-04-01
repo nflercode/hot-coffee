@@ -25,12 +25,8 @@ export const LogoType = () => {
     }, []);
 
     return (
-        <h1>
-            <Logo
-                className={`logotype${
-                    showAnimation ? " logotype-animation" : ""
-                }`}
-            />
-        </h1>
+        <Logo
+            className={`logotype${showAnimation ? " logotype-animation" : ""}`}
+        />
     );
 };

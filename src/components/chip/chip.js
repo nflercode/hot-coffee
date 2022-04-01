@@ -13,8 +13,9 @@ const chipClasses = {
 // TODO: should be "isDisabled" instead, it's more commonly used
 // TODO: Chip should use the button component(but with no style), it is a button
 const Chip = ({ chip, isEnabled, isLarger, onClick }) => {
-    if (!chip || Object.keys(chip).length <= 0)
+    if (!chip || Object.keys(chip).length <= 0) {
         throw new Error("Chip has invalid data");
+    }
 
     if (!chipClasses[chip.type]) {
         throw new Error("Chip has invalid type");
