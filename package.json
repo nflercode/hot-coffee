@@ -30,9 +30,10 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "start:dev": "env-cmd -f .env.dev react-app-rewired start",
     "build:dev": "env-cmd -f .env.dev react-app-rewired build",
     "build:prod": "env-cmd -f .env.prod react-app-rewired build",
-    "test": "jest --silent",
+    "test": "jest --",
     "test:dev": "jest --watch --silent"
   },
   "eslintConfig": {

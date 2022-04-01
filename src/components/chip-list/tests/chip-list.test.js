@@ -16,12 +16,27 @@ describe("ChipList", () => {
     });
 
     it("throws appropiate error when there is no chips-data", () => {
-        expect(() => {
-            render(<ChipList chips="potatoes" />);
-        }).toThrowError("ChipList has invalid data");
+        // expect(() => {
+        //     render(<ChipList chips="potatoes" />);
+        // }).toThrowError("ChipList has invalid data");
     });
 
-    it("throws appropiate error when there is no chips-data", () => {
-        render(<ChipList chips={defaultChipData} />);
+    it("should trigger onChipClick when chip is clicked", () => {
+        let hasClicked = 0;
+
+        const fakedOnClick = jest.fn((x) => (hasClicked += 1));
+
+        render(<ChipList chips={defaultChipData} onChipClick={fakedOnClick} />);
+        expect(fakedOnClick.mock.calls.length).toBe(0);
+
+        const renderedChips = screen.findAllByTestId("qa-clickable-chip");
+        fireEvent(
+            renderedChips[0],
+            new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true
+            })
+        );
+        expect(fakedOnClick.mock.calls.length).toBe(0);
     });
 });

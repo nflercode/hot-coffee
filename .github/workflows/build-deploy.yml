@@ -52,6 +52,9 @@ jobs:
             BUILD_MODE=prod
           tags: ${{ steps.meta.outputs.tags }}
         
+      - name: Run tests
+        run: test
+
       - name: Set up kubectl
         uses: matootie/dokube@v1.3.4
         with:
