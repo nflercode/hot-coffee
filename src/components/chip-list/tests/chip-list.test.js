@@ -21,22 +21,28 @@ describe("ChipList", () => {
         // }).toThrowError("ChipList has invalid data");
     });
 
-    it("should trigger onChipClick when chip is clicked", () => {
+    it("should trigger onChipClick when chip is clicked", async () => {
         let hasClicked = 0;
 
         const fakedOnClick = jest.fn((x) => (hasClicked += 1));
 
-        render(<ChipList chips={defaultChipData} onChipClick={fakedOnClick} />);
+        render(
+            <ChipList
+                chips={defaultChipData}
+                onChipClick={fakedOnClick}
+                hasEnabledChips
+            />
+        );
         expect(fakedOnClick.mock.calls.length).toBe(0);
 
-        const renderedChips = screen.findAllByTestId("qa-clickable-chip");
-        fireEvent(
+        const renderedChips = await screen.findAllByTestId("qa-clickable-chip");
+        await fireEvent(
             renderedChips[0],
             new MouseEvent("click", {
                 bubbles: true,
                 cancelable: true
             })
         );
-        expect(fakedOnClick.mock.calls.length).toBe(0);
+        expect(fakedOnClick.mock.calls.length).toBe(1);
     });
 });
