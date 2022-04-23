@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { Spinner } from "../spinner/spinner";
 import { StartPage } from "../../pages/start-page/start-page";
 
-//const StartPage = import("../../pages/start-page/start-page");
 const CreatePage = lazy(() => import("../../pages/create-page/create-page"));
 const JoinPage = lazy(() => import("../../pages/join-page/join-page"));
 const LobbyPage = lazy(() => import("../../pages/lobby-page/lobby-page"));
@@ -58,6 +57,9 @@ export const Router = () => {
         }
     ];
 
+    // Note that the browser router is not so friendly to unit test,
+    // if we want to test the router component we should mock it away and use historyRouter instead
+    // It may be a good idea to move away from browser to history router instead.
     return (
         <BrowserRouter>
             <GaWrapper>
