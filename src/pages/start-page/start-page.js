@@ -120,20 +120,20 @@ export const StartPage = () => {
                         </div>
                     ) : (
                         <>
-                            <p data-testId="qa-startpage-authenticated-message">
+                            <p data-testid="qa-startpage-authenticated-message">
                                 It seems like you are in a lobby alread, do you
                                 want to join it again?
                             </p>
                             <div className="start-page-leave-or-join">
                                 <Button
-                                    data-testId="qa-startpage-authenticated-toLobby"
+                                    data-testid="qa-startpage-authenticated-toLobby"
                                     onClick={() => history.push("/lobby")}
                                 >
                                     To lobby
                                 </Button>
                                 Eller
                                 <Button
-                                    data-testId="qa-startpage-authenticated-leave"
+                                    data-testid="qa-startpage-authenticated-leave"
                                     theme="negative"
                                     onClick={handleLeaveTable}
                                 >

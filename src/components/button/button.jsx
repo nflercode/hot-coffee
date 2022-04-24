@@ -11,11 +11,11 @@ export const Button = ({
     disabled,
     referenceElement,
     className = "",
-    "data-testId": dataTestId
+    "data-testid": dataTestId
 }) => {
     return (
         <button
-            data-testId={dataTestId}
+            data-testid={dataTestId}
             className={`button${block ? " button-block" : ""} button-${theme}${
                 disabled ? " button-disabled" : ""
             }${className ? ` ${className}` : ""}`}
