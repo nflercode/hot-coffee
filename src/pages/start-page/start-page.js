@@ -93,7 +93,10 @@ export const StartPage = () => {
             <main className="start-page-main">
                 <div className="start-page-main-content">
                     {!authState.authToken.token ? (
-                        <div className="start-page-new-player">
+                        <div
+                            className="start-page-new-player"
+                            data-testid="qa-startpage-new-player"
+                        >
                             <Container
                                 disabled={isCreatingTable}
                                 className="new-player-container"

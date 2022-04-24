@@ -64,7 +64,10 @@ export const DialogsContextProvider = ({ children }) => {
     };
 
     return (
-        <DialogsContext.Provider value={{ onShowDialog }}>
+        <DialogsContext.Provider
+            value={{ onShowDialog }}
+            data-testid="qa-dialogContext"
+        >
             {children}
             <div
                 className="dialog-first-render"

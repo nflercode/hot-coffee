@@ -43,6 +43,8 @@ describe("Start-page", () => {
         expect(
             screen.getByTestId("qa-startpage-authenticated-leave").textContent
         ).toBe("Leave lobby");
+
+        // TODO: Write tests for onClick
     });
 
     it("Should show correct start page when not authenticatd", () => {
@@ -51,5 +53,14 @@ describe("Start-page", () => {
                 <StartPage />
             </UnitTestHarness>
         );
+
+        expect(screen.getByTestId("qa-startpage-new-player").textContent).toBe(
+            "Create a tableInvite friendsPlay and we’ll keep count of chips"
+        );
+
+        expect(document.querySelector(".snackbar-container").textContent).toBe(
+            "Mychips.online[alpha]The web app is still under development, but you are of course welcome to test it out!Sure!"
+        );
+        // TODO: Write tests for onClick
     });
 });
