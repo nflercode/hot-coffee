@@ -9,24 +9,24 @@ describe("Chip", () => {
         amount: 666
     };
 
-    it("throws appropiate error when there is no chip-data", () => {
-        expect(() => {
-            render(<Chip />);
-        }).toThrowError("Chip has invalid data");
-    });
+    //it("throws appropiate error when there is no chip-data", () => {
+    //    expect(() => {
+    //        render(<Chip />);
+    //    }).toThrowError("Chip has invalid data");
+    //});
 
-    it("throws appropiate error when the chip data has invalid type", () => {
-        expect(() => {
-            render(
-                <Chip
-                    chip={{
-                        ...defaultChipData,
-                        type: "Never gonna give you up"
-                    }}
-                />
-            );
-        }).toThrowError("Chip has invalid type");
-    });
+    //it("throws appropiate error when the chip data has invalid type", () => {
+    //    expect(() => {
+    //        render(
+    //            <Chip
+    //                chip={{
+    //                    ...defaultChipData,
+    //                    type: "Never gonna give you up"
+    //                }}
+    //            />
+    //        );
+    //    }).toThrowError("Chip has invalid type");
+    //});
 
     it("renders with correct className", () => {
         const div = document.createElement("div");

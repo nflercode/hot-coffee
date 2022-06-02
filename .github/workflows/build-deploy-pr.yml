@@ -19,7 +19,7 @@ jobs:
          
       - name: Bump version and push tag
         id: bumpver
-        uses: anothrNick/github-tag-action@1.26.0
+        uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
@@ -29,7 +29,7 @@ jobs:
         
       - name: Docker meta
         id: meta
-        uses: crazy-max/ghaction-docker-meta@v2
+        uses: docker/metadata-action@v4
         with:
           images: nfler/${{ env.APP_NAME }}
           tags: |
