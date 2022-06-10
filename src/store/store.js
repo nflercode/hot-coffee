@@ -21,17 +21,18 @@ combineReducers({
 });
 
 const initialAuthState = refreshTokenStorage.getRefreshToken();
+export const reducer = {
+    table,
+    auth,
+    game,
+    chips,
+    potRequest,
+    gameActions,
+    exchangingChips
+};
 
 export const store = configureStore({
-    reducer: {
-        table,
-        auth,
-        game,
-        chips,
-        potRequest,
-        gameActions,
-        exchangingChips
-    },
+    reducer: reducer,
     preloadedState: {
         auth: {
             authToken: {},
