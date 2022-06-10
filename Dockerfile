@@ -1,3 +1,7 @@
+FROM alpine:3.5
+RUN apt update
+RUN apt add --no-cache git
+
 FROM node:15.1.0-buster-slim as build
 
 ARG BUILD_MODE=dev
