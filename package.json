@@ -12,7 +12,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "env-cmd": "^10.1.0",
-    "eslint-config-nfler": "github:nflercode/eslint-config-nfler",
+    "eslint-config-nfler": "git+ssh://git@github.com:nflercode/eslint-config-nfler.git",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-react-hooks": "^4.2.0",
