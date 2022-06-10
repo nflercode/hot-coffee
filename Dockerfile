@@ -6,6 +6,7 @@ WORKDIR /app
 COPY . .
 RUN npm install
 RUN npm run build:$BUILD_MODE
+RUN apk add --no-cache git
 
 FROM node:15.1.0-buster-slim
 
