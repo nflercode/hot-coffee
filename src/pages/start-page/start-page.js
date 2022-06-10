@@ -93,7 +93,10 @@ export const StartPage = () => {
             <main className="start-page-main">
                 <div className="start-page-main-content">
                     {!authState.authToken.token ? (
-                        <div className="start-page-new-player">
+                        <div
+                            className="start-page-new-player"
+                            data-testid="qa-startpage-new-player"
+                        >
                             <Container
                                 disabled={isCreatingTable}
                                 className="new-player-container"
@@ -120,16 +123,20 @@ export const StartPage = () => {
                         </div>
                     ) : (
                         <>
-                            <p>
+                            <p data-testid="qa-startpage-authenticated-message">
                                 It seems like you are in a lobby alread, do you
                                 want to join it again?
                             </p>
                             <div className="start-page-leave-or-join">
-                                <Button onClick={() => history.push("/lobby")}>
+                                <Button
+                                    data-testid="qa-startpage-authenticated-toLobby"
+                                    onClick={() => history.push("/lobby")}
+                                >
                                     To lobby
                                 </Button>
                                 Eller
                                 <Button
+                                    data-testid="qa-startpage-authenticated-leave"
                                     theme="negative"
                                     onClick={handleLeaveTable}
                                 >
