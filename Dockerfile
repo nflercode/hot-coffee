@@ -5,7 +5,7 @@ ARG BUILD_MODE=dev
 WORKDIR /app
 COPY . .
 RUN apt update
-RUN apt install git
+RUN sudo apt install git
 RUN npm install
 RUN npm run build:$BUILD_MODE
 
