@@ -1,6 +1,6 @@
 FROM alpine:3.5
-RUN apk update
-RUN apk add --no-cache git
+RUN apt update
+RUN apt add --no-cache git
 
 FROM node:15.1.0-buster-slim as build
 
